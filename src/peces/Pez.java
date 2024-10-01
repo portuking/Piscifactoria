@@ -1,8 +1,9 @@
 package peces;
 
 import java.net.Socket;
+import java.util.Random;
 
-public class Pez {
+public  abstract class Pez {
     /** Nombre Común del Pez */
     private String name;
     /** Nombre Científico del Pez */
@@ -26,12 +27,8 @@ public class Pez {
      * @param scientificName Nombre Científico del Pez
      * @param age Edad del Pez
      * @param sex Sexo del Pez
-     * @param fertile Si el Pez es Fértil 
-     * @param alive Si el pez está vivo
-     * @param hungry Si el pez está hambriento
-     * @param mature Si el Pez es maduro
      */
-    public Pez(String name, String scientificName, int age, boolean sex, boolean fertile, boolean alive, boolean hungry,boolean mature) {
+    public Pez(String name, String scientificName, boolean sex) {
         this.name = name;
         this.scientificName = scientificName;
         this.age = 0;
@@ -53,13 +50,20 @@ public class Pez {
     }
 
     /**
+     * Método que implementa la manera de comer del pez
+     */
+    public abstract void eat();
+
+    /**
+     * Método que reproduce el Pez
+     */
+    public abstract void reproduce();
+
+    /**
      * Método que hace crecer un Pez
      */
     public void grow(){
-        if(this.alive != false) {
-            this.age+=1;
-            
-        }
+        
     }
 
     /**
