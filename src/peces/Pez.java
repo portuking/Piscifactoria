@@ -63,7 +63,25 @@ public  abstract class Pez {
      * Método que hace crecer un Pez
      */
     public void grow(){
-        
+        Random r = new Random();
+        if (this.alive){
+            this.eat();
+            if(!this.hungry){
+                this.alive = r.nextBoolean(); 
+            }
+            this.age++;
+            if(!this.mature){
+                if(this.age % 2 == 0) {
+                    int kill = r.nextInt(100)+1;
+                    if (kill<=5) {
+                        this.alive=false;
+                    }
+                }
+            }
+            if (this.mature && this.fertile) {
+                this.reproduce();
+            }
+        }
     }
 
     /**
