@@ -94,4 +94,54 @@ public  abstract class Pez {
         this.hungry = true;
         this.mature = false;
     }
+
+    /**
+     * @return Si el Pez esta vivo o no
+     */
+    public boolean isAlive(){
+        return this.alive;
+    }
+
+    /**
+     * @return Si el Pez tiene hambre
+     */
+    public boolean isHungry(){
+        return this.hungry;
+    }
+
+    /**
+     * @return Si el Pez es maduro o no
+     */
+    public boolean isMature(){
+        return this.mature;
+    }
+
+    /**
+     * @return Si el Pez es fértil
+     */
+    public boolean isFertile(){
+        return this.fertile;
+    }
+
+    /**
+     * @return true si el pez es macho
+     */
+    public boolean isH(){
+        if(this.sex == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @return true si el pez es hembra
+     */
+    public boolean isM() {
+        if(this.sex == false){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

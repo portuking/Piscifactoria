@@ -31,7 +31,8 @@ public class Tanque {
      */
     public void showStatus(){
         System.out.println("=============== Tanque "+ this.tankNum +" ===============");
-        System.out.println("Ocupación: " + (fishs.size()/this.maxCapacity));
+        System.out.println("Ocupación: peces / max " + (fishs.size()/this.maxCapacity)+"%");
+
     }
     /**
      * Muestra la información de los Peces del Tanque
@@ -43,8 +44,41 @@ public class Tanque {
     }
 
     /** Muestra la ocupación del Tanque */
-    public void showCapacity() {
-
+    public void showCapacity(String pisciName) {
+        if(this.fishs.size() > 0) {
+            int capacity = this.fishs.size() / this.maxCapacity;
+            System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al " + capacity + "% de capacidad. [peces/espacios]");
+        }else{
+        System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al 0% de capacidad. [peces/espacios]");
+        }
     }
+
+    /**
+     * @return Número de Peces vivos del Tanque
+     */
+    public int fishAlive(){
+        int numAlive = 0;
+        for (Pez pez : fishs) {
+            if (pez.isAlive() == true) {
+                numAlive+=1;
+            }
+        }
+        return numAlive;
+    }
+
+    /**
+     * @return Número de Peces que han comido del Tanque
+     */
+    public int fishHungry(){
+        int numHungry = 0;
+        for (Pez pez : fishs) {
+            if (pez.isHungry() == false) {
+                numHungry+=1;
+            }
+        }
+        return numHungry;
+    }
+
+
 
 }
