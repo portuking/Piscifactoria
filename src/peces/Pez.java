@@ -88,10 +88,7 @@ public  abstract class Pez {
      * Método que resetea un Pez
      */
     public void reset(){
-        this.name = name;
-        this.scientificName = scientificName;
         this.age = 0;
-        this.sex = sex;
         this.fertile = false;
         this.alive = true;
         this.hungry = true;
