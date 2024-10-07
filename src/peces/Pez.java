@@ -1,6 +1,5 @@
 package peces;
 
-import java.net.Socket;
 import java.util.Random;
 
 public  abstract class Pez {
@@ -126,7 +125,7 @@ public  abstract class Pez {
     /**
      * @return true si el pez es macho
      */
-    public boolean isH(){
+    public boolean isMale(){
         if(this.sex == true){
             return true;
         }else{
@@ -137,11 +136,13 @@ public  abstract class Pez {
     /**
      * @return true si el pez es hembra
      */
-    public boolean isM() {
+    public boolean isFemale() {
         if(this.sex == false){
             return true;
         }else{
             return false;
         }
     }
+
+
 }
