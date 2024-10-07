@@ -79,6 +79,42 @@ public class Tanque {
         return numHungry;
     }
 
+    /**
+     * @return Número de peces hembra del Tanque
+     */
+    public int fishF() {
+        int females = 0;
+        for (Pez pez : fishs) {
+            if(pez.isAlive() == true && pez.isFemale() == true) {
+                females += 1;
+            }
+        }
+        return females;
+    }
 
+    /**
+     * @return Número de peces macho del Tanque
+     */
+    public int fishH() {
+        int males = 0;
+        for (Pez pez : fishs) {
+            if(pez.isAlive() == true && pez.isMale() == true) {
+                males += 1;
+            }
+        }
+        return males;
+    }
 
+    /**
+     * @return Número de peces Fertiles del Tanque
+     */
+    public int fertiles() {
+        int fertiles = 0;
+        for (Pez pez : fishs) {
+            if(pez.isAlive() == true && pez.isFertile() == true) {
+                fertiles += 1;
+            }
+        }
+        return fertiles;
+    }
 }
