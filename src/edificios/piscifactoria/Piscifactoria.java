@@ -1,5 +1,9 @@
 package edificios.piscifactoria;
 
-public class Piscifactoria {
+public abstract class Piscifactoria {
+    /**Precio de la Piscifactoria*/
+    private int price;
+    /**Precio del Tanque para la Piscifactoria*/
+    private int tankPrice;
     
 }

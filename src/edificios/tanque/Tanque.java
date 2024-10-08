@@ -79,7 +79,7 @@ public class Tanque {
     public int fishHungry(){
         int numHungry = 0;
         for (Pez pez : fishs) {
-            if (pez.isHungry() == false) {
+            if (pez.isHungry() == false && pez.isAlive() == true) {
                 numHungry+=1;
             }
         }
