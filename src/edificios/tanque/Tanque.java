@@ -29,9 +29,16 @@ public class Tanque {
     /**
      * Muestra la información del Tanque 
      */
+    /**MANUTE COMPLETA OS PRINTS USANDO OS MÉTODOS XA CREADOS 
+     * PARA O DE PEIXES ADULTOS CREA UN MÉTODO matureFishs() DE TIPO INT QUE DEVOLVA O NÚMERO DE PEIXES MADUROS*/
     public void showStatus(){
         System.out.println("=============== Tanque "+ this.tankNum +" ===============");
         System.out.println("Ocupación: peces / max " + (fishs.size()/this.maxCapacity)+"%");
+        System.out.println("Peces vivos: vivos / total " + (fishAlive() / this.maxCapacity)+"%");
+        System.out.println("Peces alimentados: alimentados / vivos");
+        System.out.println("Peces adultos: adultos / vivos");
+        System.out.println("Hembras / Machos");
+        System.out.println("Fertiles: fertiles / vivos");
 
     }
     /**
