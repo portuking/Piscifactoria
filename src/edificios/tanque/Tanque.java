@@ -29,16 +29,14 @@ public class Tanque {
     /**
      * Muestra la información del Tanque 
      */
-    /**MANUTE COMPLETA OS PRINTS USANDO OS MÉTODOS XA CREADOS 
-     * PARA O DE PEIXES ADULTOS CREA UN MÉTODO matureFishs() DE TIPO INT QUE DEVOLVA O NÚMERO DE PEIXES MADUROS*/
     public void showStatus(){
         System.out.println("=============== Tanque "+ this.tankNum +" ===============");
         System.out.println("Ocupación: peces / max " + (fishs.size()/this.maxCapacity)+"%");
         System.out.println("Peces vivos: vivos / total " + (fishAlive() / this.maxCapacity)+"%");
-        System.out.println("Peces alimentados: alimentados / vivos");
-        System.out.println("Peces adultos: adultos / vivos");
-        System.out.println("Hembras / Machos");
-        System.out.println("Fertiles: fertiles / vivos");
+        System.out.println("Peces alimentados: alimentados / vivos" + (fishHungry()/ fishAlive()));
+        System.out.println("Peces adultos: adultos / vivos" + (matureFishs() / fishAlive()));
+        System.out.println("Hembras / Machos" + ( fishF()/fishH()));
+        System.out.println("Fertiles: fertiles / vivos" + (fertiles()/ fishAlive()));
 
     }
     /**
@@ -85,6 +83,23 @@ public class Tanque {
         }
         return numHungry;
     }
+
+   /**
+    * @return El número de peces maduros del Tanque 
+    */
+
+    public int matureFishs(){
+        int mature = 0;
+        for (Pez pez : fishs){
+            if (pez.isMature()== true && pez.isAlive()== true){
+                mature ++;
+            }
+        }
+        return mature;
+    }
+
+
+
 
     /**
      * @return Número de peces hembra del Tanque
