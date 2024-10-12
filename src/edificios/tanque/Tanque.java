@@ -77,7 +77,7 @@ public class Tanque {
     public int fishHungry(){
         int numHungry = 0;
         for (Pez pez : fishs) {
-            if (pez.isHungry() == false) {
+            if (pez.isHungry() == false && pez.isAlive() == true) {
                 numHungry+=1;
             }
         }
@@ -87,7 +87,6 @@ public class Tanque {
    /**
     * @return El número de peces maduros del Tanque 
     */
-
     public int matureFishs(){
         int mature = 0;
         for (Pez pez : fishs){
@@ -97,9 +96,6 @@ public class Tanque {
         }
         return mature;
     }
-
-
-
 
     /**
      * @return Número de peces hembra del Tanque
