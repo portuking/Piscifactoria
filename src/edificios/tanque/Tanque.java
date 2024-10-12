@@ -87,7 +87,6 @@ public class Tanque {
    /**
     * @return El número de peces maduros del Tanque 
     */
-
     public int matureFishs(){
         int mature = 0;
         for (Pez pez : fishs){
@@ -97,9 +96,6 @@ public class Tanque {
         }
         return mature;
     }
-
-
-
 
     /**
      * @return Número de peces hembra del Tanque
