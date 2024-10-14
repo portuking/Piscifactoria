@@ -25,8 +25,6 @@ public class AlmacenCentral {
 
     /**
      * Método que reparte la mitad del Stock a cada Almacén
-     * PREGUNTAR A ADRIÁN:
-     * COMO MANEJAR CANDO O STOCK NON E DIVISIBLE ENTRE 2
      */
     public void distribute(){
         if(this.stock > 1 ){
