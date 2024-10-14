@@ -49,18 +49,8 @@ public class Tanque {
     }
 
     /** Muestra la ocupación del Tanque */
-    public void showCapacity(String pisciName) {
-        if(this.fishs.size() > 0) {
-            int capacity = this.fishs.size() / this.maxCapacity;
-            System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al " + capacity + "% de capacidad. [peces/espacios]");
-        }else{
-        System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al 0% de capacidad. [peces/espacios]");
-        }
-    }
-
-    /**
-     * @return Número de Peces vivos del Tanque
-     */
+    public void showCapacity(String pisciName) {// TODO Auto-generated method stub
+        return super.toString();
     public int fishAlive(){
         int numAlive = 0;
         for (Pez pez : fishs) {
@@ -91,7 +81,7 @@ public class Tanque {
         int mature = 0;
         for (Pez pez : fishs){
             if (pez.isMature()== true && pez.isAlive()== true){
-                mature ++;
+                mature ++;plantilla
             }
         }
         return mature;
@@ -113,7 +103,8 @@ public class Tanque {
     /**
      * @return Número de peces macho del Tanque
      */
-    public int fishH() {
+    public int fishH() {// TODO Auto-generated method stub
+        return super.toString();
         int males = 0;
         for (Pez pez : fishs) {
             if(pez.isAlive() == true && pez.isMale() == true) {
@@ -134,5 +125,17 @@ public class Tanque {
             }
         }
         return fertiles;
+    }
+    @Override
+    public String toString() {
+        return "Tanque #" + this.tankNum + "\n" +
+        "Capacidad máxima " + this.maxCapacity + "\n" +
+        "Peces actuales " + this.fishs.size() + "\n" +
+        "Peces vivos " + fishAlive() + "\n" + 
+        "Peces alimentados " + fishHungry() + "\n" +
+        "Peces adultos " + matureFishs() + "\n" + 
+        "Peces hembras " + fishF() + "\n" + 
+        "Peces machos " + fishH() + "\n" + 
+        "Peces fertiles " + fertiles();
     }
 }
