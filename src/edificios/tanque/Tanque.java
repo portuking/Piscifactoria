@@ -54,7 +54,7 @@ public class Tanque {
             int capacity = this.fishs.size() / this.maxCapacity;
             System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al " + capacity + "% de capacidad. [peces/espacios]");
         }else{
-            System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al 0% de capacidad. [peces/espacios]");
+        System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al 0% de capacidad. [peces/espacios]");
         }
     }
 
@@ -134,5 +134,17 @@ public class Tanque {
             }
         }
         return fertiles;
+    }
+    @Override
+    public String toString() {
+        return "Tanque # " + this.tankNum + "\n" + 
+        "Capacidad máxima " + this.maxCapacity + "\n" +
+        "Peces actuales " + this.fishs.size() + "\n" + 
+        "Peces vivos " + fishAlive() + "\n" +
+        "Peces alimentados " + fishHungry() + "\n" +
+        "Peces adultos " + matureFishs() + "\n" +
+        "Peces hembra " + fishF() + "\n" + 
+        "Peces macho " + fishH() + "\n" +
+        "Peces fértiles " + fertiles(); 
     }
 }
