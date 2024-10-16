@@ -64,6 +64,14 @@ public class AlmacenCentral {
             System.out.println("Operacion Incorrecta: No se añade comida");
         }      
     }
+    @Override
+    public String toString() {
+        return "Precio del almacén central " + this.price + "\n" + 
+        "Cantidad de comida Animal " + this.warehouseA + " /200"+"\n" + 
+        "Cantidad de comida vegetal " + this.warehouseV + "/200" + "\n" + 
+        "Cantidad de comida almacenada en el almacnén central " + "\n" +
+        "Capacidad máxima del almacen central " + this.maxCap;
+    }
 
     
 }
