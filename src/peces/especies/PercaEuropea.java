@@ -1,5 +1,8 @@
 package peces.especies;
 
-public class PercaEuropea {
+import peces.IRio;
+import peces.alimentacion.AlimentacionCarnivoroActivo;
+
+public class PercaEuropea extends AlimentacionCarnivoroActivo implements IRio{
 
 }

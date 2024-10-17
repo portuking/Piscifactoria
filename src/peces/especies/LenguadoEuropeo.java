@@ -1,5 +1,8 @@
 package peces.especies;
 
-public class LenguadoEuropeo {
+import peces.IMar;
+import peces.alimentacion.AlimentacionCarnivoro;
+
+public class LenguadoEuropeo extends AlimentacionCarnivoro implements IMar{
 
 }
