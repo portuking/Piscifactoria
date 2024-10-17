@@ -1,5 +1,9 @@
 package peces.especies;
 
-public class LubinaEuropea {
+import peces.IMar;
+import peces.IRio;
+import peces.alimentacion.AlimentacionCarnivoro;
+
+public class LubinaEuropea extends AlimentacionCarnivoro implements IRio, IMar{
 
 }

@@ -1,5 +1,8 @@
 package peces.especies;
 
-public class LucioDelNorte {
+import peces.IRio;
+import peces.alimentacion.AlimentacionCarnivoroActivo;
+
+public class LucioDelNorte extends AlimentacionCarnivoroActivo implements IRio{
 
 }

@@ -1,5 +1,8 @@
 package peces.especies;
 
-public class Besugo {
+import peces.IMar;
+import peces.alimentacion.AlimentacionCarnivoro;
+
+public class Besugo extends AlimentacionCarnivoro implements IMar{
 
 }

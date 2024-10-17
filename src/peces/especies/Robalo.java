@@ -1,5 +1,8 @@
 package peces.especies;
 
-public class Robalo {
+import peces.IMar;
+import peces.alimentacion.AlimentacionCarnivoro;
+
+public class Robalo extends AlimentacionCarnivoro implements IMar{
 
 }

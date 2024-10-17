@@ -1,5 +1,8 @@
 package peces.especies;
 
-public class SalmonChinook {
+import peces.IRio;
+import peces.alimentacion.AlimentacionCarnivoro;
+
+public class SalmonChinook extends AlimentacionCarnivoro implements IRio{
 
 }
