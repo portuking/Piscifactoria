@@ -2,11 +2,17 @@ package peces;
 
 import java.util.Random;
 
+import propiedades.PecesDatos;
+
+/**
+ * Clase que representa un Pez
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
 public  abstract class Pez {
-    /** Nombre Común del Pez */
-    private String name;
-    /** Nombre Científico del Pez */
-    private String scientificName;
+    /**Objeto de la clase PecesDatos con los datos del Pez */
+    private PecesDatos fishStats;
     /** Edad del Pez */
     private int age;
     /** Sexo del Pez */
@@ -22,14 +28,10 @@ public  abstract class Pez {
 
     /**
      * Constructor de Pez
-     * @param name Nombre del Pez
-     * @param scientificName Nombre Científico del Pez
      * @param age Edad del Pez
      * @param sex Sexo del Pez
      */
-    public Pez(String name, String scientificName, boolean sex) {
-        this.name = name;
-        this.scientificName = scientificName;
+    public Pez(boolean sex) {
         this.age = 0;
         this.sex = sex;
         this.fertile = false;
@@ -40,7 +42,7 @@ public  abstract class Pez {
 
     /** Método que muestra el estado del Pez */
     public void showStatus() {
-        System.out.println("---------------Nombre---------------");
+        System.out.println("---------------"+fishStats.getNombre()+"---------------");
         System.out.println("Edad: " + this.age + " días");
         System.out.println(sex ? "Sexo: H" : "Sexo: M");
         System.out.println(hungry ? "Alimentado: Si" : "Alimentado: No");
@@ -95,6 +97,13 @@ public  abstract class Pez {
     }
 
     /**
+     * @return Devuelve el objeto con la información del Pez
+     */
+    public PecesDatos getFishStats(){
+        return this.fishStats;
+    }
+
+    /**
      * @return Si el Pez esta vivo o no
      */
     public boolean isAlive(){
@@ -134,6 +143,14 @@ public  abstract class Pez {
     }
 
     /**
+     * Método para setear el sexo
+     * @param sex sexo para el pez
+     */
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
+
+    /**
      * @return true si el pez es hembra
      */
     public boolean isFemale() {
@@ -143,7 +160,4 @@ public  abstract class Pez {
             return false;
         }
     }
-
-    
-
 }

@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import peces.Pez;
 
-
+/**
+ * Clase que representa un Tanque
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
 public class Tanque {
     /** Contador de Tanques */
     public static int tankCount = 0;

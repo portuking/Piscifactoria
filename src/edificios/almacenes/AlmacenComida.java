@@ -1,5 +1,11 @@
 package edificios.almacenes;
 
+/**
+ * Clase que representa el Almacén de Comida
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
 public class AlmacenComida {
     /**Cantidad almacenada de comida*/
     private int stock;
