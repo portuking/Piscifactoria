@@ -2,7 +2,6 @@ package edificios.tanque;
 
 import java.util.ArrayList;
 import peces.Pez;
-import sistema.Simulador;
 
 /**
  * Clase que representa un Tanque
@@ -11,8 +10,6 @@ import sistema.Simulador;
  * @author Pablo Dopazo Suárez
  */
 public class Tanque<T extends Pez> {
-    /** Contador de Tanques */
-    public static int tankCount = 0;
     /** Peces que hay en el Tanque */
     private ArrayList<T> fishes;
     /** Capacidad máxima del Tanque */
@@ -24,11 +21,10 @@ public class Tanque<T extends Pez> {
      * Constructor de Tanque
      * @param maxCapacity capacidad máxima del Tanque
      */
-    public Tanque(int maxCapacity) {
+    public Tanque(int maxCapacity, int tankNum) {
         this.fishes = new ArrayList<>(this.maxCapacity);
         this.maxCapacity = maxCapacity;
-        tankCount++;
-        this.tankNum = tankCount;
+        this.tankNum = tankNum;
     }
 
     /**
@@ -85,6 +81,27 @@ public class Tanque<T extends Pez> {
 
         //Buscar como se registra el nacimiento del pez
 
+    }
+
+    /**
+     * Método que comprueba si hay un macho y una hembra para reproducirse
+     * @return True si hay un macho y una hembra fertiles y False si no hay
+     */
+    public boolean fishMatch() {
+        boolean fertileMale = false;
+        boolean fertileFemale = false;
+        for (Pez fish : fishes) {
+            if(fish.isMale() && fish.isFertile()) {
+                fertileMale = true;
+            }
+            if(fish.isFemale() && fish.isFertile()) {
+                fertileFemale = true;
+            }
+            if(fertileFemale && fertileMale) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -193,7 +210,7 @@ public class Tanque<T extends Pez> {
             return true;
         }
     }
-    
+
     @Override
     public String toString() {
         return "Tanque # " + this.tankNum + "\n" + 
