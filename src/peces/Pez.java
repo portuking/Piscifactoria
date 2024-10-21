@@ -34,13 +34,15 @@ public  abstract class Pez {
      * @param age Edad del Pez
      * @param sex Sexo del Pez
      */
-    public Pez(boolean sex) {
+    public Pez(boolean sex, PecesDatos fishStats) {
+        this.fishStats = fishStats;
         this.age = 0;
         this.sex = sex;
         this.fertile = false;
         this.alive = true;
         this.hungry = true;
         this.mature = false;
+        this.reproductionCycle = this.getFishStats().getCiclo();
     }
 
     /** Método que muestra el estado del Pez */
@@ -61,7 +63,7 @@ public  abstract class Pez {
     /**
      * Método que implementa la manera de comer del pez
      */
-    public abstract void eat();
+    public abstract void eat(Tanque<? extends Pez> tank);
 
     /**
      * Método que hace crecer un Pez
@@ -69,7 +71,7 @@ public  abstract class Pez {
     public void grow(){
         Random r = new Random();
         if (this.alive){
-            this.eat();
+            
             if(!this.hungry){
                 this.alive = r.nextBoolean(); 
             }
@@ -181,6 +183,14 @@ public  abstract class Pez {
      */
     public void setSex(boolean sex) {
         this.sex = sex;
+    }
+
+    /**
+     * Método para setear la comida
+     * @param hungry Si el pez tiene hambre
+     */
+    public void setHungry(boolean hungry) {
+        this.hungry = hungry;
     }
 
     /**
