@@ -2,6 +2,7 @@ package peces;
 
 import java.util.Random;
 
+import edificios.tanque.Tanque;
 import propiedades.PecesDatos;
 
 /**
@@ -25,6 +26,8 @@ public  abstract class Pez {
     private boolean hungry;
     /** Si el Pez es adulto */
     private boolean mature;
+    /**Ciclo de reprosucción del Pez*/
+    protected int reproductionCycle;
 
     /**
      * Constructor de Pez
@@ -51,14 +54,14 @@ public  abstract class Pez {
     }
 
     /**
+     * @return Método que devuelve una instancia de la clase Pez
+     */
+    public abstract Pez getInstance();
+
+    /**
      * Método que implementa la manera de comer del pez
      */
     public abstract void eat();
-
-    /**
-     * Método que reproduce el Pez
-     */
-    public abstract void reproduce();
 
     /**
      * Método que hace crecer un Pez
@@ -79,8 +82,38 @@ public  abstract class Pez {
                     }
                 }
             }
-            if (this.mature && this.fertile) {
-                this.reproduce();
+        }
+    }
+
+    /**
+     * Método que reproduce un Pez
+     */
+    public void reproduce(Tanque <? extends Pez> tank) {
+        if(this.fertile) {
+            for (int i = 0; i < this.fishStats.getHuevos(); i++) {
+                if(!tank.isFull()) {
+                    Pez newFish = this.getInstance();
+                    tank.addFishes(newFish);
+                }else{
+                    break;
+                }
+            }
+            this.reproductionCycle = this.fishStats.getCiclo();
+        }
+    }
+
+    /**
+     * Método que comprueba la madurez, la edad, la fertilidad y los ciclos de los Peces
+     */
+    public void isMilf() {
+        if(this.age >= this.fishStats.getMadurez()) {
+            this.mature = true;
+        }
+        if(this.mature) {
+            if(this.reproductionCycle == 0) {
+                this.fertile = true;
+            }else{
+                this.reproductionCycle --;
             }
         }
     }
