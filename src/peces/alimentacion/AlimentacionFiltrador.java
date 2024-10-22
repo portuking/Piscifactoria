@@ -1,5 +1,11 @@
 package peces.alimentacion;
 
-public class AlimentacionFiltrador {
+import propiedades.PecesDatos;
+
+public class AlimentacionFiltrador extends Pez {
+
+    public AlimentacionFiltrador(PecesDatos fishStats, boolean sex){
+        super(sex, fishStats);
+    }
 
 }
