@@ -13,19 +13,19 @@ import propiedades.PecesDatos;
  */
 public  abstract class Pez {
     /**Objeto de la clase PecesDatos con los datos del Pez */
-    private PecesDatos fishStats;
+    protected PecesDatos fishStats;
     /** Edad del Pez */
-    private int age;
+    protected int age;
     /** Sexo del Pez */
-    private boolean sex;
+    protected boolean sex;
     /** Si el Pez es fértil */
-    private boolean fertile;
+    protected boolean fertile;
     /** Si el Pez está vivo */
-    private boolean alive;
+    protected boolean alive;
     /** Si el Pez tiene hambre o no */
-    private boolean hungry;
+    protected boolean hungry;
     /** Si el Pez es adulto */
-    private boolean mature;
+    protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
     protected int reproductionCycle;
 
