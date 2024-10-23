@@ -1,5 +1,11 @@
 package edificios.almacenes;
 
+/**
+ * Clase que representa el Almacén Central
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
 public class AlmacenCentral {
     /**Capacidad máxima del Almacén central*/
     private int maxCap;
@@ -63,6 +69,14 @@ public class AlmacenCentral {
         }else{
             System.out.println("Operacion Incorrecta: No se añade comida");
         }      
+    }
+    @Override
+    public String toString() {
+        return "Precio del almacén central " + this.price + "\n" + 
+        "Cantidad de comida Animal " + this.warehouseA + " /200"+"\n" + 
+        "Cantidad de comida vegetal " + this.warehouseV + "/200" + "\n" + 
+        "Cantidad de comida almacenada en el almacnén central " + "\n" +
+        "Capacidad máxima del almacen central " + this.maxCap;
     }
 
     
