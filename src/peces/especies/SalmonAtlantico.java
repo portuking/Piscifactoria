@@ -3,6 +3,8 @@ package peces.especies;
 import peces.IMar;
 import peces.IRio;
 import peces.alimentacion.AlimentacionCarnivoro;
+import propiedades.AlmacenPropiedades;
+import propiedades.PecesDatos;
 
 /**
  * Clase que representa un Besugo
@@ -12,5 +14,23 @@ import peces.alimentacion.AlimentacionCarnivoro;
  */ 
 
 public class SalmonAtlantico extends AlimentacionCarnivoro implements IMar, IRio{
+
+    /**
+     * Constructor de Salmon Atlantico
+     * @param sex
+     */
+    public SalmonAtlantico(boolean sex) {
+        super(AlmacenPropiedades.SALMON_ATLANTICO, sex);
+       
+    }
+
+
+    /**
+     * @return nueva instancia de Salmon Atlantico
+     */
+        public Pez getInstance(){
+            return new SalmonAtlantico(sex);
+        }
+
 
 }

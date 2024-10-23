@@ -6,7 +6,7 @@ import peces.alimentacion.AlimentacionCarnivoroActivo;
 import propiedades.AlmacenPropiedades;
 
 /**
- * Clase que representa un Besugo
+ * Clase que representa un Lucio del Norte
  * @author Manuel Abalo Rietz
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
@@ -27,5 +27,6 @@ public class LucioDelNorte extends AlimentacionCarnivoroActivo implements IRio{
 
      public Pez getInstance(){
         return new LucioDelNorte (sex);
+
      }
 }
