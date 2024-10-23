@@ -123,7 +123,7 @@ public class Tanque<T extends Pez> {
     public int alimentedFishes(){
         int numHungry = 0;
         for (Pez pez : fishes) {
-            if (pez.isHungry() == false && pez.isAlive() == true) {
+            if (pez.isEat() == false && pez.isAlive() == true) {
                 numHungry+=1;
             }
         }
