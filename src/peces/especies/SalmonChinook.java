@@ -1,9 +1,9 @@
 package peces.especies;
 
 import peces.IRio;
+import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
-import propiedades.PecesDatos;
 
 /**
  * Clase que representa un Salmon Chinook
