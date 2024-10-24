@@ -22,8 +22,8 @@ public  abstract class Pez {
     protected boolean fertile;
     /** Si el Pez está vivo */
     protected boolean alive;
-    /** Si el Pez tiene hambre o no */
-    protected boolean hungry;
+    /** Si el Pez ha comido o no */
+    protected boolean eat;
     /** Si el Pez es adulto */
     protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
@@ -36,11 +36,11 @@ public  abstract class Pez {
      */
     public Pez(boolean sex, PecesDatos fishStats) {
         this.fishStats = fishStats;
-        this.age = 0;
         this.sex = sex;
+        this.age = 0;
         this.fertile = false;
         this.alive = true;
-        this.hungry = true;
+        this.eat = true;
         this.mature = false;
         this.reproductionCycle = this.getFishStats().getCiclo();
     }
@@ -50,7 +50,7 @@ public  abstract class Pez {
         System.out.println("---------------"+fishStats.getNombre()+"---------------");
         System.out.println("Edad: " + this.age + " días");
         System.out.println(sex ? "Sexo: H" : "Sexo: M");
-        System.out.println(hungry ? "Alimentado: Si" : "Alimentado: No");
+        System.out.println(eat ? "Alimentado: Si" : "Alimentado: No");
         System.out.println(mature ? "Adulto: Si" : "Adulto: No");
         System.out.println(fertile ? "Fértil: Si" : "Fértil: No");
     }
@@ -62,6 +62,10 @@ public  abstract class Pez {
 
     /**
      * Método que implementa la manera de comer del pez
+     * FACER O MÉTODO DE TIPO INT
+     * 1. DECLARAR UNHA VARIABLE QUE DEVOLVERA O NÚMERO DE UNIDADES DE COMIDA QUE VAI A COMER O PEIXE
+     * 2. IMPLEMENTAR A LÓGICA DO MÉTODO E GARDAR O QUE COME NA VARIABLE ANTERIOR
+     * 3. DEVOLVER A VARIABLE PARA POSTERIORMENTE RESTAR ESA CANTIDAD DO ALMACÉN DE COMIDA SI É NECESARIO
      */
     public abstract void eat(Tanque<? extends Pez> tank);
 
@@ -72,7 +76,7 @@ public  abstract class Pez {
         Random r = new Random();
         if (this.alive){
             
-            if(!this.hungry){
+            if(!this.eat){
                 this.alive = r.nextBoolean(); 
             }
             this.age++;
@@ -127,7 +131,7 @@ public  abstract class Pez {
         this.age = 0;
         this.fertile = false;
         this.alive = true;
-        this.hungry = true;
+        this.eat = true;
         this.mature = false;
     }
 
@@ -148,8 +152,8 @@ public  abstract class Pez {
     /**
      * @return Si el Pez tiene hambre
      */
-    public boolean isHungry(){
-        return this.hungry;
+    public boolean isEat(){
+        return this.eat;
     }
 
     /**
@@ -187,10 +191,10 @@ public  abstract class Pez {
 
     /**
      * Método para setear la comida
-     * @param hungry Si el pez tiene hambre
+     * @param eat Si el pez tiene hambre
      */
-    public void setHungry(boolean hungry) {
-        this.hungry = hungry;
+    public void setEat(boolean eat) {
+        this.eat = eat;
     }
 
     /**

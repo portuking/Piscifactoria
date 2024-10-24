@@ -16,7 +16,7 @@ public class AlimentacionCarnivoro extends Pez{
         for (int i = 0; i < tank.getFishes().size(); i++) {
             if(tank.getFishes().get(i) != null) {
                 if(!tank.getFishes().get(i).isAlive()) {
-                    this.setHungry(false);
+                    this.setEat(false);
                     Random r = new Random();
                     boolean random = r.nextBoolean();
                     if(random == false) {
