@@ -1,5 +1,11 @@
 package edificios.almacenes;
 
+/**
+ * Clase que representa el Almacén Central
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
 public class AlmacenCentral {
     /**Capacidad máxima del Almacén central*/
     private int maxCap;

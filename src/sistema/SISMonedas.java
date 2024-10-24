@@ -1,5 +1,11 @@
 package sistema;
 
+/**
+ * Clase que representa el Sistema de monedas
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
 public class SISMonedas {
 
      /**
