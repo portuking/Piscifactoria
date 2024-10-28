@@ -28,7 +28,7 @@ public  abstract class Pez {
     protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
     protected int reproductionCycle;
-
+    
     /**
      * Constructor de Pez
      * @param age Edad del Pez
@@ -67,7 +67,7 @@ public  abstract class Pez {
      * 2. IMPLEMENTAR A LÓGICA DO MÉTODO E GARDAR O QUE COME NA VARIABLE ANTERIOR
      * 3. DEVOLVER A VARIABLE PARA POSTERIORMENTE RESTAR ESA CANTIDAD DO ALMACÉN DE COMIDA SI É NECESARIO
      */
-    public abstract void eat(Tanque<? extends Pez> tank);
+    public abstract int eat();
 
     /**
      * Método que hace crecer un Pez

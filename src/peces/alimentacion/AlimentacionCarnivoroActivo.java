@@ -1,6 +1,7 @@
 package peces.alimentacion;
 
 import edificios.tanque.Tanque;
+import java.util.Random;
 import peces.Pez;
 import propiedades.PecesDatos;
 
@@ -17,10 +18,19 @@ public class AlimentacionCarnivoroActivo extends Pez{
     }
 
     @Override
-    public void eat(Tanque<? extends Pez> tank) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eat'");
-    }
+    public int eat() {
+        int comidaConsumida= 0;
+            if(this.isAlive() && !this.isEat()) {
+                    this.eat = true;
+                    Random r = new Random();
+                    if(r.nextBoolean()){
+                        comidaConsumida = 2;
+                    }else{
+                        comidaConsumida = 1;
+                    }
+                }  
+                return comidaConsumida;
+            }
 
 
 }
