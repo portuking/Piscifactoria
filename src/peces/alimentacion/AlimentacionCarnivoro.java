@@ -12,21 +12,17 @@ public class AlimentacionCarnivoro extends Pez{
     }
 
     @Override
-    public void eat(Tanque<? extends Pez> tank) {
-        for (int i = 0; i < tank.getFishes().size(); i++) {
-            if(tank.getFishes().get(i) != null) {
-                if(!tank.getFishes().get(i).isAlive()) {
-                    this.setEat(false);
-                    Random r = new Random();
-                    boolean random = r.nextBoolean();
-                    if(random == false) {
-                        tank.getFishes().set(i, null);
-                    }
-                    break;
-                }
+    public int eat() {
+        int comidaConsumida= 0;
+            if(this.isAlive() && !this.isEat()) {
+                    this.eat = true;
+                    comidaConsumida += 1;
+                }  
+                return comidaConsumida;
             }
-        }
-    }
+          
+        
+    
 
     @Override
     public Pez getInstance() {
