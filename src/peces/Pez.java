@@ -14,10 +14,14 @@ import propiedades.PecesDatos;
 public  abstract class Pez {
     /**Objeto de la clase PecesDatos con los datos del Pez */
     protected PecesDatos fishStats;
+    /**Nombre Común del Pez*/
+    protected final String name;
+    /**Nombre Científico del Pez*/
+    protected final String scientifcName;
     /** Edad del Pez */
     protected int age;
     /** Sexo del Pez */
-    protected boolean sex;
+    protected final boolean sex;
     /** Si el Pez es fértil */
     protected boolean fertile;
     /** Si el Pez está vivo */
@@ -36,6 +40,8 @@ public  abstract class Pez {
      */
     public Pez(boolean sex, PecesDatos fishStats) {
         this.fishStats = fishStats;
+        this.name = fishStats.getNombre();
+        this.scientifcName = fishStats.getCientifico();
         this.sex = sex;
         this.age = 0;
         this.fertile = false;
@@ -47,7 +53,7 @@ public  abstract class Pez {
 
     /** Método que muestra el estado del Pez */
     public void showStatus() {
-        System.out.println("---------------"+fishStats.getNombre()+"---------------");
+        System.out.println("---------------"+this.getName()+"---------------");
         System.out.println("Edad: " + this.age + " días");
         System.out.println(sex ? "Sexo: H" : "Sexo: M");
         System.out.println(eat ? "Alimentado: Si" : "Alimentado: No");
@@ -139,6 +145,20 @@ public  abstract class Pez {
     }
 
     /**
+     * @return Nombre Común del Pez
+     */
+    public String getName(){
+        return this.name;
+    }
+
+    /**
+     * @return Nombre Científico del Pez
+     */
+    public String getScientificName(){
+        return this.scientifcName;
+    }
+
+    /**
      * @return Si el Pez esta vivo o no
      */
     public boolean isAlive(){
@@ -175,14 +195,6 @@ public  abstract class Pez {
         }else{
             return false;
         }
-    }
-
-    /**
-     * Método para setear el sexo
-     * @param sex sexo para el pez
-     */
-    public void setSex(boolean sex) {
-        this.sex = sex;
     }
 
     /**
