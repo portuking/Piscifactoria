@@ -28,7 +28,7 @@ public  abstract class Pez {
     protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
     protected int reproductionCycle;
-
+    
     /**
      * Constructor de Pez
      * @param age Edad del Pez
@@ -58,16 +58,12 @@ public  abstract class Pez {
     /**
      * @return Método que devuelve una instancia de la clase Pez
      */
-    public abstract Pez getInstance();
+    public abstract Pez getNewFish();
 
     /**
      * Método que implementa la manera de comer del pez
-     * FACER O MÉTODO DE TIPO INT
-     * 1. DECLARAR UNHA VARIABLE QUE DEVOLVERA O NÚMERO DE UNIDADES DE COMIDA QUE VAI A COMER O PEIXE
-     * 2. IMPLEMENTAR A LÓGICA DO MÉTODO E GARDAR O QUE COME NA VARIABLE ANTERIOR
-     * 3. DEVOLVER A VARIABLE PARA POSTERIORMENTE RESTAR ESA CANTIDAD DO ALMACÉN DE COMIDA SI É NECESARIO
      */
-    public abstract void eat(Tanque<? extends Pez> tank);
+    public abstract int eat();
 
     /**
      * Método que hace crecer un Pez
@@ -94,11 +90,11 @@ public  abstract class Pez {
     /**
      * Método que reproduce un Pez
      */
-    public void reproduce(Tanque <? extends Pez> tank) {
+    public void reproduce(Tanque tank) {
         if(this.fertile) {
             for (int i = 0; i < this.fishStats.getHuevos(); i++) {
                 if(!tank.isFull()) {
-                    Pez newFish = this.getInstance();
+                    Pez newFish = this.getNewFish();
                     tank.addFishes(newFish);
                 }else{
                     break;
