@@ -9,9 +9,10 @@ import peces.Pez;
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
  */
-public class Tanque<T extends Pez> {
+public class Tanque {
+    private Pez fish;
     /** Peces que hay en el Tanque */
-    private ArrayList<T> fishes;
+    private ArrayList<Pez> fishes;
     /** Capacidad máxima del Tanque */
     int maxCapacity;
     /** Número del Tanque */
@@ -67,7 +68,9 @@ public class Tanque<T extends Pez> {
      */
     public void addFishes(Pez fish){
         if (this.isFull() == false) {
-            this.fishes.add((T) fish);            
+            if(fish.getFishStats().getCientifico() == this.fishes.get(0).getFishStats().getCientifico()){
+                this.fishes.add(fish);
+            }            
         }
 
         //Comprobacion del número de peces masculino y femeninos para añadir el nuevo pez de forma equitativa
@@ -185,7 +188,7 @@ public class Tanque<T extends Pez> {
     /**
      * @return ArrayList con los peces del Tanque
      */
-    public ArrayList<T> getFishes(){
+    public ArrayList<Pez> getFishes(){
         return fishes;
     }
 
