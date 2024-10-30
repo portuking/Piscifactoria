@@ -69,21 +69,15 @@ public class Tanque {
     public void addFishes(Pez fish){
         if (this.isFull() == false) {
             if(fish.getFishStats().getCientifico() == this.fishes.get(0).getFishStats().getCientifico()){
-                this.fishes.add(fish);
+                if(this.fishesM() > this.fishesF()) {
+                    this.fishes.add(fish);
+                }else if(this.fishesF() > this.fishesM()){
+                    this.addFishes(fish);
+                }else if(this.fishesM() == this.fishesF()){
+                    this.addFishes(fish);
+                }
             }            
         }
-
-        //Comprobacion del número de peces masculino y femeninos para añadir el nuevo pez de forma equitativa
-        if(this.fishesM() > this.fishesF()) {
-            fish.setSex(false);
-        }else if(this.fishesF() > this.fishesM()){
-            fish.setSex(true);
-        }else if(this.fishesM() == this.fishesF()){
-            fish.setSex(false);
-        }
-
-        //Buscar como se registra el nacimiento del pez
-
     }
 
     /**

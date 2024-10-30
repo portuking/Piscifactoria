@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IRio;
 import peces.Pez;
 import peces.alimentacion.AlimentacionFiltrador;
 import propiedades.AlmacenPropiedades;
@@ -13,7 +12,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */
 
-public class CarpaPlateada extends AlimentacionFiltrador implements IRio {
+public class CarpaPlateada extends AlimentacionFiltrador{
 
     /**
      * Constructor de una Carpa Plateada

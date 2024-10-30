@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IRio;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
@@ -12,7 +11,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */ 
 
-public class SalmonChinook extends AlimentacionCarnivoro implements IRio{
+public class SalmonChinook extends AlimentacionCarnivoro{
     /**
      * Constructor de Salmon Chinook
      * @param sex

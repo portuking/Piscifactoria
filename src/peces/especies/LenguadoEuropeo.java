@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IMar;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
@@ -11,7 +10,7 @@ import propiedades.AlmacenPropiedades;
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
  */
-public class LenguadoEuropeo extends AlimentacionCarnivoro implements IMar{
+public class LenguadoEuropeo extends AlimentacionCarnivoro{
     /**
      * Constructor de Lenguado Europeo
      * @param sex Sexo del Pez

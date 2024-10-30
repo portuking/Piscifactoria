@@ -14,10 +14,14 @@ import propiedades.PecesDatos;
 public  abstract class Pez {
     /**Objeto de la clase PecesDatos con los datos del Pez */
     protected PecesDatos fishStats;
+    /**Nombre Común del Pez*/
+    protected final String name;
+    /**Nombre Científico del Pez*/
+    protected final String scientifcName;
     /** Edad del Pez */
     protected int age;
     /** Sexo del Pez */
-    protected boolean sex;
+    protected final boolean sex;
     /** Si el Pez es fértil */
     protected boolean fertile;
     /** Si el Pez está vivo */
@@ -36,18 +40,20 @@ public  abstract class Pez {
      */
     public Pez(boolean sex, PecesDatos fishStats) {
         this.fishStats = fishStats;
+        this.name = fishStats.getNombre();
+        this.scientifcName = fishStats.getCientifico();
         this.sex = sex;
         this.age = 0;
         this.fertile = false;
         this.alive = true;
         this.eat = true;
         this.mature = false;
-        this.reproductionCycle = this.getFishStats().getCiclo();
+        this.reproductionCycle = fishStats.getCiclo();
     }
 
     /** Método que muestra el estado del Pez */
     public void showStatus() {
-        System.out.println("---------------"+fishStats.getNombre()+"---------------");
+        System.out.println("---------------"+this.getName()+"---------------");
         System.out.println("Edad: " + this.age + " días");
         System.out.println(sex ? "Sexo: H" : "Sexo: M");
         System.out.println(eat ? "Alimentado: Si" : "Alimentado: No");
@@ -91,17 +97,7 @@ public  abstract class Pez {
      * Método que reproduce un Pez
      */
     public void reproduce(Tanque tank) {
-        if(this.fertile) {
-            for (int i = 0; i < this.fishStats.getHuevos(); i++) {
-                if(!tank.isFull()) {
-                    Pez newFish = this.getNewFish();
-                    tank.addFishes(newFish);
-                }else{
-                    break;
-                }
-            }
-            this.reproductionCycle = this.fishStats.getCiclo();
-        }
+        
     }
 
     /**
@@ -136,6 +132,20 @@ public  abstract class Pez {
      */
     public PecesDatos getFishStats(){
         return this.fishStats;
+    }
+
+    /**
+     * @return Nombre Común del Pez
+     */
+    public String getName(){
+        return this.name;
+    }
+
+    /**
+     * @return Nombre Científico del Pez
+     */
+    public String getScientificName(){
+        return this.scientifcName;
     }
 
     /**
@@ -175,14 +185,6 @@ public  abstract class Pez {
         }else{
             return false;
         }
-    }
-
-    /**
-     * Método para setear el sexo
-     * @param sex sexo para el pez
-     */
-    public void setSex(boolean sex) {
-        this.sex = sex;
     }
 
     /**
