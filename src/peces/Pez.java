@@ -48,7 +48,7 @@ public  abstract class Pez {
         this.alive = true;
         this.eat = true;
         this.mature = false;
-        this.reproductionCycle = this.getFishStats().getCiclo();
+        this.reproductionCycle = fishStats.getCiclo();
     }
 
     /** Método que muestra el estado del Pez */
@@ -97,17 +97,7 @@ public  abstract class Pez {
      * Método que reproduce un Pez
      */
     public void reproduce(Tanque tank) {
-        if(this.fertile) {
-            for (int i = 0; i < this.fishStats.getHuevos(); i++) {
-                if(!tank.isFull()) {
-                    Pez newFish = this.getNewFish();
-                    tank.addFishes(newFish);
-                }else{
-                    break;
-                }
-            }
-            this.reproductionCycle = this.fishStats.getCiclo();
-        }
+        
     }
 
     /**
