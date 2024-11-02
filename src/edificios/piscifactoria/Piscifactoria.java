@@ -1,5 +1,6 @@
 package edificios.piscifactoria;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 import edificios.tanque.Tanque;
@@ -119,6 +120,33 @@ public class Piscifactoria {
             }
         }
     }
+=======
+public abstract class Piscifactoria {
+
+    
+    public void showStatus(){
+
+    }
+
+    public void showTankStatus(){
+
+    }
+
+    public void showFishStatus(){
+
+    }
+    
+    public void showCapacity(){
+
+    }
+
+    public void showFood(){
+
+    }
+
+    public void nextDay(){
+
+>>>>>>> b8371480745b2c882abef145d5217aeda4528e0e
     }
 
     public void sellFish(){
