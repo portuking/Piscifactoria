@@ -70,6 +70,21 @@ public class AlmacenCentral {
             System.out.println("Operacion Incorrecta: No se añade comida");
         }      
     }
+
+    /**
+     * @return Devuelve la capacidad maxima del almacen
+     */
+    public int getMaxCap() {
+        return maxCap;
+    }
+
+    /**
+     * @return Devuelve la comida que hay
+     */
+    public int getStock() {
+        return stock;
+    }
+
     @Override
     public String toString() {
         return "Precio del almacén central " + this.price + "\n" + 

@@ -44,6 +44,21 @@ public class AlmacenComida {
     public void upgrade(int newCapacity) {
         this.maxCap += newCapacity;
     }
+
+    /**
+     * @return Devuelve la capacidad maxima del almacen
+     */
+    public int getMaxCap() {
+        return maxCap;
+    }
+
+    /**
+     * @return Devuelve la comida que hay
+     */
+    public int getStock() {
+        return stock;
+    }
+
     @Override
     public String toString() {
         return "Cantidad de comida almacenada  "  + this.stock + "\n" +

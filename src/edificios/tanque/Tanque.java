@@ -276,6 +276,20 @@ public class Tanque {
         }
     }
 
+    /**
+     * @return Devuelve la capacidad máxima del tanque
+     */
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    /**
+     * @return Devuelve el numero del tanque
+     */ 
+     public int getTankNum() {
+        return tankNum;
+    }
+
     @Override
     public String toString() {
         return "Tanque # " + this.tankNum + "\n" + 
