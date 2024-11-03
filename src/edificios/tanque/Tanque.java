@@ -2,6 +2,7 @@ package edificios.tanque;
 
 import java.util.ArrayList;
 import peces.Pez;
+import sistema.SISMonedas;
 
 /**
  * Clase que representa un Tanque
@@ -102,10 +103,36 @@ public class Tanque {
     }
 
     /**
-     * Método que reproduce los peces del tanque si se puede
+     * Método que hace crecer todos los peces del Tanque y vende 
+     * los que hayan llegado a la edad óptima
      */
-    public void reproduce(){
-        
+    public void nextDay(){
+        for (Pez pez : fishes) {
+            if(pez.isAlive()){
+                pez.grow(fishes, null);
+            }
+        }
+        int soldFishes = 0;
+        int earnings = 0;
+        for (int i = 0; i < fishes.size(); i++) {
+            Pez pez = fishes.get(i);
+            if(pez.isAlive() && pez.getAge()>= pez.getFishStats().getOptimo()) {
+                fishes.remove(i);
+                i--;
+                soldFishes++;
+                earnings+= pez.getFishStats().getMonedas();
+            }
+        }
+        if(soldFishes > 0){
+            SISMonedas sisMonedas = SISMonedas.getInstance();
+            int currentMoney = sisMonedas.getMonedas();
+            sisMonedas.setMonedas(currentMoney + earnings);
+
+            System.out.println("Se han vendido: " + soldFishes + " peces");
+            System.out.println("Se han ganado " + earnings + " Monedas");
+        }else{
+            System.out.println("No se ha vendido ningún Pez");
+        }
     }
 
     /**
@@ -261,6 +288,5 @@ public class Tanque {
         "Peces macho " + fishesM() + "\n" +
         "Peces fértiles " + fertiles(); 
     }
-
 
 }
