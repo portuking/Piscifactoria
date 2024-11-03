@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IMar;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
@@ -11,7 +10,7 @@ import propiedades.AlmacenPropiedades;
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
  */
-public class Besugo extends AlimentacionCarnivoro implements IMar{
+public class Besugo extends AlimentacionCarnivoro{
 
     /**
      * Constructor de Besugo
@@ -27,7 +26,5 @@ public class Besugo extends AlimentacionCarnivoro implements IMar{
     public Pez getInstance() {
         return new Besugo(sex);
     }
-
-
 
 }

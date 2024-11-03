@@ -1,7 +1,5 @@
 package peces.especies;
 
-import peces.IMar;
-import peces.IRio;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
@@ -13,7 +11,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */ 
 
-public class SalmonAtlantico extends AlimentacionCarnivoro implements IMar, IRio{
+public class SalmonAtlantico extends AlimentacionCarnivoro{
 
     /**
      * Constructor de Salmon Atlantico

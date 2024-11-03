@@ -1,7 +1,5 @@
 package peces.especies;
 
-import peces.IMar;
-import peces.IRio;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
 
@@ -11,7 +9,7 @@ import propiedades.AlmacenPropiedades;
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
  */ 
-public class LubinaEuropea extends AlimentacionCarnivoro implements IRio, IMar{
+public class LubinaEuropea extends AlimentacionCarnivoro{
     /**
      * Constructor de Lubina Europea
      * @param sex sexo del pez
