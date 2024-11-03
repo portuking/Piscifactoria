@@ -77,7 +77,6 @@ public  abstract class Pez {
     public void grow(){
         Random r = new Random();
         if (this.alive){
-            
             if(!this.eat){
                 this.alive = r.nextBoolean(); 
             }
