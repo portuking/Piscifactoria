@@ -160,6 +160,13 @@ public  abstract class Pez {
     }
 
     /**
+     * @return La edad del Pez
+     */
+    public int getAge() {
+        return age;
+    }
+
+    /**
      * @return Nombre Común del Pez
      */
     public String getName(){
