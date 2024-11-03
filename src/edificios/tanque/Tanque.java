@@ -73,7 +73,7 @@ public class Tanque {
                 this.fishType = fish.getName();
             }
             if(this.fishType == fish.getName()) {
-                
+
             }else{
                 System.out.println("El tipo de Pez es incorrecto para esta Piscifactoría");
             }
@@ -105,27 +105,7 @@ public class Tanque {
      * Método que reproduce los peces del tanque si se puede
      */
     public void reproduce(){
-        if(this.fishMatch() == true) {
-            for (Pez pez : fishes) {
-                if(!isFull()) {
-                    if(pez.isFemale() && pez.isAlive() && pez.isFertile()) {
-                        for (int i = 0; i < pez.getFishStats().getHuevos(); i++) {
-                            if(this.fishesF() == fishesM()) {
-                                pez.getNewFish();
-                            }else if(this.fishesM()> this.fishesF()){
-                                pez.getNewFish();
-                            }else{
-                                pez.getNewFish();
-                            }
-                        }
-                        pez.setReproduced(true);
-                    }
-                }else{
-                    System.out.println("No se ha podido añadir el pez");
-                    break;
-                }
-            }
-        }
+        
     }
 
     /**

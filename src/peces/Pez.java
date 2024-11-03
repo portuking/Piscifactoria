@@ -1,6 +1,9 @@
 package peces;
 
+import java.util.List;
 import java.util.Random;
+
+import edificios.tanque.Tanque;
 import propiedades.PecesDatos;
 
 /**
@@ -64,7 +67,7 @@ public  abstract class Pez {
     /**
      * @return Método que devuelve una instancia de la clase Pez
      */
-    public abstract Pez getNewFish();
+    public abstract Pez getNewFish(boolean sex);
 
     /**
      * Método que implementa la manera de comer del pez
@@ -77,10 +80,10 @@ public  abstract class Pez {
     public void grow(){
         Random r = new Random();
         if (this.alive){
+            this.age++;
             if(!this.eat){
                 this.alive = r.nextBoolean(); 
             }
-            this.age++;
             if(!this.mature){
                 if(this.age % 2 == 0) {
                     int kill = r.nextInt(100)+1;
@@ -89,6 +92,42 @@ public  abstract class Pez {
                     }
                 }
             }
+
+        }
+    }
+
+    /**
+     * Método que reproduce los peces
+     * @param fishes Lista de Peces
+     * @param tank Tanque en el que se reproduce
+     */
+    public void reproduce(List<Pez> fishes, Tanque tank) {
+        if(!this.alive || !this.mature || !this.fertile || !this.isFemale() || this.reproductionCycle > 0) {
+            return;
+        }else{
+            boolean fertileMale = false;
+            for (Pez pez : fishes) {
+                if(pez.isMale() && pez.fertile && pez.alive) {
+                    fertileMale = true;
+                    break;
+                }
+            }
+            if(fertileMale){
+                int nEggs = this.fishStats.getHuevos();
+                for (int i = 0; i < nEggs; i++) {
+                    boolean newSex = false;
+                    if(!tank.isFull()){
+                        if(tank.fishesF() > tank.fishesM()) {
+                            newSex = true;
+                        }else{
+                            newSex = false;
+                        }
+                    }
+                    Pez newFish = this.getNewFish(newSex);
+                    fishes.add(newFish);
+                }
+            }
+            this.reproductionCycle = this.fishStats.getCiclo();
         }
     }
 
