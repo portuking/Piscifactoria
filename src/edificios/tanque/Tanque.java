@@ -117,10 +117,10 @@ public class Tanque {
         for (int i = 0; i < fishes.size(); i++) {
             Pez pez = fishes.get(i);
             if(pez.isAlive() && pez.getAge()>= pez.getFishStats().getOptimo()) {
+                earnings+= pez.getFishStats().getMonedas();
                 fishes.remove(i);
                 i--;
                 soldFishes++;
-                earnings+= pez.getFishStats().getMonedas();
             }
         }
         if(soldFishes > 0){
@@ -133,6 +133,23 @@ public class Tanque {
         }else{
             System.out.println("No se ha vendido ningún Pez");
         }
+    }
+
+    /**
+     * Método que vende los peces vivos y maduros
+     */
+    public void sellFishes(){
+        SISMonedas sisMonedas = SISMonedas.getInstance();
+        int earnings = 0;
+        for (int i = 0; i < fishes.size(); i++) {
+            Pez pez = fishes.get(i);
+            if(pez.isAlive() && pez.isMature()){
+                earnings += pez.getFishStats().getMonedas();
+                fishes.remove(i);
+                i--; 
+            }
+        }
+        sisMonedas.setMonedas(sisMonedas.getMonedas() + earnings);
     }
 
     /**
