@@ -33,8 +33,6 @@ public  abstract class Pez {
     protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
     protected int reproductionCycle;
-    /**Si el Pez se ha reproducido*/
-    protected boolean reproduced;
 
     /**
      * Constructor de Pez
@@ -76,23 +74,34 @@ public  abstract class Pez {
 
     /**
      * Método que hace crecer un Pez
+     * @param fishes Lista de peces para realizar la reproduccion si es posible
+     * @param tank Tanque en el que se reproducen los peces si es posible
      */
-    public void grow(){
-        Random r = new Random();
-        if (this.alive){
-            this.age++;
-            if(!this.eat){
-                this.alive = r.nextBoolean(); 
-            }
-            if(!this.mature){
-                if(this.age % 2 == 0) {
-                    int kill = r.nextInt(100)+1;
-                    if (kill<=5) {
-                        this.alive=false;
+    public void grow(List<Pez> fishes, Tanque tank){
+        if(!this.alive){
+            return;
+        }else{
+            Random r = new Random();
+            if(!this.eat) {
+                if(r.nextBoolean()){
+                    this.alive = false;
+                    return;
+                }
+                this.age++;
+                if(this.mature){
+                    if(this.fertile && this.isFemale()){
+                        this.reproduce(fishes, tank);
+                    }
+                }else{
+                    if(this.age % 2 == 0) {
+                        int dead = r.nextInt(100) + 1;
+                        if(dead <= 5) {
+                            this.alive = false;
+                            return;
+                        }
                     }
                 }
             }
-
         }
     }
 
@@ -128,6 +137,7 @@ public  abstract class Pez {
                 }
             }
             this.reproductionCycle = this.fishStats.getCiclo();
+            this.fertile = false;
         }
     }
 
@@ -228,20 +238,6 @@ public  abstract class Pez {
      */
     public int getReproductionCycle() {
         return reproductionCycle;
-    }
-
-    /**
-     * @return Si el Pez se ha reproducido
-     */
-    public boolean isReproduced(){
-        return this.reproduced;
-    }
-
-    /**
-     * Método para setear si el pez se ha reproducido o no 
-     */
-    public void setReproduced(boolean reproduced) {
-        this.reproduced = reproduced;
     }
 
     /**
