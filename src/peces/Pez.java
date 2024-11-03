@@ -1,6 +1,9 @@
 package peces;
 
+import java.util.List;
 import java.util.Random;
+
+import edificios.tanque.Tanque;
 import propiedades.PecesDatos;
 
 /**
@@ -30,8 +33,6 @@ public  abstract class Pez {
     protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
     protected int reproductionCycle;
-    /**Si el Pez se ha reproducido*/
-    protected boolean reproduced;
 
     /**
      * Constructor de Pez
@@ -64,7 +65,7 @@ public  abstract class Pez {
     /**
      * @return Método que devuelve una instancia de la clase Pez
      */
-    public abstract Pez getNewFish();
+    public abstract Pez getNewFish(boolean sex);
 
     /**
      * Método que implementa la manera de comer del pez
@@ -73,22 +74,70 @@ public  abstract class Pez {
 
     /**
      * Método que hace crecer un Pez
+     * @param fishes Lista de peces para realizar la reproduccion si es posible
+     * @param tank Tanque en el que se reproducen los peces si es posible
      */
-    public void grow(){
-        Random r = new Random();
-        if (this.alive){
-            if(!this.eat){
-                this.alive = r.nextBoolean(); 
-            }
-            this.age++;
-            if(!this.mature){
-                if(this.age % 2 == 0) {
-                    int kill = r.nextInt(100)+1;
-                    if (kill<=5) {
-                        this.alive=false;
+    public void grow(List<Pez> fishes, Tanque tank){
+        if(!this.alive){
+            return;
+        }else{
+            Random r = new Random();
+            if(!this.eat) {
+                if(r.nextBoolean()){
+                    this.alive = false;
+                    return;
+                }
+                this.age++;
+                if(this.mature){
+                    if(this.fertile && this.isFemale()){
+                        this.reproduce(fishes, tank);
+                    }
+                }else{
+                    if(this.age % 2 == 0) {
+                        int dead = r.nextInt(100) + 1;
+                        if(dead <= 5) {
+                            this.alive = false;
+                            return;
+                        }
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Método que reproduce los peces
+     * @param fishes Lista de Peces
+     * @param tank Tanque en el que se reproduce
+     */
+    public void reproduce(List<Pez> fishes, Tanque tank) {
+        if(!this.alive || !this.mature || !this.fertile || !this.isFemale() || this.reproductionCycle > 0) {
+            return;
+        }else{
+            boolean fertileMale = false;
+            for (Pez pez : fishes) {
+                if(pez.isMale() && pez.fertile && pez.alive) {
+                    fertileMale = true;
+                    break;
+                }
+            }
+            if(fertileMale){
+                int nEggs = this.fishStats.getHuevos();
+                for (int i = 0; i < nEggs; i++) {
+                    boolean newSex = false;
+                    if(!tank.isFull()){
+                        if(tank.fishesF() > tank.fishesM()) {
+                            newSex = true;
+                        }else{
+                            newSex = false;
+                        }
+                    }
+                    Pez newFish = this.getNewFish(newSex);
+                    fishes.add(newFish);
+                }
+            }
+            this.reproductionCycle = this.fishStats.getCiclo();
+            this.fertile = false;
         }
     }
 
@@ -189,20 +238,6 @@ public  abstract class Pez {
      */
     public int getReproductionCycle() {
         return reproductionCycle;
-    }
-
-    /**
-     * @return Si el Pez se ha reproducido
-     */
-    public boolean isReproduced(){
-        return this.reproduced;
-    }
-
-    /**
-     * Método para setear si el pez se ha reproducido o no 
-     */
-    public void setReproduced(boolean reproduced) {
-        this.reproduced = reproduced;
     }
 
     /**
