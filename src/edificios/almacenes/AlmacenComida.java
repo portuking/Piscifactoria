@@ -59,6 +59,23 @@ public class AlmacenComida {
         return stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int restarComida(int cantidad){
+        int newStock = 0;
+        if(stock > 0){
+            if(cantidad > stock){
+               return 0;
+            }
+            else{
+                newStock = stock - cantidad;
+            }
+        }
+        return newStock;
+    }
+
     @Override
     public String toString() {
         return "Cantidad de comida almacenada  "  + this.stock + "\n" +
