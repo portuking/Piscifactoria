@@ -10,13 +10,14 @@ import peces.Pez;
  * @author Pablo Dopazo Suárez
  */
 public class Tanque {
-    private Pez fish;
     /** Peces que hay en el Tanque */
     private ArrayList<Pez> fishes;
     /** Capacidad máxima del Tanque */
     int maxCapacity;
     /** Número del Tanque */
     private int tankNum;
+    /**Tipo de Pez del Tanque*/
+    private String fishType = null;
 
     /**
      * Constructor de Tanque
@@ -36,7 +37,7 @@ public class Tanque {
         System.out.println("Ocupación: peces / max " + (fishes.size()/this.maxCapacity)+"%");
         System.out.println("Peces vivos: vivos / total " + (fishesAlive() / this.maxCapacity)+"%");
         System.out.println("Peces alimentados: alimentados / vivos" + (alimentedFishes()/ fishesAlive()));
-        System.out.println("Peces adultos: adultos / vivos" + (maturefishes() / fishesAlive()));
+        System.out.println("Peces adultos: adultos / vivos" + (matureFishes() / fishesAlive()));
         System.out.println("Hembras / Machos" + ( fishesF()/fishesM()));
         System.out.println("Fertiles: fertiles / vivos" + (fertiles()/ fishesAlive()));
 
@@ -67,16 +68,15 @@ public class Tanque {
      * @param fish Pez a añadir
      */
     public void addFishes(Pez fish){
-        if (this.isFull() == false) {
-            if(fish.getFishStats().getCientifico() == this.fishes.get(0).getFishStats().getCientifico()){
-                if(this.fishesM() > this.fishesF()) {
-                    this.fishes.add(fish);
-                }else if(this.fishesF() > this.fishesM()){
-                    this.addFishes(fish);
-                }else if(this.fishesM() == this.fishesF()){
-                    this.addFishes(fish);
-                }
-            }            
+        if (!this.isFull()) {
+            if(this.fishType == null) {
+                this.fishType = fish.getName();
+            }
+            if(this.fishType == fish.getName()) {
+                
+            }else{
+                System.out.println("El tipo de Pez es incorrecto para esta Piscifactoría");
+            }
         }
     }
 
@@ -102,6 +102,33 @@ public class Tanque {
     }
 
     /**
+     * Método que reproduce los peces del tanque si se puede
+     */
+    public void reproduce(){
+        if(this.fishMatch() == true) {
+            for (Pez pez : fishes) {
+                if(!isFull()) {
+                    if(pez.isFemale() && pez.isAlive() && pez.isFertile()) {
+                        for (int i = 0; i < pez.getFishStats().getHuevos(); i++) {
+                            if(this.fishesF() == fishesM()) {
+                                pez.getNewFish();
+                            }else if(this.fishesM()> this.fishesF()){
+                                pez.getNewFish();
+                            }else{
+                                pez.getNewFish();
+                            }
+                        }
+                        pez.setReproduced(true);
+                    }
+                }else{
+                    System.out.println("No se ha podido añadir el pez");
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
      * @return Número de Peces vivos del Tanque
      */
     public int fishesAlive(){
@@ -115,22 +142,56 @@ public class Tanque {
     }
 
     /**
+     * Elimina todos los peces del Tanque
+     */
+    public void cleanTank(){
+        this.fishes.clear();
+    }
+
+    /**
+     * Método que elimina los peces muertos del Tanque
+     */
+    public void cleanDeadFishes(){
+        if(!this.isEmpty()){
+            for (int i = 0; i < fishes.size(); i++) {
+                if (fishes.get(i).isAlive() == false) {
+                    fishes.remove(i);
+                }
+            }
+        }else{
+            System.out.println("No hay peces");
+        }
+    }
+
+    /**
      * @return Número de Peces que han comido del Tanque
      */
     public int alimentedFishes(){
-        int numHungry = 0;
+        int numEated = 0;
         for (Pez pez : fishes) {
-            if (pez.isEat() == false && pez.isAlive() == true) {
-                numHungry+=1;
+            if (pez.isEat() == true && pez.isAlive() == true) {
+                numEated+=1;
             }
         }
-        return numHungry;
+        return numEated;
+    }
+
+    /**
+     * Método para saber cuanta comida hace falta para los peces
+     * @return Comida que comen los peces
+     */
+    public int foodAmount(){
+        int foodAmount = 0;
+        for (Pez pez : fishes) {
+            foodAmount += pez.eat();
+        }
+        return foodAmount;
     }
 
    /**
     * @return El número de peces maduros del Tanque 
     */
-    public int maturefishes(){
+    public int matureFishes(){
         int mature = 0;
         for (Pez pez : fishes){
             if (pez.isMature()== true && pez.isAlive()== true){
@@ -215,7 +276,7 @@ public class Tanque {
         "Peces actuales " + this.fishes.size() + "\n" + 
         "Peces vivos " + fishesAlive() + "\n" +
         "Peces alimentados " + alimentedFishes() + "\n" +
-        "Peces adultos " + maturefishes() + "\n" +
+        "Peces adultos " + matureFishes() + "\n" +
         "Peces hembra " + fishesF() + "\n" + 
         "Peces macho " + fishesM() + "\n" +
         "Peces fértiles " + fertiles(); 

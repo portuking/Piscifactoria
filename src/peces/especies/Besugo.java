@@ -27,6 +27,4 @@ public class Besugo extends AlimentacionCarnivoro{
         return new Besugo(sex);
     }
 
-
-
 }
