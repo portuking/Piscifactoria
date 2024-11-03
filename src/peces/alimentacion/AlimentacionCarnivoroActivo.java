@@ -29,7 +29,7 @@ public class AlimentacionCarnivoroActivo extends Pez {
      * @throws UnsupportedOperationException Si se llama a este método.
      */
     @Override
-    public Pez getNewFish() {
+    public Pez getNewFish(boolean sex) {
         throw new UnsupportedOperationException("Método no implementado");
     }
 

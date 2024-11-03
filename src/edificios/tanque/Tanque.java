@@ -2,6 +2,7 @@ package edificios.tanque;
 
 import java.util.ArrayList;
 import peces.Pez;
+import sistema.SISMonedas;
 
 /**
  * Clase que representa un Tanque
@@ -10,13 +11,14 @@ import peces.Pez;
  * @author Pablo Dopazo Suárez
  */
 public class Tanque {
-    private Pez fish;
     /** Peces que hay en el Tanque */
     private ArrayList<Pez> fishes;
     /** Capacidad máxima del Tanque */
     int maxCapacity;
     /** Número del Tanque */
     private int tankNum;
+    /**Tipo de Pez del Tanque*/
+    private String fishType = null;
 
     /**
      * Constructor de Tanque
@@ -67,16 +69,15 @@ public class Tanque {
      * @param fish Pez a añadir
      */
     public void addFishes(Pez fish){
-        if (this.isFull() == false) {
-            if(fish.getFishStats().getCientifico() == this.fishes.get(0).getFishStats().getCientifico()){
-                if(this.fishesM() > this.fishesF()) {
-                    this.fishes.add(fish);
-                }else if(this.fishesF() > this.fishesM()){
-                    this.addFishes(fish);
-                }else if(this.fishesM() == this.fishesF()){
-                    this.addFishes(fish);
-                }
-            }            
+        if (!this.isFull()) {
+            if(this.fishType == null) {
+                this.fishType = fish.getName();
+            }
+            if(this.fishType == fish.getName()) {
+
+            }else{
+                System.out.println("El tipo de Pez es incorrecto para esta Piscifactoría");
+            }
         }
     }
 
@@ -102,29 +103,35 @@ public class Tanque {
     }
 
     /**
-     * Método que reproduce los peces del tanque si se puede
+     * Método que hace crecer todos los peces del Tanque y vende 
+     * los que hayan llegado a la edad óptima
      */
-    public void reproduce(){
-        if(this.fishMatch() == true) {
-            for (Pez pez : fishes) {
-                if(!isFull()) {
-                    if(pez.isFemale() && pez.isAlive() && pez.isFertile()) {
-                        for (int i = 0; i < pez.getFishStats().getHuevos(); i++) {
-                            if(this.fishesF() == fishesM()) {
-                                pez.getNewFish();
-                            }else if(this.fishesM()> this.fishesF()){
-                                pez.getNewFish();
-                            }else{
-                                pez.getNewFish();
-                            }
-                        }
-                        pez.setReproduced(true);
-                    }
-                }else{
-                    System.out.println("No se ha podido añadir el pez");
-                    break;
-                }
+    public void nextDay(){
+        for (Pez pez : fishes) {
+            if(pez.isAlive()){
+                pez.grow(fishes, null);
             }
+        }
+        int soldFishes = 0;
+        int earnings = 0;
+        for (int i = 0; i < fishes.size(); i++) {
+            Pez pez = fishes.get(i);
+            if(pez.isAlive() && pez.getAge()>= pez.getFishStats().getOptimo()) {
+                fishes.remove(i);
+                i--;
+                soldFishes++;
+                earnings+= pez.getFishStats().getMonedas();
+            }
+        }
+        if(soldFishes > 0){
+            SISMonedas sisMonedas = SISMonedas.getInstance();
+            int currentMoney = sisMonedas.getMonedas();
+            sisMonedas.setMonedas(currentMoney + earnings);
+
+            System.out.println("Se han vendido: " + soldFishes + " peces");
+            System.out.println("Se han ganado " + earnings + " Monedas");
+        }else{
+            System.out.println("No se ha vendido ningún Pez");
         }
     }
 
@@ -142,16 +149,50 @@ public class Tanque {
     }
 
     /**
+     * Elimina todos los peces del Tanque
+     */
+    public void cleanTank(){
+        this.fishes.clear();
+    }
+
+    /**
+     * Método que elimina los peces muertos del Tanque
+     */
+    public void cleanDeadFishes(){
+        if(!this.isEmpty()){
+            for (int i = 0; i < fishes.size(); i++) {
+                if (fishes.get(i).isAlive() == false) {
+                    fishes.remove(i);
+                }
+            }
+        }else{
+            System.out.println("No hay peces");
+        }
+    }
+
+    /**
      * @return Número de Peces que han comido del Tanque
      */
     public int alimentedFishes(){
-        int numHungry = 0;
+        int numEated = 0;
         for (Pez pez : fishes) {
-            if (pez.isEat() == false && pez.isAlive() == true) {
-                numHungry+=1;
+            if (pez.isEat() == true && pez.isAlive() == true) {
+                numEated+=1;
             }
         }
-        return numHungry;
+        return numEated;
+    }
+
+    /**
+     * Método para saber cuanta comida hace falta para los peces
+     * @return Comida que comen los peces
+     */
+    public int foodAmount(){
+        int foodAmount = 0;
+        for (Pez pez : fishes) {
+            foodAmount += pez.eat();
+        }
+        return foodAmount;
     }
 
    /**
@@ -235,6 +276,20 @@ public class Tanque {
         }
     }
 
+    /**
+     * @return Devuelve la capacidad máxima del tanque
+     */
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    /**
+     * @return Devuelve el numero del tanque
+     */ 
+     public int getTankNum() {
+        return tankNum;
+    }
+
     @Override
     public String toString() {
         return "Tanque # " + this.tankNum + "\n" + 
@@ -247,6 +302,5 @@ public class Tanque {
         "Peces macho " + fishesM() + "\n" +
         "Peces fértiles " + fertiles(); 
     }
-
 
 }

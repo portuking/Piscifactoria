@@ -1,159 +1,166 @@
 package edificios.piscifactoria;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 
+import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
-import peces.Pez;
 
 public class Piscifactoria {
     private String name;
-    private String type;
-    private int maxTank = 10;
-    private int maxFood = 0;
-    private int currentFood = 0;
+    private static int tankNum = 0;
+    private int maxTank;
+    private int maxFood;
+    private int currentFood;
+    private int maxCapacity;
     private ArrayList<Tanque> tanque;
-    
-    public Piscifactoria(String name, String type) {
+    private AlmacenComida comidaVegetal;
+    private AlmacenComida comidaAnimal;
+
+    public Piscifactoria(String name, int maxFood, int tankCapacity) {
         this.name = name;
-        this.type = type;
-
-        if(type.equals("rio")){
-            maxFood = 25;
-            tanque = new ArrayList<>(25);
-        }else if(type.equals("mar")){
-            maxFood = 100;
-            tanque = new ArrayList<>(100);
-        }else{
-            this.currentFood = maxFood;
-        }
-
+        this.maxTank = 10;
+        this.maxFood = maxFood;
+        this.currentFood = maxFood;
+        this.maxCapacity = tankCapacity;
+        this.comidaAnimal = new AlmacenComida(tankCapacity);
+        this.comidaVegetal = new AlmacenComida(tankCapacity);
+        tanque = new ArrayList<>(this.maxTank);
+        tanque.add(new Tanque(maxCapacity, tankNum++));
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public static int getTankNum() {
+        return tankNum;
     }
 
     public int getMaxTank() {
         return maxTank;
     }
 
-    public void setMaxTank(int maxTank) {
-        this.maxTank = maxTank;
-    }
-
     public int getMaxFood() {
         return maxFood;
-    }
-
-    public void setMaxFood(int maxFood) {
-        this.maxFood = maxFood;
     }
 
     public int getCurrentFood() {
         return currentFood;
     }
 
-    public void setCurrentFood(int currentFood) {
-        this.currentFood = currentFood;
+    public int getMaxCapacity() {
+        return maxCapacity;
     }
 
     public ArrayList<Tanque> getTanque() {
         return tanque;
     }
 
-    public void setTanque(ArrayList<Tanque> tanque) {
-        this.tanque = tanque;
-    }
-
-    public void showStatus(){
-        System.out.println("==========Nombre: " + this.name + "==========");
-    }
-
-    public void showTankStatus(){
-        for(Tanque tank : tanque){
-            tank.showStatus();
+    public int occuped() {
+        int okupas = 0;
+        for (Tanque tanque2 : tanque) {
+            okupas += tanque2.getFishes().size();
         }
+        return okupas;
     }
 
-    public void showFishStatus(){
+    public int matureFishes() {
+        int matureFishes = 0;
+        for (Tanque tanque2 : tanque) {
+            matureFishes += tanque2.matureFishes();
+        }
+        return matureFishes;
+    }
+
+    public int fishesF() {
+        int fishesF = 0;
+        for (Tanque tanque2 : tanque) {
+            fishesF += tanque2.fishesF();
+        }
+        return fishesF;
+    }
+
+    public int fishesM() {
+        int fishesM = 0;
+        for (Tanque tanque2 : tanque) {
+            fishesM += tanque2.fishesM();
+        }
+        return fishesM;
+    }
+
+    public int fertiles() {
+        int fertiles = 0;
+        for (Tanque tanque2 : tanque) {
+            fertiles += tanque2.fertiles();
+        }
+        return fertiles;
+    }
+
+    public int maxFishes(){
+        int maxFishes = 0;
+        for (Tanque tanque2 : tanque) {
+            maxFishes += tanque2.getMaxCapacity();
+        }
+        return maxFishes;
+    }
+
+    public int alimentedFishes() {
+        int alimentedFishes = 0;
+        for (Tanque tanque2 : tanque) {
+            alimentedFishes += tanque2.alimentedFishes();
+        }
+        return alimentedFishes;
+    }
+
+    public int fishesAlive() {
+        int fishesAlive = 0;
+        for (Tanque tanque2 : tanque) {
+            fishesAlive += tanque2.fishesAlive();
+        }
+        return fishesAlive;
+    }
+
+    public void showStatus() {
+        System.out.println("===============  "+ this.name +" ===============");
+        System.out.println("Tanques :" + tanque.size());
+        System.out.println("Ocupación: peces / max " + (occuped()/maxFishes())+"%");
+        System.out.println("Peces vivos: vivos / total " + (fishesAlive()/maxFishes()+"%"));
+        System.out.println("Peces alimentados: alimentados / vivos " + (alimentedFishes()/fishesAlive()) + "%");
+        System.out.println("Peces adultos: adultos / vivos " + (matureFishes()/fishesAlive()) + "%");
+        System.out.println("Hembras/Machos " + (fishesF()/fishesM()) + "%");
+        System.out.println("Fértiles: fertiles/vivos " + (fertiles()/fishesAlive()) + "%");
+        System.out.println("Almacén de comida: actual/max"+ (currentFood/maxFood) +"%");
         
     }
-    
-    public void showCapacity(int index){
-        if(index < 0 && index >= tanque.size()){
-            System.out.println("El numero de tanque no existe");
-        }else{
-            tanque.get(index).showCapacity(name);
-        }
-    }    
 
-    public void showFood(){
-        System.out.printf("Depósito de comida de la piscifactoría %s al %.2f%% de su capacidad. [%d/%d]%n",
-                      this.name, ((double) currentFood / maxFood) * 100, currentFood, maxFood);
-    }
-
-    public void nextDay(){
-         for (Tanque t : tanque) {
-        for (Pez p : t.getFishes()) {
-            if (p.isAlive()) {
-                if (currentFood > 0) {
-                    p.setEat(true);
-                    currentFood--;
-                } else {
-                    p.setEat(false);
-                }
-                p.grow();
-                p.isMilf();
-            }
+    public void showTankStatus() {
+        for (Tanque tanque2 : tanque) {
+            tanque2.showStatus();
         }
     }
-=======
-public abstract class Piscifactoria {
 
+    public void showFishStatus(Tanque tanque) {
+        tanque.showfishestatus();
+    }
+
+    public void showCapacity() {
+        for (Tanque tanque2 : tanque) {
+            System.out.println("Tanque " + tanque2.getTankNum() + "de la piscifactoria " + this.name + "al " + (occuped()/maxFishes())+"% de capacidad. [peces/espacios]");
+        }
+    }
+
+    public void showFood() {
     
-    public void showStatus(){
+    }
+
+    public void nextDay() {
+    }
+
+    public void sellFish() {
 
     }
 
-    public void showTankStatus(){
-
-    }
-
-    public void showFishStatus(){
-
-    }
-    
-    public void showCapacity(){
-
-    }
-
-    public void showFood(){
-
-    }
-
-    public void nextDay(){
-
->>>>>>> b8371480745b2c882abef145d5217aeda4528e0e
-    }
-
-    public void sellFish(){
-
-    }
-
-    public void upgradeFood(){
+    public void upgradeFood() {
 
     }
 }
