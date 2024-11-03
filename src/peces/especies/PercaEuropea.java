@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IRio;
 import peces.alimentacion.AlimentacionCarnivoroActivo;
 import propiedades.AlmacenPropiedades;
 
@@ -11,7 +10,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */ 
 
-public class PercaEuropea extends AlimentacionCarnivoroActivo implements IRio{
+public class PercaEuropea extends AlimentacionCarnivoroActivo {
 
     /**
      * Constructor de PercaEuropea

@@ -1,8 +1,6 @@
 package peces;
 
 import java.util.Random;
-
-import edificios.tanque.Tanque;
 import propiedades.PecesDatos;
 
 /**
@@ -14,10 +12,14 @@ import propiedades.PecesDatos;
 public  abstract class Pez {
     /**Objeto de la clase PecesDatos con los datos del Pez */
     protected PecesDatos fishStats;
+    /**Nombre Común del Pez*/
+    protected final String name;
+    /**Nombre Científico del Pez*/
+    protected final String scientifcName;
     /** Edad del Pez */
     protected int age;
     /** Sexo del Pez */
-    protected boolean sex;
+    protected final boolean sex;
     /** Si el Pez es fértil */
     protected boolean fertile;
     /** Si el Pez está vivo */
@@ -28,7 +30,9 @@ public  abstract class Pez {
     protected boolean mature;
     /**Ciclo de reprosucción del Pez*/
     protected int reproductionCycle;
-    
+    /**Si el Pez se ha reproducido*/
+    protected boolean reproduced;
+
     /**
      * Constructor de Pez
      * @param age Edad del Pez
@@ -36,18 +40,20 @@ public  abstract class Pez {
      */
     public Pez(boolean sex, PecesDatos fishStats) {
         this.fishStats = fishStats;
+        this.name = fishStats.getNombre();
+        this.scientifcName = fishStats.getCientifico();
         this.sex = sex;
         this.age = 0;
         this.fertile = false;
         this.alive = true;
         this.eat = true;
         this.mature = false;
-        this.reproductionCycle = this.getFishStats().getCiclo();
+        this.reproductionCycle = fishStats.getCiclo();
     }
 
     /** Método que muestra el estado del Pez */
     public void showStatus() {
-        System.out.println("---------------"+fishStats.getNombre()+"---------------");
+        System.out.println("---------------"+this.getName()+"---------------");
         System.out.println("Edad: " + this.age + " días");
         System.out.println(sex ? "Sexo: H" : "Sexo: M");
         System.out.println(eat ? "Alimentado: Si" : "Alimentado: No");
@@ -88,39 +94,6 @@ public  abstract class Pez {
     }
 
     /**
-     * Método que reproduce un Pez
-     */
-    public void reproduce(Tanque tank) {
-        if(this.fertile) {
-            for (int i = 0; i < this.fishStats.getHuevos(); i++) {
-                if(!tank.isFull()) {
-                    Pez newFish = this.getNewFish();
-                    tank.addFishes(newFish);
-                }else{
-                    break;
-                }
-            }
-            this.reproductionCycle = this.fishStats.getCiclo();
-        }
-    }
-
-    /**
-     * Método que comprueba la madurez, la edad, la fertilidad y los ciclos de los Peces
-     */
-    public void isMilf() {
-        if(this.age >= this.fishStats.getMadurez()) {
-            this.mature = true;
-        }
-        if(this.mature) {
-            if(this.reproductionCycle == 0) {
-                this.fertile = true;
-            }else{
-                this.reproductionCycle --;
-            }
-        }
-    }
-
-    /**
      * Método que resetea un Pez
      */
     public void reset(){
@@ -136,6 +109,20 @@ public  abstract class Pez {
      */
     public PecesDatos getFishStats(){
         return this.fishStats;
+    }
+
+    /**
+     * @return Nombre Común del Pez
+     */
+    public String getName(){
+        return this.name;
+    }
+
+    /**
+     * @return Nombre Científico del Pez
+     */
+    public String getScientificName(){
+        return this.scientifcName;
     }
 
     /**
@@ -156,13 +143,23 @@ public  abstract class Pez {
      * @return Si el Pez es maduro o no
      */
     public boolean isMature(){
-        return this.mature;
+        if(this.age >= this.getFishStats().getMadurez()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
      * @return Si el Pez es fértil
      */
     public boolean isFertile(){
+        if(this.age < this.fishStats.getCiclo()){
+            this.reproductionCycle --;
+            this.fertile = false;
+        }else{
+            this.fertile = true;
+        }
         return this.fertile;
     }
 
@@ -178,22 +175,6 @@ public  abstract class Pez {
     }
 
     /**
-     * Método para setear el sexo
-     * @param sex sexo para el pez
-     */
-    public void setSex(boolean sex) {
-        this.sex = sex;
-    }
-
-    /**
-     * Método para setear la comida
-     * @param eat Si el pez tiene hambre
-     */
-    public void setEat(boolean eat) {
-        this.eat = eat;
-    }
-
-    /**
      * @return true si el pez es hembra
      */
     public boolean isFemale() {
@@ -202,5 +183,50 @@ public  abstract class Pez {
         }else{
             return false;
         }
+    }
+
+    /**
+     * @return Número de dias que tarda el pez en ser fértil
+     */
+    public int getReproductionCycle() {
+        return reproductionCycle;
+    }
+
+    /**
+     * @return Si el Pez se ha reproducido
+     */
+    public boolean isReproduced(){
+        return this.reproduced;
+    }
+
+    /**
+     * Método para setear si el pez se ha reproducido o no 
+     */
+    public void setReproduced(boolean reproduced) {
+        this.reproduced = reproduced;
+    }
+
+    /**
+     * Método para setear el ciclo de reproducción
+     * @param reproductionCycle número de días que dura el ciclo
+     */
+    public void setReproductionCycle(int reproductionCycle) {
+        this.reproductionCycle = reproductionCycle;
+    }
+
+     /**
+     * Método para setear la comida
+     * @param eat Si el pez ha comido
+     */
+    public void setEat(boolean eat) {
+        this.eat = eat;
+    }
+
+    /**
+     * Método para setear la fertilidad
+     * @param fertile false si no es fértil y true si lo es
+     */
+    public void setFertile(boolean fertile) {
+        this.fertile = fertile;
     }
 }
