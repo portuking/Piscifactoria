@@ -24,8 +24,6 @@ public class Piscifactoria {
     private int maxFood;
     /**Comida actual de la Piscifactoria */
     private int currentFood;
-    /** */
-    private int maxCapacity;
     /**Precio de la Piscifactoria */
     private int precio;
     /**Tanques de la Piscifactoria */
@@ -40,71 +38,26 @@ public class Piscifactoria {
      * @param name Nombre de la Piscifactoria 
      * @param tipo Tipo de la Piscifactoria
      */
-    public Piscifactoria(String name, boolean tipo) {
+    public Piscifactoria(String name, boolean tipo, int currentFood) {
         this.name = name;
         this.maxTank = 10;
-        this.maxCapacity = tankCapacity;
+        //this.maxCapacity = tankCapacity;
         this.tipo = tipo;
-        tanque = new ArrayList<>(this.maxTank);
-        tanque.add(new Tanque(maxCapacity, tankNum++));
+        this.tanque = new ArrayList<>(this.maxTank);
+        //tanque.add(new Tanque(maxCapacity, tankNum++));
         if (tipo) {
             this.comidaAnimal = new AlmacenComida(25);
             this.comidaVegetal = new AlmacenComida(25);
+            this.comidaAnimal.setStock(currentFood);
+            this.comidaAnimal.setStock(currentFood);
             this.precio = 500;
         } else {
             this.comidaAnimal = new AlmacenComida(100);
             this.comidaVegetal = new AlmacenComida(100);
+            this.comidaAnimal.setStock(currentFood);
+            this.comidaAnimal.setStock(currentFood);
             this.precio = 2000;
         }
-    }
-
-    /**
-     * @return Nombre de la Piscifactoria
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @return Número de Tanque de la Piscifactoria
-     */
-    public static int getTankNum() {
-        return tankNum;
-    }
-
-    /**
-     * @return Número máximo de Tanques de la Piscifactoria
-     */
-    public int getMaxTank() {
-        return maxTank;
-    }
-
-    /**
-     * @return Capacidad máxima de Comida de la Piscifactoria
-     */
-    public int getMaxFood() {
-        return maxFood;
-    }
-
-    /**
-     * @return Comida actual de la Piscifactoria
-     */
-    public int getCurrentFood() {
-        return currentFood;
-    }
-
-    /**
-     * @return Capacidad máxima de la Piscifactoria
-     */
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    /**
-     * @return Lista de Tanques de la Piscifactoria
-     */
-    public ArrayList<Tanque> getTanque() {
-        return tanque;
     }
 
     /**
@@ -223,7 +176,6 @@ public class Piscifactoria {
     /**
      * Muestra la información de los Peces de un Tanque determinado
      * @param tanque tanque a examinar
-     * -------------------------------------------------REVISAR
      */
     public void showFishStatus(Tanque tanque) {
         tanque.showfishestatus();
@@ -231,29 +183,21 @@ public class Piscifactoria {
 
     /**
      * Método que muestra la capacidad de un Tanque determinado
-     * NECESITA CORRECCIÓN:
-     * ESTE MÉTODO MOSTRA A OCUPACIÓN DE TODOS OS TANQUES
      */
-    public void showCapacity() {
-        for (Tanque tanque2 : tanque) {
-            System.out.println("Tanque " + tanque2.getTankNum() + "de la piscifactoria " + this.name + "al "
-                    + (occuped() / maxFishes()) + "% de capacidad. [peces/espacios]");
-        }
+    public void showCapacity(Tanque tanque) {
+        tanque.showCapacity(this);
     }
 
     /**
      * Muestra el estado del Almacén de comida 
-     * REVISAR
      */
     public void showFood() {
-        int stock = comidaAnimal.getStock() + comidaVegetal.getStock();
-        int maxFood = comidaAnimal.getMaxCap() + comidaVegetal.getMaxCap();
-        if (stock == 0 || maxFood == 0) {
-            System.out.println(
-                    "Depósito de comida de la piscifactoría" + this.name + "al 0% de su capacidad. [comida/max]");
+        this.currentFood  = comidaAnimal.getStock() + comidaVegetal.getStock();
+        this.maxFood = comidaAnimal.getMaxCap() + comidaVegetal.getMaxCap();
+        if (this.currentFood == 0 || this.maxFood == 0) {
+            System.out.println("Depósito de comida de la piscifactoría" + this.name + "al 0% de su capacidad. [comida/max]");
         } else {
-            System.out.println("Depósito de comida de la piscifactoría" + this.name + "al " + (stock / maxFood)
-                    + "% de su capacidad. [comida/max]");
+            System.out.println("Depósito de comida de la piscifactoría" + this.name + "al " + (this.currentFood / this.maxFood) + "% de su capacidad. [comida/max]");
         }
     }
 
@@ -317,14 +261,64 @@ public class Piscifactoria {
         if (tipo) {
             if (addTanque()) {
                 monedas.pagar(tanque.size() - 1 * 150);
-
             }
         } else {
             if (addTanque()) {
                 monedas.pagar(tanque.size() - 1 * 600);
             }
         }
-
     }
 
+     /**
+     * @return Nombre de la Piscifactoria
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return Número de Tanque de la Piscifactoria
+     */
+    public int getTankNum() {
+        return tankNum;
+    }
+
+    /**
+     * @return Número máximo de Tanques de la Piscifactoria
+     */
+    public int getMaxTank() {
+        return maxTank;
+    }
+
+    /**
+     * @return Capacidad máxima de Comida de la Piscifactoria
+     */
+    public int getMaxFood() {
+        return maxFood;
+    }
+
+    /**
+     * @return Comida actual de la Piscifactoria
+     */
+    public int getCurrentFood() {
+        return currentFood;
+    }
+
+    /**
+     * @return Lista de Tanques de la Piscifactoria
+     */
+    public ArrayList<Tanque> getTanque() {
+        return tanque;
+    }
+
+    /**
+     * @return El tipo de Piscifactoria que es
+     */
+    public String getTipo(){
+        if(this.tipo){
+            return "Tipo de Piscifactoría: Mar";
+        }else{
+            return "Tipo de Piscifactoría: Río";
+        }
+    }
 }

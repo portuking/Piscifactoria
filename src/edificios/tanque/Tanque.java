@@ -1,6 +1,8 @@
 package edificios.tanque;
 
 import java.util.ArrayList;
+
+import edificios.piscifactoria.Piscifactoria;
 import peces.Pez;
 import sistema.SISMonedas;
 
@@ -55,12 +57,12 @@ public class Tanque {
     /** 
      * Muestra la ocupación del Tanque
      */
-    public void showCapacity(String pisciName) {
+    public void showCapacity(Piscifactoria piscifactoria) {
         if(this.isEmpty() == false) {
             int capacity = this.fishes.size() / this.maxCapacity;
-            System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al " + capacity + "% de capacidad. [peces/espacios]");
+            System.out.println("Tanque " + piscifactoria.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al " + capacity + "% de capacidad. [peces/espacios]");
         }else{
-        System.out.println("Tanque " + this.tankNum + " de la piscifactoría " + pisciName + " al 0% de capacidad. [peces/espacios]");
+        System.out.println("Tanque " + piscifactoria.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al 0% de capacidad. [peces/espacios]");
         }
     }
 
