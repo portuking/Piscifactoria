@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import edificios.piscifactoria.Piscifactoria;
+import edificios.tanque.Tanque;
 
 /**
- * IMPLEMENNTAR CLASE
+ * Clase que representa el Simulador
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
  */
 public class Simulador {
     /**Días que han pasado */
@@ -19,6 +23,7 @@ public class Simulador {
     private String name;
     /**Sistema de monedas del juego*/
     private SISMonedas monedas;
+    /**Scanner para manipular las entradas del Usuario*/
     Scanner sc = new Scanner(System.in);
 
     /**
@@ -35,7 +40,7 @@ public class Simulador {
         this.fishFarms = new ArrayList<>();
         this.monedas = SISMonedas.getInstance();
         this.monedas.setMonedas(100);
-        Piscifactoria fishFarm = new Piscifactoria("Piscifactoria1", false, 25);
+        Piscifactoria fishFarm = new Piscifactoria("Piscifactoria1", true, 25);
         fishFarms.add(fishFarm);
     }
 
@@ -63,7 +68,6 @@ public class Simulador {
      * Método que muestra un ménu con las Piscifactorías disponibles
      */
     public void menuPisc(){
-        System.out.println("Seleccione una opción");
         System.out.println("--------------------------- Piscifactorías ---------------------------");
         System.out.println("[Peces vivos / Peces totales / Espacio total]");
         for (int i = 0; i < fishFarms.size(); i++) {
@@ -81,7 +85,7 @@ public class Simulador {
         Piscifactoria selected = null;
         while (selected == null) {
             try{
-                System.out.println("Seleccione una opción");
+                System.out.print("Seleccione una opción: ");
                 int option = sc.nextInt();
                 if(option == 0){
                     break;
@@ -96,12 +100,69 @@ public class Simulador {
         return selected;
     }
 
+    /**
+     * Método que muestra un menú de Tanques de una Piscifactoría y permite seleccionar uno
+     * @param p Piscifactoría de la que se va a devolver el Tanque
+     * @return Tanque seleccionado
+     */
+    public Tanque selectTank(Piscifactoria p){
+        System.out.println("========Menú Tanques========");
+        p.listTanks();
+        System.out.println("0.- Cancelar");
+        Tanque selected = null;
+        while (selected == null) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                int option = sc.nextInt();
+                if (option == 0) {
+                    break;
+                }
+                if (option > 0 && option -1 < p.getNTanks()) {
+                    selected = p.selectTank(option -1);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada no válida");
+            }
+        }
+        return selected;
+    }
+
+    /**
+     * Método que muestra el estado general del Sistema
+     * Buscar como saber si ten Almacén Central
+     */
+    public void showGeneralStatus() {
+        System.out.println("========Estado General========");
+        System.out.println("-- Día: " + this.days);
+        System.out.println("-- Monedas: " + this.monedas.getMonedas());
+        System.out.println("-- Estado de las Piscifactorías: ");
+        for (Piscifactoria piscifactoria : fishFarms) {
+            piscifactoria.showStatus();
+        }
+    }
+
+    /**
+     * Método que permite seleccionar una Piscifactoría y muestra toda la información de sus tanques
+     */
+    public void showSpecificStatus(){
+        Piscifactoria selectedPisc = selectPisc();
+        System.out.println("");
+        if(selectedPisc != null){
+            selectedPisc.showTankStatus();
+        }
+    }
+
+
     public static void main(String[] args) {
         Simulador sim = new Simulador();
         sim.init();
         //sim.menu();
         //sim.menuPisc();
-        System.out.println(sim.selectPisc());
-
+        //System.out.println(sim.selectPisc());
+        Piscifactoria p = new Piscifactoria("Pisc1", false, 50);
+        //p.listTanks();
+        //sim.showGeneralStatus();
+        //sim.showSpecificStatus();
+        sim.selectTank(p);
     }
 }

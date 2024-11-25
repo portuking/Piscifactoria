@@ -22,8 +22,8 @@ public class AlmacenCentral {
      * Constructor de Almacén Central
      */
     public AlmacenCentral() {
-        this.warehouseA = new AlmacenComida(200);
-        this.warehouseV = new AlmacenComida(200);
+        this.warehouseA = new AlmacenComida(200, 0);
+        this.warehouseV = new AlmacenComida(200, 0);
         this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;

@@ -13,8 +13,8 @@ public class AlmacenComida {
     private int maxCap;
 
     /**Constructor de AlmacenComida*/
-    public AlmacenComida(int maxCap) {
-        this.stock = 0;
+    public AlmacenComida(int maxCap, int stock) {
+        this.stock = stock;
         this.maxCap = maxCap;
     }
 
