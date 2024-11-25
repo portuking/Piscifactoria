@@ -44,7 +44,7 @@ public class Piscifactoria {
         //this.maxCapacity = tankCapacity;
         this.tipo = tipo;
         this.tanque = new ArrayList<>(this.maxTank);
-        //tanque.add(new Tanque(maxCapacity, tankNum++));
+        //tanque.add(new Tanque(maxCapacity, Piscifactoria.tankNum++));
         if (tipo) {
             this.comidaAnimal = new AlmacenComida(25);
             this.comidaVegetal = new AlmacenComida(25);
@@ -320,5 +320,12 @@ public class Piscifactoria {
         }else{
             return "Tipo de Piscifactoría: Río";
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Piscifactoria [name=" + name + ", tipo=" + tipo + ", maxTank=" + maxTank + ", maxFood=" + maxFood
+                + ", currentFood=" + currentFood + ", precio=" + precio + ", tanque=" + tanque + ", comidaVegetal="
+                + comidaVegetal + ", comidaAnimal=" + comidaAnimal + "]";
     }
 }
