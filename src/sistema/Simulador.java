@@ -5,15 +5,12 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import edificios.almacenes.AlmacenCentral;
 import edificios.piscifactoria.Piscifactoria;
-import edificios.tanque.Tanque;
+import propiedades.AlmacenPropiedades;
+import propiedades.PecesDatos;
 
 /**
- * Clase que representa el Simulador
- * @author Manuel Abalo Rietz
- * @author Adrián Ces López
- * @author Pablo Dopazo Suárez
+ * IMPLEMENNTAR CLASE
  */
 public class Simulador {
     /**Días que han pasado */
@@ -24,8 +21,6 @@ public class Simulador {
     private String name;
     /**Sistema de monedas del juego*/
     private SISMonedas monedas;
-    private AlmacenCentral centralWarehouse;
-    /**Scanner para manipular las entradas del Usuario*/
     Scanner sc = new Scanner(System.in);
 
     /**
@@ -42,8 +37,7 @@ public class Simulador {
         this.fishFarms = new ArrayList<>();
         this.monedas = SISMonedas.getInstance();
         this.monedas.setMonedas(100);
-        this.centralWarehouse = null;
-        Piscifactoria fishFarm = new Piscifactoria("Piscifactoria1", true, 25);
+        Piscifactoria fishFarm = new Piscifactoria("Piscifactoria1", false, 25);
         fishFarms.add(fishFarm);
     }
 
@@ -71,6 +65,7 @@ public class Simulador {
      * Método que muestra un ménu con las Piscifactorías disponibles
      */
     public void menuPisc(){
+        System.out.println("Seleccione una opción");
         System.out.println("--------------------------- Piscifactorías ---------------------------");
         System.out.println("[Peces vivos / Peces totales / Espacio total]");
         for (int i = 0; i < fishFarms.size(); i++) {
@@ -88,7 +83,7 @@ public class Simulador {
         Piscifactoria selected = null;
         while (selected == null) {
             try{
-                System.out.print("Seleccione una opción: ");
+                System.out.println("Seleccione una opción");
                 int option = sc.nextInt();
                 if(option == 0){
                     break;
@@ -102,154 +97,92 @@ public class Simulador {
         }
         return selected;
     }
-
-    /**
-     * Método que muestra un menú de Tanques de una Piscifactoría y permite seleccionar uno
-     * @param p Piscifactoría de la que se va a devolver el Tanque
-     * @return Tanque seleccionado
-     */
-    public Tanque selectTank(){
-        Piscifactoria p = selectPisc();
-        System.out.println("========Menú Tanques========");
-        p.listTanks();
-        System.out.println("0.- Cancelar");
-        Tanque selected = null;
-        while (selected == null) {
-            try {
-                System.out.print("Seleccione una opción: ");
-                int option = sc.nextInt();
-                if (option == 0) {
-                    break;
-                }
-                if (option > 0 && option -1 < p.getNTanks()) {
-                    selected = p.selectTank(option -1);
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida");
-            }
+    public void showIctio(){
+        System.out.println("Seleccione un pez para ver más detalles:(0 para ancelar)");
+        System.out.println("1. Besugo");
+        System.out.println("2. Caballa");
+        System.out.println("3. Carpa Plateada");
+        System.out.println("4. Lenguado Europeo");  
+        System.out.println("5. Lubina Europea");
+        System.out.println("6. Lubina Rayada");
+        System.out.println("7. Lucio del norte");
+        System.out.println("8. Pejerrey");
+        System.out.println("9. Perca Europea");
+        System.out.println("10. Robalo");
+        System.out.println("11. Salmón Atlantico");
+        System.out.println("12. Salmón Chinook");
+        System.out.print("Seleccione una opción: ");
+        int opcion = sc.nextInt();
+        
+        if (opcion == 0) {
+        System.out.println("Operación cancelada.");
+        return;
         }
-        return selected;
-    }
 
-    /**
-     * Método que muestra el estado general del Sistema
-     */
-    public void showGeneralStatus() {
-        System.out.println("========Estado General========");
-        System.out.println("-- Día: " + this.days);
-        System.out.println("-- Monedas: " + this.monedas.getMonedas());
-        System.out.println("-- Estado de las Piscifactorías: ");
-        for (Piscifactoria piscifactoria : fishFarms) {
-            piscifactoria.showStatus();
+        switch (opcion) {
+            case 1: 
+                name = "Besugo";        
+                break;
+            case 2:
+                name = "Caballa";
+                break;
+            case 3:
+                name = "Carpa Plateada";
+                break;
+            case 4:
+                name = "Lenguado Europeo";
+                break;
+            case 5:
+                name = "Lubina Europea";
+                break;
+            case 6:
+                name = "Lubina Rayada";                
+                break;
+            case 7:
+                name = "Lucio del norte";               
+                break;
+            case 8:
+                name = "Pejerrey";
+                break;
+            case 9:
+                name = "Perca Europea";              
+                break;
+            case 10:
+                name = "Róbalo";
+                break;
+            case 11:
+                name = "Salmón Atlántico";
+                break;
+            case 12:
+                name = "Salmón Chinook";
+                break;    
+        
+            default:
+                System.out.println("Opción no válida. Por favor, intente de nuevo.");
+                break;
         }
-        if(centralWarehouse != null) {
-            System.out.println("-- Estado del Almacén Central:");
-            centralWarehouse.getOcuped();
-        }
-    }
 
-    /**
-     * Método que permite seleccionar una Piscifactoría y muestra toda la información de sus tanques
-     */
-    public void showSpecificStatus(){
-        Piscifactoria selectedPisc = selectPisc();
-        System.out.println("");
-        if(selectedPisc != null){
-            selectedPisc.showTankStatus();
-        }
-    }
+        PecesDatos pezSeleccionado = AlmacenPropiedades.getPropByName(name);
 
-    /**
-     * Método que permite elegir uno de los Tanques de la Piscifactoría y muestra la información de los peces
-     */
-    public void showTankStatus() {
-        Tanque selectedTank = selectTank();
-        selectedTank.showfishestatus();
-    }
-
-    /**
-     * Método que permite pasar varios días en las Piscifactorías
-     * @param days Número de días a pasar
-     */
-    public void nextDay(int days) {
-        for (int i = 0; i < days; i++) {
-            for (Piscifactoria piscifactoria : fishFarms) {
-                piscifactoria.nextDay();
-            }
+        if (pezSeleccionado != null) {
+            System.out.println("-------- " + pezSeleccionado.getNombre() + " --------");
+            System.out.println("Nombre científico: " + pezSeleccionado.getCientifico());
+            System.out.println("Tipo: " + pezSeleccionado.getTipo().getValue());
+            System.out.println("Coste: " + pezSeleccionado.getCoste());
+            System.out.println("Valor de venta: " + pezSeleccionado.getMonedas());
+            System.out.println("Huevos: " + pezSeleccionado.getHuevos());
+            System.out.println("Ciclo: " + pezSeleccionado.getCiclo());
+            System.out.println("Madurez: " + pezSeleccionado.getMadurez());
+            System.out.println("Edad óptima: " + pezSeleccionado.getOptimo());
         }
-    }
 
-    /**
-     * Método que añade comida al Almacén de comida elegido de la Piscifactoría dada
-     */
-    public void addFood() {
-        Piscifactoria selectedFishFarm = selectPisc();
-        boolean cancel = false;
-        int warehouseType;
-        while (!cancel) {
-            try{
-                System.out.println("Tipo de Almacén: ");
-                System.out.println("1.- Almacén de comida animal");
-                System.out.println("2.- Almacén de comida vegetal");
-                System.out.println("0.- Cancelar");
-                System.out.print("Seleccione una opción: ");
-                warehouseType = sc.nextInt();
-                if (warehouseType == 0) {
-                    cancel = true;
-                }else{
-                    System.out.println("1.- 5");
-                    System.out.println("2.- 10");
-                    System.out.println("3.- 25");
-                    System.out.println("4.- Llenar");
-                    System.out.println("0.- Cancelar");
-                    System.out.print("Seleccione una opción: ");
-                    int option = sc.nextInt();
-                    switch (option) {
-                        case 1:
-                            if(warehouseType == 1) {
-                                selectedFishFarm.getWarehouseA().addFood(5);
-                            }else if(warehouseType == 2){
-                                selectedFishFarm.getWarehouseV().addFood(5);
-                            }
-                            this.monedas.pagar(5);
-                            break;
-                        case 2:
-                            if(warehouseType == 1) {
-                                selectedFishFarm.getWarehouseA().addFood(10);
-                            }else if(warehouseType == 2){
-                                selectedFishFarm.getWarehouseV().addFood(10);
-                            }
-                            this.monedas.pagar(10);
-                            break;
-                        case 3:
-                            if(warehouseType == 1) {
-                                selectedFishFarm.getWarehouseA().addFood(25);
-                            }else if(warehouseType == 2){
-                                selectedFishFarm.getWarehouseV().addFood(25);
-                            }
-                            this.monedas.pagar(24);
-                            break;
-                        case 4:
-                            if(warehouseType == 1) {
-                                selectedFishFarm.getWarehouseA().setFull();
-                            }else if(warehouseType == 2){
-                                selectedFishFarm.getWarehouseV().setFull();
-                            }
-                            this.monedas.pagar(option);                       
-                        default:
-                            break;
-                    }   
-                }
-            }catch(InputMismatchException e) {
-                System.out.println("Selección incorrecta");
-            }   
-        }
     }
 
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
-        sim.init();
+        //sim.init();
+        sim.showIctio();
         //sim.menu();
         //sim.menuPisc();
         //System.out.println(sim.selectPisc());
@@ -261,3 +194,4 @@ public class Simulador {
         //sim.showTankStatus();
     }
 }
+
