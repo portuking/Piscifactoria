@@ -22,8 +22,8 @@ public class AlmacenCentral {
      * Constructor de Almacén Central
      */
     public AlmacenCentral() {
-        this.warehouseA = new AlmacenComida(200);
-        this.warehouseV = new AlmacenComida(200);
+        this.warehouseA = new AlmacenComida(200, 0);
+        this.warehouseV = new AlmacenComida(200, 0);
         this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;
@@ -69,6 +69,16 @@ public class AlmacenCentral {
         }else{
             System.out.println("Operacion Incorrecta: No se añade comida");
         }      
+    }
+
+    /**
+     * Método que muestra la ocupación del Almacén Central
+     */
+    public void getOcuped(){
+        System.out.println("--------Almacén Central--------");
+        System.out.println("Comida actual: " + this.getStock());
+        System.out.println("Capacidad máxima: " + this.getMaxCap());
+        System.out.println("Porcentaje de ocupación [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
     }
 
     /**
