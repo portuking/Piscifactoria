@@ -72,6 +72,16 @@ public class AlmacenCentral {
     }
 
     /**
+     * Método que muestra la ocupación del Almacén Central
+     */
+    public void getOcuped(){
+        System.out.println("--------Almacén Central--------");
+        System.out.println("Comida actual: " + this.getStock());
+        System.out.println("Capacidad máxima: " + this.getMaxCap());
+        System.out.println("Porcentaje de ocupación [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
+    }
+
+    /**
      * @return Devuelve la capacidad maxima del almacen
      */
     public int getMaxCap() {

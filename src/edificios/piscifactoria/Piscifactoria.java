@@ -373,6 +373,20 @@ public class Piscifactoria {
     }
 
     /**
+     * @return Almacén de comida Animal de la Piscifactoría
+     */
+    public AlmacenComida getWarehouseA(){
+        return comidaAnimal;
+    }
+
+    /**
+     * @return Almacén de comida Vegetal de la Piscifactoría
+     */
+    public AlmacenComida getWarehouseV(){
+        return comidaVegetal;
+    }
+
+    /**
      * Método que muestra una lista de los Tanques de la Piscifactoría
      */
     public void listTanks(){
