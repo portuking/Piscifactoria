@@ -82,6 +82,15 @@ public class AlmacenCentral {
     }
 
     /**
+     * Método que comprueba cuanto sitio hay libre en el Almacén
+     * @return espacio libre
+     */
+    public int getSpace() {
+        int freeSpace = this.getMaxCap() - this.getStock();
+        return freeSpace;
+    }
+
+    /**
      * @return Devuelve la capacidad maxima del almacen
      */
     public int getMaxCap() {

@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import edificios.almacenes.AlmacenCentral;
 import edificios.piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
@@ -177,6 +178,8 @@ public class Simulador {
         }
 
     }
+
+
 
 
     public static void main(String[] args) {
