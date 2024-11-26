@@ -95,6 +95,15 @@ public class AlmacenComida {
         return emptyAmmount;
     }
 
+    /**
+     * Método que comprueba cuanto sitio hay libre en el Almacén
+     * @return espacio libre
+     */
+    public int getSpace() {
+        int freeSpace = this.getMaxCap() - this.getStock();
+        return freeSpace;
+    }
+
     @Override
     public String toString() {
         return "Cantidad de comida almacenada  "  + this.stock + "\n" +
