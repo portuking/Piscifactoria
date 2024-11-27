@@ -271,10 +271,10 @@ public class Simulador {
      * Método que añade comida al Almacén de comida elegido de la Piscifactoría dada
      */
     public void addFood() {
+        boolean cancel = false;
+        int warehouseType;
         if(centralWarehouse == null){
-            Piscifactoria selectedFishFarm = selectPisc();
-            boolean cancel = false;
-            int warehouseType;
+            Piscifactoria selectedFishFarm = selectPisc();    
             while (!cancel) {
                 try{
                     System.out.println("Tipo de Almacén: ");
@@ -340,7 +340,67 @@ public class Simulador {
                 }   
             }
         }else{
-            
+            while (!cancel) {
+                System.out.println("Tipo de Almacén: ");
+                System.out.println("1.- Almacén de comida animal");
+                System.out.println("2.- Almacén de comida vegetal");
+                System.out.println("0.- Cancelar");
+                System.out.print("Seleccione una opción: ");
+                warehouseType = sc.nextInt();
+                if(warehouseType == 0) {
+                    cancel = true;
+                }else{
+                    System.out.println("1.- 5");
+                    System.out.println("2.- 10");
+                    System.out.println("3.- 25");
+                    System.out.println("4.- Llenar");
+                    System.out.println("0.- Cancelar");
+                    System.out.print("Seleccione una opción: ");
+                    int ammount = sc.nextInt();
+                    switch (ammount) {
+                        case 1:
+                            if(warehouseType == 1) {
+                                this.centralWarehouse.addAnimalFood(5);;
+                            }else if(warehouseType == 2){
+                                this.centralWarehouse.addVegtalFood(5);
+                            }
+                            this.monedas.pagar(5);
+                            break;
+                        case 2:
+                            if(warehouseType == 1) {
+                                this.centralWarehouse.addAnimalFood(10);
+                            }else if(warehouseType == 2){
+                                this.centralWarehouse.addVegtalFood(10);
+                            }
+                            this.monedas.pagar(10);
+                            break;
+                        case 3:
+                            if(warehouseType == 1) {
+                                this.centralWarehouse.addAnimalFood(25);
+                            }else if(warehouseType == 2){
+                                this.centralWarehouse.addAnimalFood(25);
+                            }
+                            this.monedas.pagar(20);
+                            break;
+                        case 4:
+                            int added = 0;
+                            int discount = 0;
+                            if(warehouseType == 1) {
+                                added = selectedFishFarm.getWarehouseA().getSpace();
+                                discount = added / 25;
+                                selectedFishFarm.getWarehouseA().setFull();
+                            }else if(warehouseType == 2){
+                                added = selectedFishFarm.getWarehouseV().getSpace();
+                                discount = added / 25;
+                                selectedFishFarm.getWarehouseV().setFull();
+                            }
+                            this.monedas.pagar(added - (discount * 5));                       
+                        default:
+                            break;
+                    }
+                }
+                
+            }
         }
     }
 
