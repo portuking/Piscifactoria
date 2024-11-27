@@ -81,6 +81,7 @@ public class AlmacenCentral {
         System.out.println("Porcentaje de ocupación [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
     }
 
+
     /**
      * @return Devuelve la capacidad maxima del almacen
      */
