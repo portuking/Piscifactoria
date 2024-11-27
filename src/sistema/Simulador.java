@@ -9,6 +9,7 @@ import edificios.almacenes.AlmacenCentral;
 import edificios.almacenes.AlmacenComida;
 import edificios.piscifactoria.Piscifactoria;
 import edificios.tanque.Tanque;
+import estadisticas.Estadisticas;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
 
@@ -26,6 +27,23 @@ public class Simulador {
     private SISMonedas monedas;
     /**Almacén de comida central del Sistema*/
     private AlmacenCentral centralWarehouse;
+    /**Array que contiene los peces disponibles*/
+    private static String[] pecesDisponibles = {
+        propiedades.AlmacenPropiedades.BESUGO.getNombre(),
+        propiedades.AlmacenPropiedades.CABALLA.getNombre(),
+        propiedades.AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
+        propiedades.AlmacenPropiedades.LENGUADO_EUROPEO.getNombre(),
+        propiedades.AlmacenPropiedades.LUBINA_EUROPEA.getNombre(),
+        propiedades.AlmacenPropiedades.LUBINA_RAYADA.getNombre(),
+        propiedades.AlmacenPropiedades.LUCIO_NORTE.getNombre(),
+        propiedades.AlmacenPropiedades.PEJERREY.getNombre(),
+        propiedades.AlmacenPropiedades.PERCA_EUROPEA.getNombre(),
+        propiedades.AlmacenPropiedades.ROBALO.getNombre(),
+        propiedades.AlmacenPropiedades.SALMON_ATLANTICO.getNombre(),
+        propiedades.AlmacenPropiedades.SALMON_CHINOOK.getNombre()};
+    /**INstancia de clase estadisticas*/
+    public estadisticas.Estadisticas stats = new Estadisticas(pecesDisponibles);
+
     Scanner sc = new Scanner(System.in);
 
     /**
@@ -150,7 +168,6 @@ public class Simulador {
         int opcion = sc.nextInt();
         
         if (opcion == 0) {
-        System.out.println("Operación cancelada.");
         return;
         }
 
@@ -327,12 +344,14 @@ public class Simulador {
         }
     }
 
-
+    public void showStats(){
+        stats.mostrar();
+    }
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
         //sim.init();
-        sim.showIctio();
+        sim.showStats();
         //sim.menu();
         //sim.menuPisc();
         //System.out.println(sim.selectPisc());
