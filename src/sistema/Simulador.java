@@ -271,10 +271,10 @@ public class Simulador {
      * Método que añade comida al Almacén de comida elegido de la Piscifactoría dada
      */
     public void addFood() {
+        boolean cancel = false;
+        int warehouseType;
         if(centralWarehouse == null){
-            Piscifactoria selectedFishFarm = selectPisc();
-            boolean cancel = false;
-            int warehouseType;
+            Piscifactoria selectedFishFarm = selectPisc();    
             while (!cancel) {
                 try{
                     System.out.println("Tipo de Almacén: ");
@@ -293,44 +293,89 @@ public class Simulador {
                         System.out.println("0.- Cancelar");
                         System.out.print("Seleccione una opción: ");
                         int option = sc.nextInt();
+                        int ammount = 0;
+                        int discount = 0;
                         switch (option) {
                             case 1:
                                 if(warehouseType == 1) {
-                                    selectedFishFarm.getWarehouseA().addFood(5);
+                                    if(selectedFishFarm.getWarehouseA().getSpace() < 5) {
+                                        ammount = selectedFishFarm.getWarehouseA().getSpace();
+                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    }else{
+                                        ammount = 5;
+                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    }
                                 }else if(warehouseType == 2){
-                                    selectedFishFarm.getWarehouseV().addFood(5);
+                                    if(selectedFishFarm.getWarehouseV().getSpace() < 5) {
+                                        ammount = selectedFishFarm.getWarehouseV().getSpace();
+                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    }else{
+                                        ammount = 5;
+                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    }
                                 }
-                                this.monedas.pagar(5);
+                                this.monedas.pagar(ammount);
                                 break;
                             case 2:
                                 if(warehouseType == 1) {
-                                    selectedFishFarm.getWarehouseA().addFood(10);
+                                    if(selectedFishFarm.getWarehouseA().getSpace() < 10) {
+                                        ammount = selectedFishFarm.getWarehouseA().getSpace();
+                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    }else{
+                                        ammount = 10;
+                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    } 
                                 }else if(warehouseType == 2){
-                                    selectedFishFarm.getWarehouseV().addFood(10);
+                                    if(selectedFishFarm.getWarehouseV().getSpace() < 10) {
+                                        ammount = selectedFishFarm.getWarehouseV().getSpace();
+                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    }else{
+                                        ammount = 10;
+                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    }
                                 }
-                                this.monedas.pagar(10);
+                                this.monedas.pagar(ammount);
                                 break;
                             case 3:
                                 if(warehouseType == 1) {
-                                    selectedFishFarm.getWarehouseA().addFood(25);
+                                    if(selectedFishFarm.getWarehouseA().getSpace() < 25) {
+                                        ammount = selectedFishFarm.getWarehouseA().getSpace();
+                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    }else{
+                                        ammount = 25;
+                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    } 
                                 }else if(warehouseType == 2){
-                                    selectedFishFarm.getWarehouseV().addFood(25);
+                                    if(selectedFishFarm.getWarehouseV().getSpace() < 25) {
+                                        ammount = selectedFishFarm.getWarehouseV().getSpace();
+                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    }else{
+                                        ammount = 25;
+                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    }
+                                    if(ammount > 25) {
+                                        discount = (ammount / 25) * 5;
+                                        monedas.pagar(discount);
+                                    }else{
+                                        monedas.pagar(ammount);
+                                    }
                                 }
                                 this.monedas.pagar(20);
                                 break;
                             case 4:
-                                int added = 0;
-                                int discount = 0;
                                 if(warehouseType == 1) {
-                                    added = selectedFishFarm.getWarehouseA().getSpace();
-                                    discount = added / 25;
-                                    selectedFishFarm.getWarehouseA().setFull();
+                                    ammount = selectedFishFarm.getWarehouseA().getSpace();
+                                    selectedFishFarm.getWarehouseA().addFood(ammount);
                                 }else if(warehouseType == 2){
-                                    added = selectedFishFarm.getWarehouseV().getSpace();
-                                    discount = added / 25;
-                                    selectedFishFarm.getWarehouseV().setFull();
+                                    ammount = selectedFishFarm.getWarehouseV().getSpace();
+                                    selectedFishFarm.getWarehouseV().addFood(ammount);
                                 }
-                                this.monedas.pagar(added - (discount * 5));                       
+                                if(ammount > 25) {
+                                    discount = (ammount / 25) * 5;
+                                    monedas.pagar(discount);
+                                }else{
+                                    monedas.pagar(ammount);
+                                }                      
                             default:
                                 break;
                         }   
@@ -340,9 +385,112 @@ public class Simulador {
                 }   
             }
         }else{
-            
+            while (!cancel) {
+                System.out.println("Tipo de Almacén: ");
+                System.out.println("1.- Almacén de comida animal");
+                System.out.println("2.- Almacén de comida vegetal");
+                System.out.println("0.- Cancelar");
+                System.out.print("Seleccione una opción: ");
+                warehouseType = sc.nextInt();
+                if(warehouseType == 0) {
+                    cancel = true;
+                }else{
+                    System.out.println("1.- 5");
+                    System.out.println("2.- 10");
+                    System.out.println("3.- 25");
+                    System.out.println("4.- Llenar");
+                    System.out.println("0.- Cancelar");
+                    System.out.print("Seleccione una opción: ");
+                    int opcion = sc.nextInt();
+                    int discount = 0;
+                    int ammount = 0;
+                    switch (opcion) {
+                        case 1:
+                            if(warehouseType == 1) {
+                                if(this.centralWarehouse.getWarehouseA().getSpace() < 5) {
+                                    ammount = this.centralWarehouse.getWarehouseA().getSpace();
+                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                }else{
+                                    ammount = 5;
+                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                }
+                            }else if(warehouseType == 2){
+                                if(this.centralWarehouse.getWarehouseV().getSpace() < 5) {
+                                    ammount = this.centralWarehouse.getWarehouseV().getSpace();
+                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                }else{
+                                    ammount = 5;
+                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                }
+                            }
+                            this.monedas.pagar(ammount);
+                            break;
+                        case 2:
+                            if(warehouseType == 1) {
+                                if(this.centralWarehouse.getWarehouseA().getSpace() < 10) {
+                                    ammount = this.centralWarehouse.getWarehouseA().getSpace();
+                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                }else{
+                                    ammount = 10;
+                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                }
+                            }else if(warehouseType == 2){
+                                if(this.centralWarehouse.getWarehouseV().getSpace() < 10) {
+                                    ammount = this.centralWarehouse.getWarehouseV().getSpace();
+                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                }else{
+                                    ammount = 10;
+                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                }
+                            }
+                            this.monedas.pagar(ammount);
+                            break;
+                        case 3:
+                            if(warehouseType == 1) {
+                                if(this.centralWarehouse.getWarehouseA().getSpace() < 25) {
+                                    ammount = this.centralWarehouse.getWarehouseA().getSpace();
+                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                }else{
+                                    ammount = 25;
+                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                }
+                            }else if(warehouseType == 2){
+                                if(this.centralWarehouse.getWarehouseV().getSpace() < 25) {
+                                    ammount = this.centralWarehouse.getWarehouseV().getSpace();
+                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                }else{
+                                    ammount = 25;
+                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                }
+                            }
+                            if(ammount > 25) {
+                                discount = (ammount / 25) * 5;
+                                this.monedas.pagar(discount);
+                            }else{
+                                this.monedas.pagar(ammount);
+                            }
+                            break;
+                        case 4:
+                            if(warehouseType == 1) {
+                                ammount = this.centralWarehouse.getWarehouseA().getSpace();
+                                this.centralWarehouse.getWarehouseA().addFood(ammount);
+                            }else if(warehouseType == 2){
+                                ammount = this.centralWarehouse.getWarehouseV().getSpace();
+                                this.centralWarehouse.getWarehouseV().addFood(ammount);
+                            }
+                            if(ammount > 25) {
+                                discount = (ammount / 25) * 5;
+                                this.monedas.pagar(discount);
+                            }else{
+                                this.monedas.pagar(ammount);
+                            }
+                            break;                   
+                    }
+                }
+                
+            }
         }
-    }
+     }
 
     public void showStats(){
         stats.mostrar();

@@ -86,16 +86,6 @@ public class AlmacenComida {
     }
 
     /**
-     * Método para llenar el Almacén de comida
-     * @return Cantidad de comida añadida para llenar el Almacén
-     */
-    public int setFull(){
-        int emptyAmmount = this.getMaxCap() - this.getStock();
-        this.setStock(this.getStock() + emptyAmmount);
-        return emptyAmmount;
-    }
-
-    /**
      * Método que comprueba cuanto sitio hay libre en el Almacén
      * @return espacio libre
      */
