@@ -11,10 +11,6 @@ public class AlmacenCentral {
     private int maxCap;
     /**Stock del Almacén central */
     private int stock;
-    /**Stock de comida animal del Almacén Central */
-    private int animalFoodStock;
-    /**Stock de comida vegetal del Almacén Central */
-    private int vegetalFoodStock;
     /**Precio de el Almacén Central */
     private int price;
     /**Almacén de comida Animal*/
@@ -28,8 +24,6 @@ public class AlmacenCentral {
     public AlmacenCentral() {
         this.warehouseA = new AlmacenComida(200, 0);
         this.warehouseV = new AlmacenComida(200, 0);
-        this.animalFoodStock = this.warehouseA.getStock();
-        this.vegetalFoodStock = this.warehouseV.getStock();
         this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;
@@ -61,8 +55,8 @@ public class AlmacenCentral {
         System.out.println("Comida actual: " + this.getStock());
         System.out.println("Capacidad máxima: " + this.getMaxCap());
         System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
-        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + (this.getAnimalFoodStock()/this.warehouseA.getMaxCap())*100 + "%");
-        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + (this.getVegetalFoodStock()/this.warehouseV.getMaxCap())*100 + "%");
+        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + (this.getWarehouseA().getStock()/this.getWarehouseA().getMaxCap())*100 + "%");
+        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + (this.getWarehouseV().getStock()/this.getWarehouseV().getMaxCap())*100 + "%");
     }
 
 
@@ -81,17 +75,17 @@ public class AlmacenCentral {
     }
 
     /**
-     * @return Stock de comida animal del Almacén Central
+     * @return Almacén de comida animal
      */
-    public int getAnimalFoodStock(){
-        return this.animalFoodStock;
+    public AlmacenComida getWarehouseA() {
+        return warehouseA;
     }
 
     /**
-     * @return Stock de comida Vegetal del Almacén Central
+     * @return Almacén de comida vegetal
      */
-    public int getVegetalFoodStock(){
-        return this.vegetalFoodStock;
+    public AlmacenComida getWarehouseV() {
+        return warehouseV;
     }
 
     @Override
