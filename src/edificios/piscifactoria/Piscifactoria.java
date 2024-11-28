@@ -304,6 +304,20 @@ public class Piscifactoria {
         }
     }
 
+
+     /**
+     * Método que elimina los peces muertos de los tanques
+     */
+    public void cleanDeadFishes() {
+        for (Tanque tanque : tanques) {
+            tanque.cleanDeadFishes();
+        }
+    }
+
+    public void cleanTank(Tanque tank){
+        tank.cleanTank();
+    }
+
      /**
      * @return Nombre de la Piscifactoria
      */
@@ -391,7 +405,7 @@ public class Piscifactoria {
      */
     public void listTanks(){
         for (Tanque t : tanques) {
-            System.out.println((t.getTankNum() - 1) + ".- " + "Tipo: " + t.getFishType() + ".");
+            System.out.println((t.getTankNum()) + ".- " + "Tipo: " + t.getFishType() + ".");
         }
     }
 
