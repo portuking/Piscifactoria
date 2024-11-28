@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IRio;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoroActivo;
 import propiedades.AlmacenPropiedades;
@@ -12,7 +11,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */ 
 
-public class LucioDelNorte extends AlimentacionCarnivoroActivo implements IRio{
+public class LucioDelNorte extends AlimentacionCarnivoroActivo{
     /**
      * Constructor de Lucio del Norte
      * @param sex Sexo del Pez

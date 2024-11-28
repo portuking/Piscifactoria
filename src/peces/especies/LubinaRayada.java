@@ -1,6 +1,5 @@
 package peces.especies;
 
-import peces.IMar;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
@@ -12,7 +11,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */ 
 
-public class LubinaRayada extends AlimentacionCarnivoro implements IMar{
+public class LubinaRayada extends AlimentacionCarnivoro{
     /**
      * Constructor de Lubina Rayada
      * @param sex Sexo del Pez

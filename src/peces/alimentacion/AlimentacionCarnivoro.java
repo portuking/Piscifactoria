@@ -1,38 +1,50 @@
 package peces.alimentacion;
 
-import edificios.tanque.Tanque;
 import peces.Pez;
 import propiedades.PecesDatos;
-import java.util.Random;
 
-public class AlimentacionCarnivoro extends Pez{
+/**
+ * Clase que representa la alimentación carnívora de un pez
+ * @author Manuel Abalo Rietz
+ * @author Adrián Ces López
+ * @author Pablo Dopazo Suárez
+ */
+public class AlimentacionCarnivoro extends Pez {
 
-    public AlimentacionCarnivoro(PecesDatos fishStats, boolean sex){
+    /**
+     * Constructor para crear un nuevo pez carnívoro.
+     *
+     * @param fishStats Objeto de tipo PecesDatos que contiene las estadísticas del pez.
+     * @param sex       booleano que indica el sexo del pez (true si es macho, false si es hembra).
+     */
+    public AlimentacionCarnivoro(PecesDatos fishStats, boolean sex) {
         super(sex, fishStats);
     }
 
+     /**
+     * Método que simula la acción de comer del pez carnívoro.
+     *
+     * @return La cantidad de comida consumida (1 si ha comido).
+     */
     @Override
-    public void eat(Tanque<? extends Pez> tank) {
-        for (int i = 0; i < tank.getFishes().size(); i++) {
-            if(tank.getFishes().get(i) != null) {
-                if(!tank.getFishes().get(i).isAlive()) {
-                    this.setEat(false);
-                    Random r = new Random();
-                    boolean random = r.nextBoolean();
-                    if(random == false) {
-                        tank.getFishes().set(i, null);
-                    }
-                    break;
-                }
-            }
+    public int eat() {
+        int comidaConsumida = 0;
+        if (this.isAlive() && !this.isEat()) {
+            this.eat = true;
+            comidaConsumida += 1;
         }
+        return comidaConsumida;
     }
 
+    /**
+     * Método que crea un nuevo pez. Este método no está implementado y lanzará una excepción.
+     *
+     * @return Un nuevo objeto de tipo Pez (no implementado).
+     * @throws UnsupportedOperationException Si se llama a este método.
+     */
     @Override
-    public Pez getInstance() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getInstance'");
+    public Pez getNewFish(boolean sex) {
+        throw new UnsupportedOperationException("Método sin implementar");
     }
-
 
 }
