@@ -496,10 +496,27 @@ public class Simulador {
         stats.mostrar();
     }
 
+
+    /**
+     * Metodo que elimina todos los peces muertos de los tanques de una Piscifactoria
+     */
+    public void cleanTank(){
+        Piscifactoria selectedFishFarm = selectPisc();
+        selectedFishFarm.cleanDeadFishes();
+    }
+
+    /**
+     * Metodo que borra todos los peces de un Tanque en concreto de una piscifactoria
+     */
+    public void emptyTank(){
+        Tanque tank = selectTank();
+        tank.cleanTank();
+    }
+
     public static void main(String[] args) {
         Simulador sim = new Simulador();
-        //sim.init();
-        sim.showStats();
+        sim.init();
+        //sim.showStats();
         //sim.menu();
         //sim.menuPisc();
         //System.out.println(sim.selectPisc());
@@ -509,6 +526,8 @@ public class Simulador {
         //sim.showSpecificStatus();
         //sim.selectTank();
         //sim.showTankStatus();
+        //sim.cleanTank();
+        sim.emptyTank(); 
     }
 }
 
