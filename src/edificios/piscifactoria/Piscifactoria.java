@@ -304,8 +304,7 @@ public class Piscifactoria {
         }
     }
 
-
-     /**
+    /**
      * Método que elimina los peces muertos de los tanques
      */
     public void cleanDeadFishes() {
@@ -314,7 +313,11 @@ public class Piscifactoria {
         }
     }
 
-    public void cleanTank(Tanque tank){
+    /**
+     * Método que elimina los peces de un tanque
+     * @param tank Tanque elegido
+     */
+    public void cleanTank(Tanque tank) {
         tank.cleanTank();
     }
 
@@ -401,6 +404,13 @@ public class Piscifactoria {
     }
 
     /**
+     * @return El precio de la Piscifactoría
+     */
+    public int getPrecio(){
+        return this.precio;
+    }
+
+    /**
      * Método que muestra una lista de los Tanques de la Piscifactoría
      */
     public void listTanks(){
@@ -411,8 +421,10 @@ public class Piscifactoria {
 
     @Override
     public String toString() {
-        return "Piscifactoria [name=" + name + ", tipo=" + tipo + ", maxTank=" + maxTank + ", maxFood=" + maxFood
-                + ", currentFood=" + currentFood + ", precio=" + precio + ", tanque=" + tanques + ", comidaVegetal="
-                + comidaVegetal + ", comidaAnimal=" + comidaAnimal + "]";
+        return "Nombre: " + this.getName() + "\n" + 
+        "Tipo: " + this.getTipo() +"\n"+ "Precio: "+ this.getPrecio() +"\n" + "Máximo de Tanques permitidos: " + 
+        this.getMaxTank() + "\n" + "Almacenes de comida: " + "\n" + "Almacén de comida vegetal:"
+        + "\n" + this.getWarehouseV().toString() + "\n" + "Almacén de comida animal: " + "\n"
+        + this.getWarehouseA().toString() + "\n" + "Tanques: " + "\n" + this.getTanques();
     }
 }
