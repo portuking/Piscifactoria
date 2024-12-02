@@ -651,9 +651,29 @@ public class Simulador {
      */
     public void upgradeFisFarm() {
         Piscifactoria selectedFishFarm = selectPisc();
+        int opcion = 0;
+        boolean validSelection = false;
         System.out.println("1. Comprar Tanque");
         System.out.println("2. Aumentar Almacén de comida");
-        
+        while (!validSelection) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1:
+                        selectedFishFarm.compraTanque();
+                        validSelection = true;
+                        break;
+                    case 2: 
+                        selectedFishFarm.upgradeFood();
+                        validSelection = true;
+                    default:
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Entrada inválida");
+            }
+        }
     }
 
     /**
