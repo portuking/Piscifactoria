@@ -59,6 +59,12 @@ public class AlmacenCentral {
         System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + (this.getWarehouseV().getStock()/this.getWarehouseV().getMaxCap())*100 + "%");
     }
 
+    /**
+     * Método que añade 50 espacios al Almacén central
+     */
+    public void upgrade() {
+        this.maxCap += 50; 
+    }
 
     /**
      * @return Devuelve la capacidad maxima del almacen
