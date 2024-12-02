@@ -277,7 +277,6 @@ public class Piscifactoria {
     /**
      * Método que añade un Tanque
      * @return si es posible añadirlo
-     * ---------------------------------REVISAR
      */
     public boolean addTanque() {
         if (tanques.size() < this.maxTank) {
@@ -289,18 +288,23 @@ public class Piscifactoria {
 
     /**
      * Método que permite comprar un Tanque para la Piscifactoria
-     * ---------------------------------------------------------------REVISAR
      */
     public void compraTanque() {
         SISMonedas monedas = SISMonedas.getInstance();
+        Tanque newTank = null;
         if (tipo) {
             if (addTanque()) {
                 monedas.pagar(tanques.size() - 1 * 150);
+                newTank = new Tanque(25, tankNum);
             }
         } else {
             if (addTanque()) {
                 monedas.pagar(tanques.size() - 1 * 600);
+                newTank = new Tanque(100, tankNum);
             }
+        }
+        if(newTank != null) {
+            this.tanques.add(newTank);
         }
     }
 
