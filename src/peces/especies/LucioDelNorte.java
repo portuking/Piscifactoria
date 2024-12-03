@@ -28,4 +28,13 @@ public class LucioDelNorte extends AlimentacionCarnivoroActivo{
         return new LucioDelNorte (sex);
 
      }
+
+
+    @Override
+    public String toString() {
+        return "===== Lucio del Norte=====\n" +
+               "Especie: " + AlmacenPropiedades.LUCIO_NORTE + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
 }

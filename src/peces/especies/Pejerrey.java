@@ -29,4 +29,13 @@ public class Pejerrey extends AlimentacionCarnivoro {
         return new Pejerrey(sex);
      }
 
+
+    @Override
+    public String toString() {
+        return "===== BPejerrey =====\n" +
+               "Especie: " + AlmacenPropiedades.PEJERREY + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
+
 }

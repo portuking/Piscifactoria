@@ -24,12 +24,21 @@ public class Robalo extends AlimentacionCarnivoro {
 
 
     /**
-     * @return Nueva instancia de Besugo
+     * @return Nueva instancia de Robalo
      */
 
      public Pez getInstance(){
-        return new Besugo(sex);
+        return new Robalo(sex);
      }
+
+
+    @Override
+    public String toString() {
+        return "===== Robalo =====\n" +
+               "Especie: " + AlmacenPropiedades.ROBALO + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
 
 
 }

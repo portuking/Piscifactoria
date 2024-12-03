@@ -31,4 +31,14 @@ public class SalmonAtlantico extends AlimentacionCarnivoro{
         }
 
 
+
+    @Override
+    public String toString() {
+        return "===== Salmon Atlantico =====\n" +
+               "Especie: " + AlmacenPropiedades.SALMON_ATLANTICO + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
+
+
 }

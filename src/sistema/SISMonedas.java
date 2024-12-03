@@ -91,4 +91,11 @@ public class SISMonedas {
         SISMonedas.saldo = saldo;
     }
 
+    @Override
+    public String toString() {
+        return "===== Sistema de Monedas =====\n" +
+               "Saldo actual: " + monedas + " monedas\n" +
+                "===============================";
+}
+
 }

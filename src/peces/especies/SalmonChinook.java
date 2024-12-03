@@ -28,4 +28,13 @@ public class SalmonChinook extends AlimentacionCarnivoro{
     public Pez getInstance(){
         return new SalmonChinook(sex);
     }
+
+
+    @Override
+    public String toString() {
+        return "===== Salmon Chinook =====\n" +
+               "Especie: " + AlmacenPropiedades.SALMON_CHINOOK + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
 }
