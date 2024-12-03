@@ -17,7 +17,7 @@ public class Piscifactoria {
     /**Número de Tanque*/
     private static int tankNum = 0;
     /**Tipo de Piscifactoria */
-    private boolean tipo;
+    protected boolean tipo;
     /**Máximo de Tanques permitidos en la Piscifactoria*/
     private int maxTank;
     /**Capacidad máxima de comida de la Piscifactoria */
@@ -277,6 +277,7 @@ public class Piscifactoria {
     /**
      * Método que añade un Tanque
      * @return si es posible añadirlo
+     * ---------------------------------REVISAR
      */
     public boolean addTanque() {
         if (tanques.size() < this.maxTank) {
@@ -288,27 +289,23 @@ public class Piscifactoria {
 
     /**
      * Método que permite comprar un Tanque para la Piscifactoria
+     * ---------------------------------------------------------------REVISAR
      */
     public void compraTanque() {
         SISMonedas monedas = SISMonedas.getInstance();
-        Tanque newTank = null;
         if (tipo) {
             if (addTanque()) {
                 monedas.pagar(tanques.size() - 1 * 150);
-                newTank = new Tanque(25, tankNum);
             }
         } else {
             if (addTanque()) {
                 monedas.pagar(tanques.size() - 1 * 600);
-                newTank = new Tanque(100, tankNum);
             }
-        }
-        if(newTank != null) {
-            this.tanques.add(newTank);
         }
     }
 
-    /**
+
+     /**
      * Método que elimina los peces muertos de los tanques
      */
     public void cleanDeadFishes() {
@@ -317,11 +314,7 @@ public class Piscifactoria {
         }
     }
 
-    /**
-     * Método que elimina los peces de un tanque
-     * @param tank Tanque elegido
-     */
-    public void cleanTank(Tanque tank) {
+    public void cleanTank(Tanque tank){
         tank.cleanTank();
     }
 
@@ -408,13 +401,6 @@ public class Piscifactoria {
     }
 
     /**
-     * @return El precio de la Piscifactoría
-     */
-    public int getPrecio(){
-        return this.precio;
-    }
-
-    /**
      * Método que muestra una lista de los Tanques de la Piscifactoría
      */
     public void listTanks(){
@@ -425,10 +411,8 @@ public class Piscifactoria {
 
     @Override
     public String toString() {
-        return "Nombre: " + this.getName() + "\n" + 
-        "Tipo: " + this.getTipo() +"\n"+ "Precio: "+ this.getPrecio() +"\n" + "Máximo de Tanques permitidos: " + 
-        this.getMaxTank() + "\n" + "Almacenes de comida: " + "\n" + "Almacén de comida vegetal:"
-        + "\n" + this.getWarehouseV().toString() + "\n" + "Almacén de comida animal: " + "\n"
-        + this.getWarehouseA().toString() + "\n" + "Tanques: " + "\n" + this.getTanques();
+        return "Piscifactoria [name=" + name + ", tipo=" + tipo + ", maxTank=" + maxTank + ", maxFood=" + maxFood
+                + ", currentFood=" + currentFood + ", precio=" + precio + ", tanque=" + tanques + ", comidaVegetal="
+                + comidaVegetal + ", comidaAnimal=" + comidaAnimal + "]";
     }
 }
