@@ -34,5 +34,14 @@ public class CarpaPlateada extends AlimentacionFiltrador{
         return new CarpaPlateada(sex);
      }
 
+
+    @Override
+        public String toString() {
+            return "===== Carpa Plateada =====\n" +
+                "Especie: " + AlmacenPropiedades.CARPA_PLATEADA + "\n" +
+                "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+                "===================";
+    }
+
     
 }

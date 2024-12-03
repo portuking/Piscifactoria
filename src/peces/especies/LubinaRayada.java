@@ -30,4 +30,13 @@ public class LubinaRayada extends AlimentacionCarnivoro{
         return new LubinaRayada(sex);
      }
 
+
+    @Override
+    public String toString() {
+        return "===== Lubina Rayada =====\n" +
+               "Especie: " + AlmacenPropiedades.LUBINA_RAYADA + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
+
 }

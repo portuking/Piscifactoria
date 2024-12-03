@@ -28,4 +28,13 @@ public class LenguadoEuropeo extends AlimentacionCarnivoro{
      public Pez getInstance(){
         return new LenguadoEuropeo(sex);
      }
+
+
+    @Override
+    public String toString() {
+        return "===== Lenguado Europeo =====\n" +
+               "Especie: " + AlmacenPropiedades.LENGUADO_EUROPEO + "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+    }
 }

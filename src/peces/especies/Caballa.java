@@ -21,9 +21,21 @@ public class Caballa extends AlimentacionCarnivoro{
         super(AlmacenPropiedades.CABALLA, sex);
 
     }
-
+    /**
+     * 
+     * @return Nueva instancia de Caballa
+     */
     public Pez getInstance(){
         return new Caballa(sex);
+    }
+
+
+    @Override
+    public String toString() {
+        return "===== Caballa =====\n" +
+            "Especie: " + AlmacenPropiedades.CABALLA + "\n" +
+            "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+            "===================";
     }
 
 }

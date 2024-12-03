@@ -1,5 +1,6 @@
 package peces.especies;
 
+import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoroActivo;
 import propiedades.AlmacenPropiedades;
 
@@ -20,5 +21,23 @@ public class PercaEuropea extends AlimentacionCarnivoroActivo {
      public PercaEuropea(boolean sex){
         super(AlmacenPropiedades.PERCA_EUROPEA, sex);
      }
+     
+     /**
+      * 
+      * @return Nueva instancia de Perca Europea
+      */
+     public Pez getInstance(){
+      return new PercaEuropea(sex);
+     }
+
+
+
+    @Override
+      public String toString() {
+         return "===== Perca Europea =====\n" +
+               "Especie: " + AlmacenPropiedades.PERCA_EUROPEA+ "\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "===================";
+}
 
 }

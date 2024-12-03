@@ -27,4 +27,13 @@ public class Besugo extends AlimentacionCarnivoro{
         return new Besugo(sex);
     }
 
+
+    @Override
+    public String toString() {
+        return "===== Besugo =====\n" +
+            "Especie: " + AlmacenPropiedades.BESUGO + "\n" +
+            "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+            "===================";
+}
+
 }
