@@ -284,6 +284,5 @@ public  abstract class Pez {
                "  - Fértil: " + (fertile ? "Sí" : "No") + "\n" +
                "Ciclo de Reproducción Restante: " + reproductionCycle + " días\n" +
                "===========================";
-    
     }
 }
