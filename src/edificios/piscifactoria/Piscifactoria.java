@@ -1,67 +1,41 @@
 package edificios.piscifactoria;
 
 import java.util.ArrayList;
-
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
-import sistema.SISMonedas;
+
 /**
  * Clase que representa la Piscifactoría
  * @author Manuel Abalo Rietz
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
  */
-public class Piscifactoria {
+public abstract class Piscifactoria {
     /**Nombre de la Piscifactoria */
     private String name;
     /**Número de Tanque*/
     private static int tankNum = 0;
-    /**Tipo de Piscifactoria */
-    private boolean tipo;
     /**Máximo de Tanques permitidos en la Piscifactoria*/
     private int maxTank;
     /**Capacidad máxima de comida de la Piscifactoria */
     private int maxFood;
     /**Comida actual de la Piscifactoria */
     private int currentFood;
-    /**Precio de la Piscifactoria */
-    private int precio;
     /**Tanques de la Piscifactoria */
     private ArrayList<Tanque> tanques;
     /**Almacén de Comida vegetal */
     private AlmacenComida comidaVegetal;
     /**Almacén de Comida animal */
     private AlmacenComida comidaAnimal;
-    /**Tanque inicial de la Piscifactoría*/
-    private Tanque initialTank;
 
     /**
      * Constructor de Piscifactoria
      * @param name Nombre de la Piscifactoria 
-     * @param tipo Tipo de la Piscifactoria true: Río / false: Mal
      */
-    public Piscifactoria(String name, boolean tipo, int initialFood) {
+    protected Piscifactoria(String name) {
         this.name = name;
         this.maxTank = 10;
-        this.tipo = tipo;
         this.tanques = new ArrayList<>(this.maxTank);
-        if (tipo) {
-            this.initialTank = new Tanque(25, Piscifactoria.tankNum++);
-            tanques.add(this.initialTank);
-            this.comidaAnimal = new AlmacenComida(25, initialFood);
-            this.comidaVegetal = new AlmacenComida(25, initialFood);
-            this.precio = 500;
-        } else {
-            this.initialTank = new Tanque(100, Piscifactoria.tankNum+=1);
-            tanques.add(this.initialTank);
-            this.comidaAnimal = new AlmacenComida(100, initialFood);
-            this.comidaVegetal = new AlmacenComida(100, initialFood);
-            this.comidaAnimal.setStock(initialFood);
-            this.comidaAnimal.setStock(initialFood);
-            this.precio = 2000;
-        }
-        this.currentFood = this.comidaAnimal.getStock() + this.comidaVegetal.getStock();
-        this.maxFood = this.comidaAnimal.getMaxCap() + this.comidaVegetal.getMaxCap();
     }
 
     /**
@@ -256,23 +230,7 @@ public class Piscifactoria {
     /**
      * Método que mejora el Almacén de comida
      */
-    public void upgradeFood() {
-        SISMonedas monedas = SISMonedas.getInstance();
-        if (this.tipo) {
-            if (this.comidaAnimal.getMaxCap() <= 250 && this.comidaVegetal.getMaxCap() <= 250) {
-                monedas.pagar(50);
-                this.comidaAnimal.upgrade(this.comidaAnimal.getMaxCap() + 25);
-                this.comidaVegetal.upgrade(this.comidaVegetal.getMaxCap() + 25);
-            }
-
-        } else {
-            if (this.comidaAnimal.getMaxCap() <= 1000 && this.comidaVegetal.getMaxCap() <= 1000) {
-                monedas.pagar(200);
-                this.comidaAnimal.upgrade(this.comidaAnimal.getMaxCap() + 100);
-                this.comidaVegetal.upgrade(this.comidaVegetal.getMaxCap() + 100);
-            }
-        }
-    }
+    public abstract void upgradeFood();
 
     /**
      * Método que añade un Tanque
@@ -289,24 +247,7 @@ public class Piscifactoria {
     /**
      * Método que permite comprar un Tanque para la Piscifactoria
      */
-    public void compraTanque() {
-        SISMonedas monedas = SISMonedas.getInstance();
-        Tanque newTank = null;
-        if (tipo) {
-            if (addTanque()) {
-                monedas.pagar(tanques.size() - 1 * 150);
-                newTank = new Tanque(25, tankNum);
-            }
-        } else {
-            if (addTanque()) {
-                monedas.pagar(tanques.size() - 1 * 600);
-                newTank = new Tanque(100, tankNum);
-            }
-        }
-        if(newTank != null) {
-            this.tanques.add(newTank);
-        }
-    }
+    public abstract void compraTanque();
 
     /**
      * Método que elimina los peces muertos de los tanques
@@ -376,15 +317,9 @@ public class Piscifactoria {
     }
 
     /**
-     * @return El tipo de Piscifactoria que es
+     * @return Devuelve el tipo de Piscifactoría
      */
-    public String getTipo(){
-        if(this.tipo){
-            return "Tipo de Piscifactoría: Río";
-        }else{
-            return "Tipo de Piscifactoría: Mar";
-        }
-    }
+    public abstract String getTipo();
 
     /**
      * @return El número de Tanques de la Piscifactoria
@@ -410,9 +345,7 @@ public class Piscifactoria {
     /**
      * @return El precio de la Piscifactoría
      */
-    public int getPrecio(){
-        return this.precio;
-    }
+    public abstract int getPrecio();
 
     /**
      * Método que muestra una lista de los Tanques de la Piscifactoría
