@@ -13,14 +13,12 @@ import edificios.tanque.Tanque;
 public abstract class Piscifactoria {
     /**Nombre de la Piscifactoria */
     private String name;
-    /**Número de Tanque*/
-    private static int tankNum = 0;
-    /**Máximo de Tanques permitidos en la Piscifactoria*/
-    private int maxTank;
     /**Capacidad máxima de comida de la Piscifactoria */
     private int maxFood;
     /**Comida actual de la Piscifactoria */
     private int currentFood;
+    /**Máximo de Tanques de las Piscifactorías*/
+    private int maxTank;
     /**Tanques de la Piscifactoria */
     private ArrayList<Tanque> tanques;
     /**Almacén de Comida vegetal */
@@ -233,15 +231,15 @@ public abstract class Piscifactoria {
     public abstract void upgradeFood();
 
     /**
-     * Método que añade un Tanque
+     * Método que comprueba si es posible añadir un Tanque
      * @return si es posible añadirlo
      */
-    public boolean addTanque() {
-        if (tanques.size() < this.maxTank) {
-            this.tanques.add(new Tanque(this.maxTank, tankNum + 1));
+    public boolean canAddTanque() {
+        if(this.tanques.size() < this.getMaxTank()){
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     /**
@@ -271,13 +269,6 @@ public abstract class Piscifactoria {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return Número de Tanque de la Piscifactoria
-     */
-    public int getTankNum() {
-        return tankNum;
     }
 
     /**
