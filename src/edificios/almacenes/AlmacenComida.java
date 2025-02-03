@@ -39,10 +39,10 @@ public class AlmacenComida {
 
     /**
      * Método que aumenta el espacio de almacenamiento del Almacén
-     * @param newCapacity Número de espacios a añadir
+     * @param capacityAdded Número de espacios a añadir
      */
-    public void upgrade(int newCapacity) {
-        this.maxCap += newCapacity;
+    public void upgrade(int capacityAdded) {
+        this.maxCap += capacityAdded;
     }
 
     /**
