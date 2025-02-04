@@ -30,10 +30,10 @@ public class PiscifactoriaRio extends Piscifactoria{
      */
     public PiscifactoriaRio(String name) {
         super(name);
-        this.tankID = 1;
+        this.tankID = super.getTankID();
         this.maxTankCapacity = 25;
         this.maxFood = 250;
-        Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID);
+        Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID, this.getTipo());
         super.getTanques().add(initialRiverTank);
         this.wharehouseA = new AlmacenComida(25, 0);
         this.wharehouseV = new AlmacenComida(25, 0);
@@ -49,7 +49,7 @@ public class PiscifactoriaRio extends Piscifactoria{
         this.tankID = 1;
         this.maxTankCapacity = 25;
         this.maxFood = 250;
-        Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID);
+        Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID, this.getTipo());
         super.getTanques().add(initialRiverTank);
         this.wharehouseA = new AlmacenComida(25, stock);
         this.wharehouseV = new AlmacenComida(25, stock);
@@ -89,7 +89,7 @@ public class PiscifactoriaRio extends Piscifactoria{
             SISMonedas sistemaMonedas = SISMonedas.getInstance();
             if (sistemaMonedas.getMonedas() >= costo) {
                 sistemaMonedas.pagar(costo);
-                Tanque newTank = new Tanque(this.maxTankCapacity, (this.getTankID() + 1));
+                Tanque newTank = new Tanque(this.maxTankCapacity, (this.getTankID() + 1), this.getTipo());
                 super.getTanques().add(newTank);
             } else {
                 System.out.println("No tienes suficientes monedas para comprar un tanque.");
