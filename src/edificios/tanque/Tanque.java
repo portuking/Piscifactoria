@@ -27,11 +27,11 @@ public class Tanque {
      * @param maxCapacity capacidad máxima del Tanque
      * @param tankNum Número de tanque
      */
-    public Tanque(int maxCapacity, int tankNum) {
+    public Tanque(int maxCapacity, int tankNum, String fishType) {
         this.fishes = new ArrayList<>(this.maxCapacity);
         this.maxCapacity = maxCapacity;
         this.tankNum = tankNum;
-        this.fishType = null;
+        this.fishType = fishType;
     }
 
     /**
@@ -81,11 +81,13 @@ public class Tanque {
      * Muestra la ocupación del Tanque
      */
     public void showCapacity(Piscifactoria piscifactoria) {
-        if(this.isEmpty() == false) {
-            int capacity = this.fishes.size() / this.maxCapacity;
-            System.out.println("Tanque " + piscifactoria.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al " + capacity + "% de capacidad. [peces/espacios]");
-        }else{
-        System.out.println("Tanque " + piscifactoria.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al 0% de capacidad. [peces/espacios]");
+        if(piscifactoria != null) {
+            if(this.isEmpty() == false){
+                int capacity = this.fishes.size() / this.maxCapacity;
+                System.out.println("Tanque " + piscifactoria.getTankID() + " de la piscifactoría " + piscifactoria.getName() + " al " + capacity + "% de capacidad. [peces/espacios]");
+            }else{
+                System.out.println("Tanque " + piscifactoria.getTankID() + " de la piscifactoría " + piscifactoria.getName() + " al 0% de capacidad. [peces/espacios]");
+            }
         }
     }
 

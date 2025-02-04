@@ -10,9 +10,9 @@ public class PiscifactoriaMar extends Piscifactoria{
 
     /**Precio de la Piscifactoría */
     private final int PRICE = 2000;
-    /**ID de los tanques*/
-    private int tankID;
     /**Almacén de comida vegetal*/
+    /**ID de los tanques de la Piscifactoría*/
+    private int tankID;
     private AlmacenComida wharehouseV;
     /**Almacén de comida Animal*/
     private AlmacenComida wharehouseA;
@@ -28,8 +28,8 @@ public class PiscifactoriaMar extends Piscifactoria{
     public PiscifactoriaMar(String name) {
         super(name);
         this.maxTankCapacity = 100;
-        this.tankID = 1;
-        Tanque initialSeaTank = new Tanque(this.maxTankCapacity, this.tankID);
+        this.tankID = super.getTankID();
+        Tanque initialSeaTank = new Tanque(this.maxTankCapacity, this.tankID, this.getTipo());
         super.getTanques().add(initialSeaTank);
         this.wharehouseA = new AlmacenComida(100, 0);
         this.wharehouseV = new AlmacenComida(100, 0);
@@ -45,7 +45,7 @@ public class PiscifactoriaMar extends Piscifactoria{
         super(name);
         this.maxTankCapacity = 100;
         this.tankID = 1;
-        Tanque initialSeaTank = new Tanque(this.maxTankCapacity, this.tankID);
+        Tanque initialSeaTank = new Tanque(this.maxTankCapacity, this.tankID, this.getTipo());
         super.getTanques().add(initialSeaTank);
         this.wharehouseA = new AlmacenComida(100, stock);
         this.wharehouseV = new AlmacenComida(100, stock);
@@ -81,7 +81,7 @@ public class PiscifactoriaMar extends Piscifactoria{
     @Override
     public void compraTanque() {
         if(this.canAddTanque()) {
-            Tanque newTank = new Tanque(this.maxTankCapacity, (this.getTankID() + 1));
+            Tanque newTank = new Tanque(this.maxTankCapacity, (this.getTankID() + 1), this.getTipo());
             super.getTanques().add(newTank);
         }
     }
