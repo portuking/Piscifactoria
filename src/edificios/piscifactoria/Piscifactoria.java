@@ -348,8 +348,10 @@ public abstract class Piscifactoria {
 
     @Override
     public String toString() {
-        return "Piscifactoria [name=" + name + ", tipo=" + tipo + ", maxTank=" + maxTank + ", maxFood=" + maxFood
-                + ", currentFood=" + currentFood + ", precio=" + precio + ", tanque=" + tanques + ", comidaVegetal="
-                + comidaVegetal + ", comidaAnimal=" + comidaAnimal + "]";
+        return "Nombre: " + this.getName() + "\n" + 
+        "Tipo: " + this.getTipo() +"\n"+ "Precio: "+ this.getPrecio() +"\n" + "Máximo de Tanques permitidos: " + 
+        this.getMaxTank() + "\n" + "Almacenes de comida: " + "\n" + "Almacén de comida vegetal:"
+        + "\n" + this.getWarehouseV().toString() + "\n" + "Almacén de comida animal: " + "\n"
+        + this.getWarehouseA().toString() + "\n" + "Tanques: " + "\n" + this.getTanques();
     }
 }

@@ -5,6 +5,9 @@ import edificios.tanque.Tanque;
 
 /**
  * Clase que representa una Piscifactoría de Río
+ * @author Adrián Ces López
+ * @author Manuel Abalo Rietz
+ * @author Pablo Dopazo Suárez
  */
 public class PiscifactoriaRio extends Piscifactoria{
     /**Precio de las Piscifactorías de Río*/
