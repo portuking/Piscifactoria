@@ -2,6 +2,7 @@ package edificios.piscifactoria;
 
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
+import sistema.SISMonedas;
 
 /**
  * Clase que representa una Piscifactoría de Mar
@@ -83,10 +84,20 @@ public class PiscifactoriaMar extends Piscifactoria{
      */
     @Override
     public void compraTanque() {
-        if(this.canAddTanque()) {
-            Tanque newTank = new Tanque(this.maxTankCapacity, (this.getTankID() + 1));
-            super.getTanques().add(newTank);
-        }
+        if (this.canAddTanque()) {
+            int numTanquesActual = super.getTanques().size();
+            int costo = 150 * numTanquesActual;
+            SISMonedas sistemaMonedas = SISMonedas.getInstance();
+            if (sistemaMonedas.getMonedas() >= costo) {
+                sistemaMonedas.pagar(costo);
+                Tanque newTank = new Tanque(this.maxTankCapacity, (this.getTankID() + 1));
+                super.getTanques().add(newTank);
+            } else {
+                System.out.println("No tienes suficientes monedas para comprar un tanque.");
+            }
+        } else {
+        System.out.println("No se pueden añadir más tanques. Se ha alcanzado el máximo (10).");
+    }
     }
 
     /**

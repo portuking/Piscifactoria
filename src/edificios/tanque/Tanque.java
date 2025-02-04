@@ -83,9 +83,9 @@ public class Tanque {
     public void showCapacity(Piscifactoria piscifactoria) {
         if(this.isEmpty() == false) {
             int capacity = this.fishes.size() / this.maxCapacity;
-            System.out.println("Tanque " + piscifactoria.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al " + capacity + "% de capacidad. [peces/espacios]");
+            System.out.println("Tanque " + this.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al " + capacity + "% de capacidad. [peces/espacios]");
         }else{
-        System.out.println("Tanque " + piscifactoria.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al 0% de capacidad. [peces/espacios]");
+        System.out.println("Tanque " + this.getTankNum() + " de la piscifactoría " + piscifactoria.getName() + " al 0% de capacidad. [peces/espacios]");
         }
     }
 
