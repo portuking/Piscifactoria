@@ -8,6 +8,7 @@ import java.util.Scanner;
 import edificios.almacenes.AlmacenCentral;
 import edificios.almacenes.AlmacenComida;
 import edificios.piscifactoria.Piscifactoria;
+import edificios.piscifactoria.PiscifactoriaRio;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
 import propiedades.AlmacenPropiedades;
@@ -53,16 +54,18 @@ public class Simulador {
         try{
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
+            System.out.print("Escriba el nombre de su primera Piscifactoría: ");
+            String fishfarmName = sc.nextLine();
+            this.days = 0;
+            this.fishFarms = new ArrayList<Piscifactoria>();
+            this.monedas = SISMonedas.getInstance();
+            this.monedas.setMonedas(100);
+            Piscifactoria initialRiverFishfarm = new PiscifactoriaRio(fishfarmName, 25);
+            fishFarms.add(initialRiverFishfarm);
+            this.centralWarehouse = null;
         }catch(InputMismatchException e) {
             System.out.println("El nombre es incorrecto");
         }
-        this.days = 0;
-        this.fishFarms = new ArrayList<>();
-        this.monedas = SISMonedas.getInstance();
-        this.monedas.setMonedas(100);
-        Piscifactoria fishFarm = new Piscifactoria("Piscifactoria1", false, 25);
-        fishFarms.add(fishFarm);
-        this.centralWarehouse = null;
     }
 
     /**
@@ -558,7 +561,7 @@ public class Simulador {
      * Método que permite comprar edificios
      */
     public void buyBuildings() {
-        int opcion = 0;
+        /*int opcion = 0;
         boolean validSelection = false;
         System.out.println("1. Piscifactoría");
         System.out.println("2. Almacén Central");
@@ -607,7 +610,7 @@ public class Simulador {
             }catch(InputMismatchException e) {
                 System.out.println("Entrada inválida.");
             }
-        }
+        } */ //TODO
     }
 
     /**
@@ -701,6 +704,7 @@ public class Simulador {
         //sim.upgrade();
         //sim.buyBuildings();
         //sim.menuPisc();
+        sim.selectPisc();
     }
 }
 

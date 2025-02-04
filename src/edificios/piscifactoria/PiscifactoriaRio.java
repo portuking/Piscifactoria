@@ -34,6 +34,22 @@ public class PiscifactoriaRio extends Piscifactoria{
         this.wharehouseA = new AlmacenComida(25, 0);
         this.wharehouseV = new AlmacenComida(25, 0);
     }
+
+    /**
+     * Constructor de una Piscifactoría de Río
+     * @param name Nombre de la Piscifactoría
+     * @param stock Cantidad de comida inicial de la Piscifactoría de río
+     */
+    public PiscifactoriaRio(String name, int stock) {
+        super(name);
+        this.tankID = 1;
+        this.maxTankCapacity = 25;
+        this.maxFood = 250;
+        Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID);
+        super.getTanques().add(initialRiverTank);
+        this.wharehouseA = new AlmacenComida(25, stock);
+        this.wharehouseV = new AlmacenComida(25, stock);
+    }
     
     /**
      * Método que permite mejorar los Almacenes de la Piscifactoría
