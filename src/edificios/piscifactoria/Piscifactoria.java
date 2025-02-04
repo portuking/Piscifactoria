@@ -233,6 +233,7 @@ public abstract class Piscifactoria {
     /**
      * Método que comprueba si es posible añadir un Tanque
      * @return si es posible añadirlo
+     * ---------------------------------REVISAR
      */
     public boolean canAddTanque() {
         if(this.tanques.size() < this.getMaxTank()){
@@ -244,6 +245,7 @@ public abstract class Piscifactoria {
 
     /**
      * Método que permite comprar un Tanque para la Piscifactoria
+     * ---------------------------------------------------------------REVISAR
      */
     public abstract void compraTanque();
 
