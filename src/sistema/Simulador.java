@@ -8,6 +8,7 @@ import java.util.Scanner;
 import edificios.almacenes.AlmacenCentral;
 import edificios.almacenes.AlmacenComida;
 import edificios.piscifactoria.Piscifactoria;
+import edificios.piscifactoria.PiscifactoriaRio;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
 import propiedades.AlmacenPropiedades;
@@ -53,16 +54,18 @@ public class Simulador {
         try{
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
+            System.out.print("Escriba el nombre de su primera Piscifactoría: ");
+            String fishfarmName = sc.nextLine();
+            this.days = 0;
+            this.fishFarms = new ArrayList<Piscifactoria>();
+            this.monedas = SISMonedas.getInstance();
+            this.monedas.setMonedas(100);
+            Piscifactoria initialRiverFishfarm = new PiscifactoriaRio(fishfarmName, 25);
+            fishFarms.add(initialRiverFishfarm);
+            this.centralWarehouse = null;
         }catch(InputMismatchException e) {
             System.out.println("El nombre es incorrecto");
         }
-        this.days = 0;
-        this.fishFarms = new ArrayList<>();
-        this.monedas = SISMonedas.getInstance();
-        this.monedas.setMonedas(100);
-        Piscifactoria fishFarm = new Piscifactoria("Piscifactoria1", false, 25);
-        fishFarms.add(fishFarm);
-        this.centralWarehouse = null;
     }
 
     /**
@@ -521,6 +524,168 @@ public class Simulador {
         tank.cleanTank();
     } 
 
+    /**
+     * Método que para mejorar y comprar edificios
+     */
+    public void upgrade() {
+        int opcion = 0;
+        boolean validSelection = false;
+        System.out.println("1. Comprar edificios");
+        System.out.println("2. Mejorar edificios"); 
+        System.out.println("3. Cancelar");
+        while (!validSelection) {
+            try {
+                System.out.print("Seleccione una opción: "); 
+                opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    this.buyBuildings();            
+                    break;
+                case 2:
+                    this.upgradeBuildings();
+                    break;
+                case 3:
+                    validSelection = true;
+                    break;
+                default:
+                    break;
+            }  
+            } catch (Exception e) {
+                System.out.println("Entrada inválida");
+                sc.nextLine();
+            }         
+        }
+    }
+
+    /**
+     * Método que permite comprar edificios
+     */
+    public void buyBuildings() {
+        /*int opcion = 0;
+        boolean validSelection = false;
+        System.out.println("1. Piscifactoría");
+        System.out.println("2. Almacén Central");
+        System.out.println("3. Cancelar");
+        while (!validSelection) {
+            try{
+                System.out.print("Seleccione una opción: ");
+                opcion = sc.nextInt();
+                sc.nextLine();
+                switch (opcion) {
+                    case 1:
+                        System.out.print("Nombre de la nueva Piscifactoría: ");
+                        String name = sc.nextLine();
+                        boolean validType = false;
+                        while (!validType) {
+                            System.out.print("Tipo de Piscifactoría Rio / Mar: ");
+                            String type = sc.nextLine();
+                            if(type.equals("Rio")) {
+                                Piscifactoria newRiverFishFarm = new Piscifactoria(name, true, 0);
+                                fishFarms.add(newRiverFishFarm);
+                                this.monedas.pagar(500 * (this.fishFarms.size() -1));
+                                validType = true;
+                                validSelection = true;
+                            }else if(type.equals("Mar")) {
+                                Piscifactoria newSeaFishFarm = new Piscifactoria(name, false, 0);
+                                fishFarms.add(newSeaFishFarm);
+                                this.monedas.pagar(2000 * this.fishFarms.size() -1);
+                                validType = true;
+                                validSelection = true;
+                            }else{
+                                System.out.println("Tipo de Piscifactoría incorrecto");
+                            }
+                        }
+                        break;
+                        case 2:
+                            if(this.centralWarehouse == null) {
+                                this.centralWarehouse = new AlmacenCentral();
+                            }else{
+                                System.out.println("Mejora ya comprada");
+                            }
+                            validSelection = true;
+                            break;
+                    default:
+                        break;
+                } 
+            }catch(InputMismatchException e) {
+                System.out.println("Entrada inválida.");
+            }
+        } */ //TODO
+    }
+
+    /**
+     * Método que permite mejorar los edificios
+     */
+    public void upgradeBuildings() {
+        int opcion = 0;
+        boolean validSelection = false;
+        System.out.println("1. Piscifactoría");
+        if(this.centralWarehouse != null) {
+            System.out.println("2. Almacén Central");
+        }
+        System.out.println("3. Cancelar");
+        while (!validSelection) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1:
+                        this.upgradeFisFarm();
+                        break;
+                    case 2:
+                        if(this.centralWarehouse != null) {
+                            this.upgradeCentralWarehouse();
+                        }else{
+                            System.out.println("No dispone de Almacén Central");
+                            validSelection = false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida");
+            }
+        }
+    }
+
+    /**
+     * Método para mejorar las Piscifactorías
+     */
+    public void upgradeFisFarm() {
+        Piscifactoria selectedFishFarm = selectPisc();
+        int opcion = 0;
+        boolean validSelection = false;
+        System.out.println("1. Comprar Tanque");
+        System.out.println("2. Aumentar Almacén de comida");
+        while (!validSelection) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1:
+                        selectedFishFarm.compraTanque();
+                        validSelection = true;
+                        break;
+                    case 2: 
+                        selectedFishFarm.upgradeFood();
+                        validSelection = true;
+                    default:
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Entrada inválida");
+            }
+        }
+    }
+
+    /**
+     * Método para mejorar el Almacén Central
+     */
+    public void upgradeCentralWarehouse() {
+
+    }
+
     public static void main(String[] args) {
         Simulador sim = new Simulador();
         //sim.init();
@@ -535,7 +700,11 @@ public class Simulador {
         //sim.selectTank();
         //sim.showTankStatus();
         //sim.cleanTank();
-        //sim.emptyTank(); 
+        //sim.emptyTank();
+        //sim.upgrade();
+        //sim.buyBuildings();
+        //sim.menuPisc();
+        sim.selectPisc();
     }
 }
 

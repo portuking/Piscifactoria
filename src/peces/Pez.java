@@ -270,4 +270,19 @@ public  abstract class Pez {
     public void setFertile(boolean fertile) {
         this.fertile = fertile;
     }
+    @Override
+    public String toString() {
+        return "===== Estado del Pez =====\n" +
+               "Nombre Común: " + name + "\n" +
+               "Nombre Científico: " + scientifcName + "\n" +
+               "Edad: " + age + " días\n" +
+               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "Estado:\n" +
+               "  - Vivo: " + (alive ? "Sí" : "No") + "\n" +
+               "  - Alimentado: " + (eat ? "Sí" : "No") + "\n" +
+               "  - Maduro: " + (mature ? "Sí" : "No") + "\n" +
+               "  - Fértil: " + (fertile ? "Sí" : "No") + "\n" +
+               "Ciclo de Reproducción Restante: " + reproductionCycle + " días\n" +
+               "===========================";
+    }
 }

@@ -1,5 +1,6 @@
 package peces.especies;
 
+import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoroActivo;
 import propiedades.AlmacenPropiedades;
 
@@ -19,6 +20,40 @@ public class PercaEuropea extends AlimentacionCarnivoroActivo {
 
      public PercaEuropea(boolean sex){
         super(AlmacenPropiedades.PERCA_EUROPEA, sex);
+     }
+     
+     /**
+      * 
+      * @return Nueva instancia de Perca Europea
+      */
+     public Pez getInstance(){
+      return new PercaEuropea(sex);
+     }
+
+
+
+     @Override
+     public String toString() {
+         return "===== Estado del pez =====\n" +
+             "Especie: " + AlmacenPropiedades.PERCA_EUROPEA + "\n"+
+             "Nombre comun: " + name + "\n" +
+             "Nombre cientifico: " + scientifcName + "\n" +
+             "Tipo de pez: " + fishStats.getTipo() + "\n" +
+             "Costo de compra: " + fishStats.getCoste() + " monedas\n" +
+             "Monedas al vender: " + fishStats.getMonedas() + " monedas\n" +
+             "Edad: " + age + " dias\n" +
+             "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+             "Estado:\n" +
+             "  - Vivo: " + (alive ? "Si" : "No") + "\n" +
+             "  - Alimentado: " + (eat ? "Si" : "No") + "\n" +
+             "  - Maduro: " + (mature ? "Si" : "No") + "\n" +
+             "  - Fertil: " + (fertile ? "Si" : "No") + "\n" +
+             "Ciclo de reproduccion: " + fishStats.getCiclo() + " dias\n" +
+             "Huevos por reproduccion: " + fishStats.getHuevos() + "\n" +
+             "Madurez alcanzada en: " + fishStats.getMadurez() + " dias\n" +
+             "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
+             "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
+             "===========================";
      }
 
 }
