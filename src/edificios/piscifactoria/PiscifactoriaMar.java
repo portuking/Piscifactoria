@@ -5,6 +5,9 @@ import edificios.tanque.Tanque;
 
 /**
  * Clase que representa una Piscifactoría de Mar
+ * @author Adrián Ces López
+ * @author Manuel Abalo Rietz
+ * @author Pablo Dopazo Suárez
  */
 public class PiscifactoriaMar extends Piscifactoria{
 
