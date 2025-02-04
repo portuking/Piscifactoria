@@ -108,21 +108,18 @@ public class Simulador {
     public Piscifactoria selectPisc(){
         this.menuPisc();
         Piscifactoria selected = null;
-        boolean validSelection = false;
-        while (!validSelection) {
+        while (selected == null) {
             try{
-                System.out.print("Seleccione una opción: ");
+                System.out.println("Seleccione una opción");
                 int option = sc.nextInt();
                 if(option == 0){
-                    return null;
+                    break;
                 }
                 if(option > 0 && option -1 < this.fishFarms.size()) {
                     selected = this.fishFarms.get(option -1);
-                    validSelection = true;
                 }
             }catch(InputMismatchException e){
                 System.out.println("Entrada no válida");
-                sc.nextLine();
             }
         }
         return selected;
@@ -139,29 +136,24 @@ public class Simulador {
         p.listTanks();
         System.out.println("0.- Cancelar");
         Tanque selected = null;
-        boolean validSelection = false;
-        while (!validSelection) { 
+        while (selected == null) {
             try {
                 System.out.print("Seleccione una opción: ");
-                int option = sc.nextInt(); 
+                int option = sc.nextInt();
                 if (option == 0) {
-                    return null; 
+                    break;
                 }
-                if (option > 0 && option - 1 < p.getNTanks()) { 
-                    selected = p.selectTank(option - 1); 
-                    validSelection = true;
-                } else {
-                    System.out.println("Opción no válida. Intente nuevamente.");
+                if (option > 0 && option -1 < p.getNTanks()) {
+                    selected = p.selectTank(option -1);
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Por favor, ingrese un número.");
-                sc.nextLine();
+                System.out.println("Entrada no válida");
             }
         }
         return selected;
     }
 
-    public void showIctio(){
+    public void menupeces(){
         System.out.println("Seleccione un pez para ver más detalles:(0 para ancelar)");
         System.out.println("1. Besugo");
         System.out.println("2. Caballa");
@@ -176,6 +168,10 @@ public class Simulador {
         System.out.println("11. Salmón Atlantico");
         System.out.println("12. Salmón Chinook");
         System.out.print("Seleccione una opción: ");
+    }
+
+    public void showIctio(){
+        menupeces();                      
         int opcion = sc.nextInt();
         
         if (opcion == 0) {
@@ -281,7 +277,7 @@ public class Simulador {
     /**
      * Método que añade comida al Almacén de comida elegido de la Piscifactoría dada
      */
-    public void addFood() {
+    public void addFood() {  
         boolean cancel = false;
         int warehouseType;
         if(centralWarehouse == null){
@@ -502,7 +498,11 @@ public class Simulador {
             }
         }
      }
+    
 
+    /**
+     * Método que muestra las estadisticas de los peces de la piscifactoria
+     */
     public void showStats(){
         stats.mostrar();
     }
@@ -522,7 +522,7 @@ public class Simulador {
     public void emptyTank(){
         Tanque tank = selectTank();
         tank.cleanTank();
-    }
+    } 
 
     /**
      * Método que para mejorar y comprar edificios
@@ -688,8 +688,8 @@ public class Simulador {
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
-        sim.init();
-        //sim.showStats();
+        //sim.init();
+        sim.showIctio();
         //sim.menu();
         //sim.menuPisc();
         //System.out.println(sim.selectPisc());
