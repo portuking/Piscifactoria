@@ -697,14 +697,14 @@ public class Simulador {
         //p.listTanks();
         //sim.showGeneralStatus();
         //sim.showSpecificStatus();
-        //sim.selectTank();
+        sim.selectTank();
         //sim.showTankStatus();
         //sim.cleanTank();
         //sim.emptyTank();
         //sim.upgrade();
         //sim.buyBuildings();
         //sim.menuPisc();
-        sim.selectPisc();
+        //sim.selectPisc();
     }
 }
 

@@ -19,6 +19,8 @@ public abstract class Piscifactoria {
     private int currentFood;
     /**Máximo de Tanques de las Piscifactorías*/
     private int maxTank;
+    /**ID de los tanques*/
+    private int tankID;
     /**Tanques de la Piscifactoria */
     private ArrayList<Tanque> tanques;
     /**Almacén de Comida vegetal */
@@ -33,6 +35,7 @@ public abstract class Piscifactoria {
     protected Piscifactoria(String name) {
         this.name = name;
         this.maxTank = 10;
+        this.tankID = 0;
         this.tanques = new ArrayList<>(this.maxTank);
     }
 
@@ -290,6 +293,13 @@ public abstract class Piscifactoria {
      */
     public int getCurrentFood() {
         return currentFood;
+    }
+
+    /**
+     * @return El id de un Tanque
+     */
+    public int getTankID(){
+        return this.tankID;
     }
 
     /**
