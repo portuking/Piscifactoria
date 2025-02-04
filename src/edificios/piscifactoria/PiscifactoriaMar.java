@@ -37,6 +37,22 @@ public class PiscifactoriaMar extends Piscifactoria{
     }
 
     /**
+     * Constructor de Piscifactoría de mar
+     * @param name Nombre de la Piscifactoría
+     * @param stock Cantidad inicial de comida de la Piscifactoría de Mar
+     */
+    public PiscifactoriaMar(String name, int stock) {
+        super(name);
+        this.maxTankCapacity = 100;
+        this.tankID = 1;
+        Tanque initialSeaTank = new Tanque(this.maxTankCapacity, this.tankID);
+        super.getTanques().add(initialSeaTank);
+        this.wharehouseA = new AlmacenComida(100, stock);
+        this.wharehouseV = new AlmacenComida(100, stock);
+        this.maxFood = 1000;
+    }
+
+    /**
      * Método que permite mejorar la capacidad de comida
      */
     @Override
