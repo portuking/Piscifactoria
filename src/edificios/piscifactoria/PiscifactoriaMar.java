@@ -61,21 +61,26 @@ public class PiscifactoriaMar extends Piscifactoria{
      */
     @Override
     public void upgradeFood() {
-        int wharehouseAUpgradeable = this.maxFood - this.wharehouseA.getMaxCap();
-        int wharehouseVUpgradeable = this.maxFood - this.wharehouseV.getMaxCap();
-        if(this.wharehouseA.getMaxCap() < this.maxFood){
-            if(wharehouseAUpgradeable > 50) {
-                this.wharehouseA.upgrade(50);
-            }else{
-                this.wharehouseA.upgrade(wharehouseAUpgradeable);
+        SISMonedas sisMonedas = SISMonedas.getInstance();
+        int costoMejora = 200;
+        int incrementoCap = 100;
+        int capMax = this.maxFood;
+        if(sisMonedas.getMonedas() >= costoMejora){
+            boolean realizaMejora = false;
+            if(this.wharehouseA.getMaxCap() <  capMax){
+                this.wharehouseA.upgrade(incrementoCap);
+                realizaMejora = true;
             }
-        }
-        if(this.wharehouseV.getMaxCap() > this.maxFood) {
-            if(wharehouseVUpgradeable > 50) {
-                this.wharehouseV.upgrade(50);
+            if(this.wharehouseV.getMaxCap() <  capMax){
+                this.wharehouseV.upgrade(incrementoCap);
+                realizaMejora = true;
+            }if(realizaMejora){
+                sisMonedas.pagar(costoMejora);
             }else{
-                this.wharehouseV.upgrade(wharehouseVUpgradeable);
+                System.out.println("Ambos almacenes están al maximo");
             }
+        }else{
+            System.out.println("No tienes suficientes monedas para realizar la mejora");
         }
     }
 
