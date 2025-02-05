@@ -86,6 +86,53 @@ public class Simulador {
         System.out.println("12. Mejorar");
         System.out.println("13. Pasar varios días");
         System.out.println("14. Salir");
+
+        int opcion = sc.nextInt();
+
+        switch (opcion) {
+            case 1:
+                showGeneralStatus();
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+                showStats();
+                break;
+            case 5:
+                showIctio();
+                break;
+            case 6:
+                nextDay(opcion);
+                break;
+            case 7:
+            
+                break;
+            case 8:
+
+                break;
+            case 9:
+
+                break;
+            case 10:
+                cleanTank();
+                break;
+            case 11:
+                emptyTank();
+                break;
+            case 12:
+
+                break;
+            case 14:
+
+                break;
+            default:
+                break;
+        }
+
     }
 
     /**
@@ -168,6 +215,15 @@ public class Simulador {
         System.out.println("11. Salmón Atlantico");
         System.out.println("12. Salmón Chinook");
         System.out.print("Seleccione una opción: ");
+
+        int opcion = sc.nextInt();
+        if(opcion == 0){
+            return;
+        }
+
+        switch(opcion){
+
+        }
     }
 
     public void showIctio(){
@@ -688,16 +744,16 @@ public class Simulador {
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
-        //sim.init();
-        sim.showIctio();
-        //sim.menu();
+        sim.init();
+        //sim.showIctio();
+        sim.menu();
         //sim.menuPisc();
         //System.out.println(sim.selectPisc());
         //Piscifactoria p = new Piscifactoria("Pisc1", false, 50);
         //p.listTanks();
         //sim.showGeneralStatus();
         //sim.showSpecificStatus();
-        sim.selectTank();
+        //sim.selectTank();
         //sim.showTankStatus();
         //sim.cleanTank();
         //sim.emptyTank();
