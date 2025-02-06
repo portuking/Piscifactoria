@@ -73,65 +73,69 @@ public class Simulador {
      * Método que muestra el menú general
      */
     public void menu(){
-        System.out.println("1. Estado general");
-        System.out.println("2. Estado piscifactoría");
-        System.out.println("3. Estado Tanques");
-        System.out.println("4. Informes");
-        System.out.println("5. Ictiopedia");
-        System.out.println("6. Pasar día");
-        System.out.println("7. Comprar comida");
-        System.out.println("8. Comprar peces");
-        System.out.println("9. Vender peces");
-        System.out.println("10. Limpiar tanques");
-        System.out.println("11. Vaciar tanques");
-        System.out.println("12. Mejorar");
-        System.out.println("13. Pasar varios días");
-        System.out.println("14. Salir");
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("1. Estado general");
+            System.out.println("2. Estado piscifactoría");
+            System.out.println("3. Estado Tanques");
+            System.out.println("4. Informes");
+            System.out.println("5. Ictiopedia");
+            System.out.println("6. Pasar día");
+            System.out.println("7. Comprar comida");
+            System.out.println("8. Comprar peces");
+            System.out.println("9. Vender peces");
+            System.out.println("10. Limpiar tanques");
+            System.out.println("11. Vaciar tanques");
+            System.out.println("12. Mejorar");
+            System.out.println("13. Pasar varios días");
+            System.out.println("14. Salir");
 
         int opcion = sc.nextInt();
 
-        switch (opcion) {
-            case 1:
-                this.showGeneralStatus();
-                break;
-            case 2:
-                this.showSpecificStatus();
-                break;
-            case 3:
-                this.showTankStatus();
-                break;
-            case 4:
-                this.showStats();
-                break;
-            case 5:
-                this.showIctio();
-                break;
-            case 6:
-                nextDay(opcion);
-                break;
-            case 7:
-                this.addFood();
-                break;
-            case 8:
-
-                break;
-            case 9:
-
-                break;
-            case 10:
-                cleanTank();
-                break;
-            case 11:
-                emptyTank();
-                break;
-            case 12:
-
-                break;
-            case 14:
-
-                break;
-            default:
-                break;
+            switch (opcion) {
+                case 1:
+                    this.showGeneralStatus();
+                    break;
+                case 2:
+                    this.showSpecificStatus();
+                    break;
+                case 3:
+                    this.showTankStatus();
+                    break;
+                case 4:
+                    this.showStats();
+                    break;
+                case 5:
+                    this.showIctio();
+                    break;
+                case 6:
+                    nextDay(opcion);
+                    break;
+                case 7:
+                    this.addFood();
+                    break;
+                case 8:
+    
+                    break;
+                case 9:
+    
+                    break;
+                case 10:
+                    cleanTank();
+                    break;
+                case 11:
+                    emptyTank();
+                    break;
+                case 12:
+    
+                    break;
+                case 14:
+                    exit = true;
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
@@ -175,7 +179,6 @@ public class Simulador {
 
      /**
      * Método que muestra un menú de Tanques de una Piscifactoría y permite seleccionar uno
-     * @param p Piscifactoría de la que se va a devolver el Tanque
      * @return Tanque seleccionado
      */
     public Tanque selectTank(){
@@ -744,6 +747,7 @@ public class Simulador {
 
     }
 
+   
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
