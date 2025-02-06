@@ -24,9 +24,9 @@ public abstract class Piscifactoria {
     /**Tanques de la Piscifactoria */
     private ArrayList<Tanque> tanques;
     /**Almacén de Comida vegetal */
-    private AlmacenComida comidaVegetal;
+    protected AlmacenComida comidaVegetal;
     /**Almacén de Comida animal */
-    private AlmacenComida comidaAnimal;
+    protected AlmacenComida comidaAnimal;
 
     /**
      * Constructor de Piscifactoria
@@ -133,8 +133,6 @@ public abstract class Piscifactoria {
     public void showStatus() {
         this.currentFood = this.comidaAnimal.getStock() + this.comidaVegetal.getStock();
         this.maxFood = this.comidaAnimal.getMaxCap() + this.comidaVegetal.getMaxCap();
-        System.out.println(getCurrentFood());
-        System.out.println(getMaxFood());
         System.out.println("===============  " + this.name + " ===============");
         System.out.println("Tanques :" + this.tanques.size());
         if(this.occuped() > 0 && this.maxFishes() > 0){
@@ -172,6 +170,12 @@ public abstract class Piscifactoria {
         }else{
             System.out.println("Almacén de comida: actual/max 0%");
         }
+        System.out.println("Cantidad de comida actual: "+this.getCurrentFood());
+        System.out.println("Cantidad de comida animal: "+this.getWarehouseA().getStock());
+        System.out.println("Cantidad de comida Vegetal: "+this.getWarehouseV().getStock());
+        System.out.println("Cantidad de comida máxima: "+this.getMaxFood());
+        System.out.println("Cantidad máxima de comida Animal: "+this.getWarehouseA().getMaxCap());
+        System.out.println("Cantidad máxima de comida Vegetal: "+this.getWarehouseV().getMaxCap());
     }
 
     /**
