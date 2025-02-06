@@ -8,6 +8,7 @@ import java.util.Scanner;
 import edificios.almacenes.AlmacenCentral;
 import edificios.almacenes.AlmacenComida;
 import edificios.piscifactoria.Piscifactoria;
+import edificios.piscifactoria.PiscifactoriaMar;
 import edificios.piscifactoria.PiscifactoriaRio;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
@@ -304,9 +305,11 @@ public class Simulador {
         for (Piscifactoria piscifactoria : fishFarms) {
             piscifactoria.showStatus();
         }
+        System.out.println("-- Estado del Almacén Central:");
         if(centralWarehouse != null) {
-            System.out.println("-- Estado del Almacén Central:");
             centralWarehouse.getOcuped();
+        }else{
+            System.out.println("No comprado");
         }
     }
 
@@ -617,7 +620,7 @@ public class Simulador {
      * Método que permite comprar edificios
      */
     public void buyBuildings() {
-        /*int opcion = 0;
+        int opcion = 0;
         boolean validSelection = false;
         System.out.println("1. Piscifactoría");
         System.out.println("2. Almacén Central");
@@ -636,13 +639,13 @@ public class Simulador {
                             System.out.print("Tipo de Piscifactoría Rio / Mar: ");
                             String type = sc.nextLine();
                             if(type.equals("Rio")) {
-                                Piscifactoria newRiverFishFarm = new Piscifactoria(name, true, 0);
+                                Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
                                 fishFarms.add(newRiverFishFarm);
                                 this.monedas.pagar(500 * (this.fishFarms.size() -1));
                                 validType = true;
                                 validSelection = true;
                             }else if(type.equals("Mar")) {
-                                Piscifactoria newSeaFishFarm = new Piscifactoria(name, false, 0);
+                                Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                 fishFarms.add(newSeaFishFarm);
                                 this.monedas.pagar(2000 * this.fishFarms.size() -1);
                                 validType = true;
@@ -666,7 +669,7 @@ public class Simulador {
             }catch(InputMismatchException e) {
                 System.out.println("Entrada inválida.");
             }
-        } */ //TODO
+        }
     }
 
     /**

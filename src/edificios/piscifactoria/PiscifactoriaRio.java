@@ -15,10 +15,6 @@ public class PiscifactoriaRio extends Piscifactoria{
     private final int PRICE = 500;
     /**ID de los tanques de la Piscifactoría*/
     private int tankID;
-    /**Almacén de comida animal de la Piscifactoría*/
-    private AlmacenComida wharehouseA;
-    /**Almacén de comida vegetal de la Piscifactoría*/
-    private AlmacenComida wharehouseV;
     /**Capacidad máxima de comida de la Piscifactoría*/
     private int maxFood;
     /**Capacidad máxima de Peces permitidos en los Tanques*/
@@ -35,8 +31,8 @@ public class PiscifactoriaRio extends Piscifactoria{
         this.maxFood = 250;
         Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID, this.getTipo());
         super.getTanques().add(initialRiverTank);
-        this.wharehouseA = new AlmacenComida(25, 0);
-        this.wharehouseV = new AlmacenComida(25, 0);
+        this.comidaAnimal = new AlmacenComida(25, 0);
+        this.comidaVegetal = new AlmacenComida(25, 0);
     }
 
     /**
@@ -51,8 +47,8 @@ public class PiscifactoriaRio extends Piscifactoria{
         this.maxFood = 250;
         Tanque initialRiverTank = new Tanque(this.maxTankCapacity, this.tankID, this.getTipo());
         super.getTanques().add(initialRiverTank);
-        this.wharehouseA = new AlmacenComida(25, stock);
-        this.wharehouseV = new AlmacenComida(25, stock);
+        this.comidaAnimal = new AlmacenComida(25, stock);
+        this.comidaVegetal = new AlmacenComida(25, stock);
     }
     
     /**
@@ -66,12 +62,12 @@ public class PiscifactoriaRio extends Piscifactoria{
         int capMax = this.maxFood;
         if(sisMonedas.getMonedas() >= costoMejora){
             boolean realizaMejora = false;
-            if(this.wharehouseA.getMaxCap() <  capMax){
-                this.wharehouseA.upgrade(incrementoCap);
+            if(this.comidaAnimal.getMaxCap() <  capMax){
+                this.comidaAnimal.upgrade(incrementoCap);
                 realizaMejora = true;
             }
-            if(this.wharehouseV.getMaxCap() <  capMax){
-                this.wharehouseV.upgrade(incrementoCap);
+            if(this.comidaVegetal.getMaxCap() <  capMax){
+                this.comidaVegetal.upgrade(incrementoCap);
                 realizaMejora = true;
             }if(realizaMejora){
                 sisMonedas.pagar(costoMejora);
