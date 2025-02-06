@@ -92,25 +92,25 @@ public class Simulador {
 
         switch (opcion) {
             case 1:
-                showGeneralStatus();
+                this.showGeneralStatus();
                 break;
             case 2:
-
+                this.showSpecificStatus();
                 break;
             case 3:
-
+                this.showTankStatus();
                 break;
             case 4:
-                showStats();
+                this.showStats();
                 break;
             case 5:
-                showIctio();
+                this.showIctio();
                 break;
             case 6:
                 nextDay(opcion);
                 break;
             case 7:
-            
+                this.addFood();
                 break;
             case 8:
 
@@ -216,15 +216,6 @@ public class Simulador {
         System.out.println("11. Salmón Atlantico");
         System.out.println("12. Salmón Chinook");
         System.out.print("Seleccione una opción: ");
-
-        int opcion = sc.nextInt();
-        if(opcion == 0){
-            return;
-        }
-
-        switch(opcion){
-
-        }
     }
 
     public void showIctio(){
@@ -311,6 +302,14 @@ public class Simulador {
         }else{
             System.out.println("No comprado");
         }
+    }
+
+    /**
+     * Método que permite seleccionar una Piscifactoría y muestra su estado
+     */
+    public void showSpecificStatus() {
+        Piscifactoria selected = this.selectPisc();
+        selected.showTankStatus();
     }
 
     /**
@@ -744,6 +743,7 @@ public class Simulador {
     public void upgradeCentralWarehouse() {
 
     }
+
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();

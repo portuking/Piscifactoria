@@ -47,11 +47,11 @@ public class SISMonedas {
      * @param cantidad El número de monedas a pagar.
      */
     public void pagar(int cantidad){
-        if (this.monedas >= cantidad) {
+        if (this.monedas >= cantidad && cantidad > 0) {
         this.monedas -= cantidad;
         System.out.println("Pago realizado con exito");
-        } else {
-        System.out.println("No tienes suficientes momendas para comprar");
+        } else{
+        System.out.println("La compra no se ha realizado");
         }
     }
 
