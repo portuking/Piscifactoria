@@ -96,15 +96,24 @@ public class Tanque {
      * @param fish Pez a añadir
      */
     public void addFishes(Pez fish){
-        if (!this.isFull()) {
+        if(this.canaddFish(fish)){
             if(this.fishType == null) {
                 this.fishType = fish.getName();
             }
-            if(this.fishType == fish.getName()) {
+            this.fishes.add(fish);
+        }
+    }
 
-            }else{
-                System.out.println("El tipo de Pez es incorrecto para esta Piscifactoría");
-            }
+    /**
+     * Método que comprueba si se puede añadir un pez según el tipo
+     * @param fish pez a comprobar
+     * @return true si se puede añadir y false si no se puede
+     */
+    public boolean canaddFish(Pez fish){
+        if(this.fishType == null || fish.getName() == this.fishType) {
+            return true;
+        }else{
+            return false;
         }
     }
 
