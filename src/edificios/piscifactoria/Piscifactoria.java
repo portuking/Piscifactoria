@@ -356,7 +356,7 @@ public abstract class Piscifactoria {
      */
     public void listTanks(){
         for (Tanque t : tanques) {
-            System.out.println((t.getTankNum()) + ".- " + "Tipo: " + t.getFishType() + ".");
+            System.out.println((t.getTankNum()) + ".- " + "Tipo: " + t.getTankType() + ".");
         }
     }
 
