@@ -21,17 +21,20 @@ public class Tanque {
     private int tankNum;
     /**Tipo de Pez del Tanque*/
     private String fishType;
+    /**Tipo del Tanque: true -> Río | false -> Mar */
+    private boolean type;
 
     /**
      * Constructor de Tanque
      * @param maxCapacity capacidad máxima del Tanque
      * @param tankNum Número de tanque
      */
-    public Tanque(int maxCapacity, int tankNum, String fishType) {
+    public Tanque(int maxCapacity, int tankNum, boolean type) {
         this.fishes = new ArrayList<>(this.maxCapacity);
         this.maxCapacity = maxCapacity;
         this.tankNum = tankNum;
-        this.fishType = fishType;
+        this.fishType = null;
+        this.type = type;
     }
 
     /**
@@ -347,11 +350,21 @@ public class Tanque {
      * @return El tipo de Pez permitido por el Tanque
      */
     public String getFishType(){
-        if(this.fishType == null){
-            return "Sin Tipo";
-        }else{
-            return this.fishType;
-        }
+        return this.fishType;
+    }
+
+    /**
+     * @return El tipo de peces que puede contener en forma de boolean
+     */
+    public boolean getType() {
+        return this.type;
+    }
+
+    /**
+     * @return El tipo de peces que puede contener en forma textual
+     */
+    public String getTankType() {
+        return this.type ? "Río" : "Mar";
     }
 
     @Override

@@ -30,21 +30,19 @@ public class Simulador {
     /**Almacén de comida central del Sistema*/
     private AlmacenCentral centralWarehouse;
     /**Array que contiene los peces disponibles*/
-    private static String[] pecesDisponibles = {
-        propiedades.AlmacenPropiedades.BESUGO.getNombre(),
-        propiedades.AlmacenPropiedades.CABALLA.getNombre(),
-        propiedades.AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
-        propiedades.AlmacenPropiedades.LENGUADO_EUROPEO.getNombre(),
-        propiedades.AlmacenPropiedades.LUBINA_EUROPEA.getNombre(),
-        propiedades.AlmacenPropiedades.LUBINA_RAYADA.getNombre(),
-        propiedades.AlmacenPropiedades.LUCIO_NORTE.getNombre(),
-        propiedades.AlmacenPropiedades.PEJERREY.getNombre(),
-        propiedades.AlmacenPropiedades.PERCA_EUROPEA.getNombre(),
-        propiedades.AlmacenPropiedades.ROBALO.getNombre(),
-        propiedades.AlmacenPropiedades.SALMON_ATLANTICO.getNombre(),
-        propiedades.AlmacenPropiedades.SALMON_CHINOOK.getNombre()};
-    /**INstancia de clase estadisticas*/
-    public estadisticas.Estadisticas stats = new Estadisticas(pecesDisponibles);
+    private static PecesDatos[] pecesDisponibles = {
+        propiedades.AlmacenPropiedades.BESUGO,
+        propiedades.AlmacenPropiedades.CABALLA,
+        propiedades.AlmacenPropiedades.CARPA_PLATEADA,
+        propiedades.AlmacenPropiedades.LENGUADO_EUROPEO,
+        propiedades.AlmacenPropiedades.LUBINA_EUROPEA,
+        propiedades.AlmacenPropiedades.LUBINA_RAYADA,
+        propiedades.AlmacenPropiedades.LUCIO_NORTE,
+        propiedades.AlmacenPropiedades.PEJERREY,
+        propiedades.AlmacenPropiedades.PERCA_EUROPEA,
+        propiedades.AlmacenPropiedades.ROBALO,
+        propiedades.AlmacenPropiedades.SALMON_ATLANTICO,
+        propiedades.AlmacenPropiedades.SALMON_CHINOOK};
 
     Scanner sc = new Scanner(System.in);
 
@@ -76,6 +74,7 @@ public class Simulador {
         boolean exit = false;
 
         while (!exit) {
+            System.out.println("");
             System.out.println("1. Estado general");
             System.out.println("2. Estado piscifactoría");
             System.out.println("3. Estado Tanques");
@@ -116,7 +115,7 @@ public class Simulador {
                     this.addFood();
                     break;
                 case 8:
-    
+                    this.addFish();
                     break;
                 case 9:
     
@@ -565,6 +564,11 @@ public class Simulador {
      * Método que muestra las estadisticas de los peces de la piscifactoria
      */
     public void showStats(){
+        String[] peces = new String[12];
+        for (int i = 0; i < pecesDisponibles.length; i++) {
+            peces[i] = pecesDisponibles[i].getNombre();
+        }
+        estadisticas.Estadisticas stats = new Estadisticas(peces);
         stats.mostrar();
     }
 
@@ -747,7 +751,29 @@ public class Simulador {
 
     }
 
-   
+    public void addFish() {
+        Tanque selectedTank = this.selectTank();
+        System.out.println("");
+        int menuFishes = 1;
+        if(selectedTank == null){
+            return;
+        }
+        if(selectedTank.getType()) {
+            if(selectedTank.getFishType() == null) {
+                for (int i = 0; i < pecesDisponibles.length; i++) {
+                    if(pecesDisponibles[i].getPiscifactoria().getName().equals("Río") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) { 
+                        System.out.println((menuFishes++) + ". " + pecesDisponibles[i].getNombre());
+                    }
+                }
+            }else{
+                for (int i = 0; i < pecesDisponibles.length; i++) {
+                    if(pecesDisponibles[i].getNombre() == selectedTank.getFishType()) {
+                        System.out.println((menuFishes)+". " + pecesDisponibles[i].getNombre());
+                    }
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
