@@ -113,7 +113,7 @@ public class Tanque {
      * @return true si se puede añadir y false si no se puede
      */
     public boolean canaddFish(Pez fish){
-        if(this.fishType == null || fish.getName() == this.fishType) {
+        if(this.fishType == null || fish.getName().equals(this.getFishType())) {
             return true;
         }else{
             return false;
