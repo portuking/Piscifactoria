@@ -145,6 +145,11 @@ public class Simulador {
                 case 14:
                     exit = true;
                     break;
+                case 98:
+
+                case 99:
+                    procesaOpcion99();
+                    break;
                 default:
                     break;
             }
@@ -868,6 +873,15 @@ public class Simulador {
         }
     }
 
+    /**
+     * Metodo oculto que añade 1000 monedas al saldo
+     * 
+     */
+    public void procesaOpcion99(){
+        this.monedas.setMonedas(this.monedas.getMonedas() + 1000);
+        System.out.println("Se han añadido 1000 monedas al saldo");
+        System.out.println("Monedas actuales: " + SISMonedas.getInstance().getMonedas());
+    }
 
 
     public static void main(String[] args) {
