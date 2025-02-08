@@ -28,6 +28,7 @@ public class Tanque {
      * Constructor de Tanque
      * @param maxCapacity capacidad máxima del Tanque
      * @param tankNum Número de tanque
+     * @param type Define el tipo de Tanque
      */
     public Tanque(int maxCapacity, int tankNum, boolean type) {
         this.fishes = new ArrayList<>(this.maxCapacity);
@@ -209,6 +210,7 @@ public class Tanque {
      */
     public void cleanTank(){
         this.fishes.clear();
+        this.fishType = null;
     }
 
     /**
