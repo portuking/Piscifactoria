@@ -6,12 +6,24 @@ import java.util.List;
 import java.util.Scanner;
 
 import edificios.almacenes.AlmacenCentral;
-import edificios.almacenes.AlmacenComida;
+//import edificios.almacenes.AlmacenComida;
 import edificios.piscifactoria.Piscifactoria;
 import edificios.piscifactoria.PiscifactoriaMar;
 import edificios.piscifactoria.PiscifactoriaRio;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
+import peces.especies.Besugo;
+import peces.especies.Caballa;
+import peces.especies.CarpaPlateada;
+import peces.especies.LenguadoEuropeo;
+import peces.especies.LubinaEuropea;
+import peces.especies.LubinaRayada;
+import peces.especies.LucioDelNorte;
+import peces.especies.Pejerrey;
+import peces.especies.PercaEuropea;
+import peces.especies.Robalo;
+import peces.especies.SalmonAtlantico;
+import peces.especies.SalmonChinook;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
 
@@ -69,6 +81,7 @@ public class Simulador {
 
     /**
      * Método que muestra el menú general
+     * Implementar control de errores
      */
     public void menu(){
         boolean exit = false;
@@ -751,8 +764,17 @@ public class Simulador {
 
     }
 
+    /**
+     * Método que permite añadir un pez a una Piscifactoría
+     * Al imprimir la lista de peces mostrar el precio
+     * añadir peces hasta que se cancele
+     * control de excepciones
+     */
     public void addFish() {
+        int opcion;
+        ArrayList<PecesDatos> pecesCompatibles = new ArrayList<>();
         Tanque selectedTank = this.selectTank();
+        String selectedFish;
         System.out.println("");
         int menuFishes = 1;
         if(selectedTank == null){
@@ -763,17 +785,90 @@ public class Simulador {
                 for (int i = 0; i < pecesDisponibles.length; i++) {
                     if(pecesDisponibles[i].getPiscifactoria().getName().equals("Río") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) { 
                         System.out.println((menuFishes++) + ". " + pecesDisponibles[i].getNombre());
+                        pecesCompatibles.add(pecesDisponibles[i]);
                     }
                 }
             }else{
                 for (int i = 0; i < pecesDisponibles.length; i++) {
                     if(pecesDisponibles[i].getNombre() == selectedTank.getFishType()) {
                         System.out.println((menuFishes)+". " + pecesDisponibles[i].getNombre());
+                        pecesCompatibles.add(pecesDisponibles[i]);
+                    }
+                }
+            }
+        }else{
+            if(selectedTank.getFishType() == null) {
+                for (int i = 0; i < pecesDisponibles.length; i++) {
+                    if(pecesDisponibles[i].getPiscifactoria().getName().equals("Mar") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) { 
+                        System.out.println((menuFishes++) + ". " + pecesDisponibles[i].getNombre());
+                        pecesCompatibles.add(pecesDisponibles[i]);
+                    }
+                }
+            }else{
+                for (int i = 0; i < pecesDisponibles.length; i++) {
+                    if(pecesDisponibles[i].getNombre() == selectedTank.getFishType()) {
+                        System.out.println((menuFishes)+". " + pecesDisponibles[i].getNombre());
+                        pecesCompatibles.add(pecesDisponibles[i]);
                     }
                 }
             }
         }
+        System.out.println("0. Cancelar");
+        System.out.print("Seleccione un pez: ");
+        opcion = sc.nextInt() - 1;
+        if(opcion >= 0 && opcion <= pecesCompatibles.size()) {
+            selectedFish = pecesCompatibles.get(opcion).getNombre();
+            boolean fishSex;
+            if(selectedTank.fishesF() <= selectedTank.fishesM()) {
+                fishSex = true;
+            }else{
+                fishSex = false;
+            }
+            switch (selectedFish) {
+                case "Besugo": 
+                    selectedTank.addFishes(new Besugo(fishSex));       
+                    break;
+                case "Caballa":
+                    selectedTank.addFishes(new Caballa(fishSex));
+                    break;
+                case "Carpa plateada":
+                    selectedTank.addFishes(new CarpaPlateada(fishSex));
+                    break;
+                case "Lenguado europeo":
+                    selectedTank.addFishes(new LenguadoEuropeo(fishSex));
+                    break;
+                case "Lubina europea":
+                    selectedTank.addFishes(new LubinaEuropea(fishSex));
+                    break;
+                case "Lubina rayada":
+                    selectedTank.addFishes(new LubinaRayada(fishSex));               
+                    break;
+                case "Lucio del norte":
+                    selectedTank.addFishes(new LucioDelNorte(fishSex));              
+                    break;
+                case "Pejerrey":
+                    selectedTank.addFishes(new Pejerrey(fishSex));
+                    break;
+                case "Perca europea":
+                    selectedTank.addFishes(new PercaEuropea(fishSex));             
+                    break;
+                case "Róbalo":
+                    selectedTank.addFishes(new Robalo(fishSex));
+                    break;
+                case "Salmón atlántico":
+                    selectedTank.addFishes(new SalmonAtlantico(fishSex));
+                    break;
+                case "Salmón chinook":
+                    selectedTank.addFishes(new SalmonChinook(fishSex));
+                    break;    
+                default:
+                    System.out.println("Opción no válida. Por favor, intente de nuevo.");
+                    break;
+            }
+        }
     }
+
+
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();

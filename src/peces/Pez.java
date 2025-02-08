@@ -21,7 +21,7 @@ public  abstract class Pez {
     protected final String scientifcName;
     /** Edad del Pez */
     protected int age;
-    /** Sexo del Pez */
+    /** Sexo del Pez  true -> Hembra | false -> Macho*/
     protected final boolean sex;
     /** Si el Pez es fértil */
     protected boolean fertile;
@@ -222,7 +222,7 @@ public  abstract class Pez {
      * @return true si el pez es macho
      */
     public boolean isMale(){
-        if(this.sex == true){
+        if(this.sex == false){
             return true;
         }else{
             return false;
@@ -233,7 +233,7 @@ public  abstract class Pez {
      * @return true si el pez es hembra
      */
     public boolean isFemale() {
-        if(this.sex == false){
+        if(this.sex == true){
             return true;
         }else{
             return false;
@@ -276,7 +276,7 @@ public  abstract class Pez {
                "Nombre Común: " + name + "\n" +
                "Nombre Científico: " + scientifcName + "\n" +
                "Edad: " + age + " días\n" +
-               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+               "Sexo: " + (sex ? "Hembra" : "Macho") + "\n" +
                "Estado:\n" +
                "  - Vivo: " + (alive ? "Sí" : "No") + "\n" +
                "  - Alimentado: " + (eat ? "Sí" : "No") + "\n" +
