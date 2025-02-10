@@ -724,7 +724,7 @@ public class Simulador {
                             System.out.print("Tipo de Piscifactoría Rio / Mar: ");
                             String type = sc.nextLine();
                             if (type.equals("Rio") || type.equals("rio")) {
-                                if(this.monedas.pagar(500 * this.getRiverFishfarms())) {
+                                if((500 * this.getRiverFishfarms()) <= this.monedas.getMonedas()) {
                                     Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
                                     fishFarms.add(newRiverFishFarm);
                                     this.monedas.pagar(500 * (this.getRiverFishfarms()));
@@ -733,13 +733,13 @@ public class Simulador {
                                 validSelection = true;
                             } else if (type.equals("Mar") || type.equals("mar")) {
                                 if(this.getSeaFishfarms() > 0) {
-                                    if(this.monedas.pagar(2000 * this.getSeaFishfarms())) {
+                                    if((2000 * this.getSeaFishfarms()) <= this.monedas.getMonedas()) {
                                         Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                         fishFarms.add(newSeaFishFarm);
                                         this.monedas.pagar(2000 * getSeaFishfarms());
                                     }
                                 }else{
-                                    if(this.monedas.pagar(2000)) {
+                                    if(2000 <= this.monedas.getMonedas()) {
                                         Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                         fishFarms.add(newSeaFishFarm);
                                         this.monedas.pagar(2000 * getSeaFishfarms());

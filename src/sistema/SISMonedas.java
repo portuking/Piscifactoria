@@ -47,16 +47,13 @@ public class SISMonedas {
      * @param cantidad El número de monedas a pagar.
      * @return true si el pago se realizó con éxito, false en caso contrario.
      */
-    public boolean pagar(int cantidad){
+    public void pagar(int cantidad){
         if (this.monedas >= cantidad && cantidad > 0) {
         this.monedas -= cantidad;
         System.out.println("Pago realizado con exito");
-        return true;
         } else{
         System.out.println("La compra no se ha realizado");
-        return false;
-        }
-        
+        }    
     }
 
     /**
