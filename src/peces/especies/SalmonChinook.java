@@ -22,10 +22,11 @@ public class SalmonChinook extends AlimentacionCarnivoro{
     }
 
     /**
-     * @return Nueva instancia de Salmón chinook
-    */
-
-    public Pez getInstance(){
+     * Método que crea un pez
+     * @return Una cría de Salmón Chinook
+     */
+    @Override
+    public Pez reproduce(boolean sex) {
         return new SalmonChinook(sex);
     }
 

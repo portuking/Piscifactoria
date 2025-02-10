@@ -22,12 +22,13 @@ public class Pejerrey extends AlimentacionCarnivoro {
     }
 
     /**
-     * @return Nueva instancia de Pejerrey
+     * Método que crea un pez
+     * @return Una cría de Pejerrey
      */
-
-     public Pez getInstance(){
+    @Override
+    public Pez reproduce(boolean sex) {
         return new Pejerrey(sex);
-     }
+    }
 
 
      @Override
@@ -52,6 +53,6 @@ public class Pejerrey extends AlimentacionCarnivoro {
              "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
              "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
              "===========================";
-     }
+    }
 
 }

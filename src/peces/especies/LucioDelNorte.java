@@ -21,14 +21,13 @@ public class LucioDelNorte extends AlimentacionCarnivoroActivo{
     }
 
     /**
-     * @return Nueva instancia de Lucio del Norte
+     * Método que crea un pez
+     * @return Una cría de Lucio del Norte
      */
-
-     public Pez getInstance(){
-        return new LucioDelNorte (sex);
-
-     }
-
+    @Override
+    public Pez reproduce(boolean sex) {
+        return new LucioDelNorte(sex);
+    }
 
      @Override
      public String toString() {

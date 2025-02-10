@@ -24,11 +24,13 @@ public class SalmonAtlantico extends AlimentacionCarnivoro{
 
 
     /**
-     * @return nueva instancia de Salmon Atlantico
+     * Método que crea un pez
+     * @return Una cría de Salmón Atlántico
      */
-        public Pez getInstance(){
-            return new SalmonAtlantico(sex);
-        }
+    @Override
+    public Pez reproduce(boolean sex) {
+        return new SalmonAtlantico(sex);
+    }
 
 
         @Override

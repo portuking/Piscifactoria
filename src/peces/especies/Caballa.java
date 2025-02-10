@@ -21,13 +21,7 @@ public class Caballa extends AlimentacionCarnivoro{
         super(AlmacenPropiedades.CABALLA, sex);
 
     }
-    /**
-     * 
-     * @return Nueva instancia de Caballa
-     */
-    public Pez getInstance(){
-        return new Caballa(sex);
-    }
+    
 
 
     @Override
@@ -52,6 +46,15 @@ public class Caballa extends AlimentacionCarnivoro{
             "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
             "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
             "===========================";
+    }
+
+    /**
+     * Método que crea un pez
+     * @return Una cría de Caballa
+     */
+    @Override
+    public Pez reproduce(boolean sex) {
+        return new Caballa(sex);
     }
 
 }

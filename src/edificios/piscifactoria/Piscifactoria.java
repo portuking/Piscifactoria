@@ -225,38 +225,7 @@ public abstract class Piscifactoria {
      */
     public void nextDay() {
         for (Tanque tanque : tanques) {
-            int comidaAnimalDisponible = this.comidaAnimal.getStock();
-            int comidaVegetalDisponible = this.comidaVegetal.getStock();
-            int pecesAlimentados = 0;
-            for (Pez pez : tanque.getFishes()) {
-                if (pez.isAlive()) {
-                    int comidaConsumida = 0;
-                    if ((pez instanceof AlimentacionCarnivoro && comidaAnimalDisponible > 0) || (pez instanceof AlimentacionCarnivoroActivo && comidaAnimalDisponible > 0)) {
-                        comidaConsumida = pez.eat();
-                        if (comidaConsumida > 0) {
-                            this.comidaAnimal.restarComida(comidaConsumida);
-                            comidaAnimalDisponible -= comidaConsumida;
-                        }
-                    } else if (pez instanceof AlimentacionFiltrador && comidaVegetalDisponible > 0) {
-                        comidaConsumida = pez.eat();
-                        if (comidaConsumida > 0) {
-                            this.comidaVegetal.restarComida(comidaConsumida);
-                            comidaVegetalDisponible -= comidaConsumida;
-                        }
-                    }
-                    if (comidaConsumida > 0) {
-                        pez.setEat(true);
-                        pecesAlimentados++;
-                    } else {
-                        pez.setEat(false); 
-                    }
-                }
-            }
-            System.out.println("En el tanque " + tanque.getTankNum() + " se han alimentado " + pecesAlimentados + " peces.");
-            if (pecesAlimentados < tanque.getFishes().size()) {
-                System.out.println("No había suficiente comida para todos los peces.");
-            }
-            tanque.nextDay();
+            tanque.nextDay(this);
         }
     }
 
