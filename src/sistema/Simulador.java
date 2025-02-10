@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 import edificios.almacenes.AlmacenCentral;
-//import edificios.almacenes.AlmacenComida;
 import edificios.piscifactoria.Piscifactoria;
 import edificios.piscifactoria.PiscifactoriaMar;
 import edificios.piscifactoria.PiscifactoriaRio;

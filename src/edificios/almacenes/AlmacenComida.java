@@ -72,18 +72,15 @@ public class AlmacenComida {
      * @return Nueva cantidad
      */
     public int restarComida(int cantidad){
-        int newStock = 0;
-        if(stock > 0){
-            if(cantidad > stock){
-               return 0;
-            }
-            else{
-                newStock = stock - cantidad;
-            }
+        if (stock >= cantidad) {
+            stock -= cantidad;
+            return stock;
+        } else {
+            System.out.println("No hay suficiente comida en el almacén.");
+            return 0;
         }
-        this.setStock(newStock);
-        return newStock;
     }
+    
 
     /**
      * Método que comprueba cuanto sitio hay libre en el Almacén
