@@ -263,14 +263,6 @@ public abstract class Piscifactoria {
      */
     public abstract void compraTanque();
 
-    /**
-     * Método que elimina los peces muertos de los tanques
-     */
-    public void cleanDeadFishes() {
-        for (Tanque tanque : tanques) {
-            tanque.cleanDeadFishes();
-        }
-    }
 
     public void cleanTank(Tanque tank) {
         tank.cleanTank();
