@@ -369,6 +369,7 @@ public class Simulador {
      * @param days Número de días a pasar
      */
     public void nextDay(int days) {
+        this.days += days;
         for (int i = 0; i < days; i++) {
             for (Piscifactoria piscifactoria : fishFarms) {
                 piscifactoria.nextDay();
