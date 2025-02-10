@@ -3,6 +3,7 @@ package sistema;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import edificios.almacenes.AlmacenCentral;
@@ -151,7 +152,8 @@ public class Simulador {
                     exit = true;
                     break;
                 case 98:
-
+                    this.addFishAmmount();
+                    break;
                 case 99:
                     this.procesaOpcion99();
                     break;
@@ -983,6 +985,97 @@ public class Simulador {
         this.monedas.setMonedas(this.monedas.getMonedas() + 1000);
         System.out.println("Se han añadido 1000 monedas al saldo");
         System.out.println("Monedas actuales: " + SISMonedas.getInstance().getMonedas());
+    }
+
+    /**
+     * Método que añade cuatro peces aleatorios a una Piscifactoría seleccionada
+     */
+    public void addFishAmmount() {
+        Tanque tanque = this.selectTank();
+        ArrayList<PecesDatos> pecesCompatibles = new ArrayList<>();
+        Random r = new Random();
+        if(tanque != null) {
+            if (tanque.getType()) {
+                if (tanque.getFishType() == null) {
+                    for (int i = 0; i < pecesDisponibles.length; i++) {
+                        if (pecesDisponibles[i].getPiscifactoria().getName().equals("Río") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) {
+                            pecesCompatibles.add(pecesDisponibles[i]);
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < pecesDisponibles.length; i++) {
+                        if (pecesDisponibles[i].getNombre() == tanque.getFishType()) {
+                            pecesCompatibles.add(pecesDisponibles[i]);
+                        }
+                    }
+                }
+            } else {
+                if (tanque.getFishType() == null) {
+                    for (int i = 0; i < pecesDisponibles.length; i++) {
+                        if (pecesDisponibles[i].getPiscifactoria().getName().equals("Mar") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) {
+                            pecesCompatibles.add(pecesDisponibles[i]);
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < pecesDisponibles.length; i++) {
+                        if (pecesDisponibles[i].getNombre() == tanque.getFishType()) {
+                            pecesCompatibles.add(pecesDisponibles[i]);
+                        }
+                    }
+                }
+            }
+            int pezRandom = r.nextInt(pecesCompatibles.size());
+            String selectedFish = pecesCompatibles.get(pezRandom).getNombre();
+            boolean fishSex;
+            for (int i = 0; i < 4; i++) {
+                if (tanque.fishesF() <= tanque.fishesM()) {
+                    fishSex = true;
+                } else {
+                    fishSex = false;
+                }
+                switch (selectedFish) {
+                    case "Besugo":
+                        tanque.addFishes(new Besugo(fishSex));
+                        break;
+                    case "Caballa":
+                        tanque.addFishes(new Caballa(fishSex));
+                        break;
+                    case "Carpa plateada":
+                        tanque.addFishes(new CarpaPlateada(fishSex));
+                        break;
+                    case "Lenguado europeo":
+                        tanque.addFishes(new LenguadoEuropeo(fishSex));
+                        break;
+                    case "Lubina europea":
+                        tanque.addFishes(new LubinaEuropea(fishSex));
+                        break;
+                    case "Lubina rayada":
+                        tanque.addFishes(new LubinaRayada(fishSex));
+                        break;
+                    case "Lucio del norte":
+                        tanque.addFishes(new LucioDelNorte(fishSex));
+                        break;
+                    case "Pejerrey":
+                        tanque.addFishes(new Pejerrey(fishSex));
+                        break;
+                    case "Perca europea":
+                        tanque.addFishes(new PercaEuropea(fishSex));
+                        break;
+                    case "Róbalo":
+                        tanque.addFishes(new Robalo(fishSex));
+                        break;
+                    case "Salmón atlántico":
+                        tanque.addFishes(new SalmonAtlantico(fishSex));
+                        break;
+                    case "Salmón chinook":
+                        tanque.addFishes(new SalmonChinook(fishSex));
+                        break;
+                    default:
+                        System.out.println("No se ha encontrado el pez");
+                        break;
+                }
+            }
+        }
     }
 
     /**
