@@ -149,7 +149,7 @@ public class Tanque {
     public void nextDay(){
         for (Pez pez : fishes) {
             if(pez.isAlive()){
-                pez.grow(fishes, null);
+                pez.grow(fishes, this);
             }
         }
         int soldFishes = 0;

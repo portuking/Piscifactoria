@@ -219,7 +219,9 @@ public abstract class Piscifactoria {
      * Método que hace que todos los Peces de la Piscifactoria pasen de día
      */
     public void nextDay() {
-        
+        for (Tanque tanque : tanques) {
+            tanque.nextDay();
+        }
     }
 
     /**
