@@ -88,7 +88,7 @@ public class Simulador {
         boolean exit = false;
 
         while (!exit) {
-            System.out.println("");
+            System.out.println("===========Menú Principal===========");
             System.out.println("1. Estado general"); // rarete
             System.out.println("2. Estado piscifactoría"); // funciona
             System.out.println("3. Estado Tanques"); // perfecto
@@ -103,6 +103,7 @@ public class Simulador {
             System.out.println("12. Mejorar"); // terminar
             System.out.println("13. Pasar varios días"); // implementar
             System.out.println("14. Salir");
+            System.out.print("Escoja una opción: ");
 
             int opcion = sc.nextInt();
 
@@ -132,16 +133,16 @@ public class Simulador {
                     this.addFish();
                     break;
                 case 9:
-
+                    this.sellFish();
                     break;
                 case 10:
-                    cleanTank();
+                    this.cleanTank();
                     break;
                 case 11:
-                    emptyTank();
+                    this.emptyTank();
                     break;
                 case 12:
-
+                    this.upgrade();
                     break;
                 case 14:
                     exit = true;
@@ -149,7 +150,7 @@ public class Simulador {
                 case 98:
 
                 case 99:
-                    procesaOpcion99();
+                    this.procesaOpcion99();
                     break;
                 default:
                     break;
@@ -182,7 +183,7 @@ public class Simulador {
         Piscifactoria selected = null;
         while (selected == null) {
             try {
-                System.out.println("Seleccione una opción");
+                System.out.print("Seleccione una opción: ");
                 int option = sc.nextInt();
                 if (option == 0) {
                     return null;
@@ -244,6 +245,7 @@ public class Simulador {
         System.out.println("10. Robalo");
         System.out.println("11. Salmón Atlantico");
         System.out.println("12. Salmón Chinook");
+        System.out.println("0. Cancelar");
         System.out.print("Seleccione una opción: ");
     }
 
@@ -612,22 +614,8 @@ public class Simulador {
     /**
      * Método para vender peces vivos y maduros
      */
-    public void venderPeces() {
-        // Seleccionar piscifactoría
-        System.out.println("=== Venta de Peces ===");
-        System.out.println("Seleccione una Piscifactoría para vender peces:");
-        Piscifactoria piscifac = selectPisc();
-        if (piscifac == null) {
-            System.out.println("Operación cancelada.");
-            return;
-        }
-
-        // Seleccionar tanque
-        System.out.println("Seleccione un tanque para vender peces:");
-        piscifac.listTanks();
-        System.out.print("Seleccione un tanque: ");
-        int tankIndex = sc.nextInt();
-        Tanque tanque = piscifac.selectTank(tankIndex);
+    public void sellFish() {
+        Tanque tanque = this.selectTank();
         if (tanque == null) {
             System.out.println("Operación cancelada.");
             return;
@@ -685,10 +673,10 @@ public class Simulador {
     public void upgrade() {
         int opcion = 0;
         boolean validSelection = false;
-        System.out.println("1. Comprar edificios");
-        System.out.println("2. Mejorar edificios");
-        System.out.println("3. Cancelar");
         while (!validSelection) {
+            System.out.println("1. Comprar edificios");
+            System.out.println("2. Mejorar edificios");
+            System.out.println("3. Cancelar");
             try {
                 System.out.print("Seleccione una opción: ");
                 opcion = sc.nextInt();
@@ -703,6 +691,7 @@ public class Simulador {
                         validSelection = true;
                         break;
                     default:
+                        System.out.println("Número de opción inválido");
                         break;
                 }
             } catch (Exception e) {
@@ -718,10 +707,10 @@ public class Simulador {
     public void buyBuildings() {
         int opcion = 0;
         boolean validSelection = false;
-        System.out.println("1. Piscifactoría");
-        System.out.println("2. Almacén Central");
-        System.out.println("3. Cancelar");
         while (!validSelection) {
+            System.out.println("1. Piscifactoría");
+            System.out.println("2. Almacén Central");
+            System.out.println("3. Cancelar");
             try {
                 System.out.print("Seleccione una opción: ");
                 opcion = sc.nextInt();
@@ -734,16 +723,20 @@ public class Simulador {
                         while (!validType) {
                             System.out.print("Tipo de Piscifactoría Rio / Mar: ");
                             String type = sc.nextLine();
-                            if (type.equals("Rio")) {
+                            if (type.equals("Rio") || type.equals("rio")) {
                                 Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
                                 fishFarms.add(newRiverFishFarm);
-                                this.monedas.pagar(500 * (this.fishFarms.size() - 1));
+                                this.monedas.pagar(500 * (this.getRiverFishfarms()));
                                 validType = true;
                                 validSelection = true;
-                            } else if (type.equals("Mar")) {
+                            } else if (type.equals("Mar") || type.equals("mar")) {
                                 Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                 fishFarms.add(newSeaFishFarm);
-                                this.monedas.pagar(2000 * this.fishFarms.size() - 1);
+                                if(this.getSeaFishfarms() > 0) {
+                                    this.monedas.pagar(2000 * getSeaFishfarms());
+                                }else{
+                                    this.monedas.pagar(2000);
+                                }
                                 validType = true;
                                 validSelection = true;
                             } else {
@@ -759,7 +752,10 @@ public class Simulador {
                         }
                         validSelection = true;
                         break;
+                    case 3:
+                        validSelection = true;
                     default:
+                        System.out.println("Número de opción inválido");
                         break;
                 }
             } catch (InputMismatchException e) {
@@ -774,28 +770,33 @@ public class Simulador {
     public void upgradeBuildings() {
         int opcion = 0;
         boolean validSelection = false;
-        System.out.println("1. Piscifactoría");
-        if (this.centralWarehouse != null) {
-            System.out.println("2. Almacén Central");
-        }
-        System.out.println("3. Cancelar");
         while (!validSelection) {
+            System.out.println("1. Piscifactoría");
+            if (this.centralWarehouse != null) {
+                System.out.println("2. Almacén Central");
+            }
+            System.out.println("0. Cancelar");
             try {
                 System.out.print("Seleccione una opción: ");
                 opcion = sc.nextInt();
                 switch (opcion) {
                     case 1:
                         this.upgradeFisFarm();
+                        validSelection = true;
                         break;
                     case 2:
                         if (this.centralWarehouse != null) {
                             this.upgradeCentralWarehouse();
+                            validSelection = true;
                         } else {
                             System.out.println("No dispone de Almacén Central");
                             validSelection = false;
                         }
                         break;
+                    case 0:
+                        validSelection = true;
                     default:
+                        System.out.println("Número de opción inválido");
                         break;
                 }
             } catch (InputMismatchException e) {
@@ -811,9 +812,10 @@ public class Simulador {
         Piscifactoria selectedFishFarm = selectPisc();
         int opcion = 0;
         boolean validSelection = false;
-        System.out.println("1. Comprar Tanque");
-        System.out.println("2. Aumentar Almacén de comida");
         while (!validSelection) {
+            System.out.println("1. Comprar Tanque");
+            System.out.println("2. Aumentar Almacén de comida");
+            System.out.println("0. Cancelar");
             try {
                 System.out.print("Seleccione una opción: ");
                 opcion = sc.nextInt();
@@ -824,6 +826,8 @@ public class Simulador {
                         break;
                     case 2:
                         selectedFishFarm.upgradeFood();
+                        validSelection = true;
+                    case 3:
                         validSelection = true;
                     default:
                         break;
@@ -907,48 +911,53 @@ public class Simulador {
                 } else {
                     fishSex = false;
                 }
-                switch (selectedFish) {
-                    case "Besugo":
-                        selectedTank.addFishes(new Besugo(fishSex));
-                        break;
-                    case "Caballa":
-                        selectedTank.addFishes(new Caballa(fishSex));
-                        break;
-                    case "Carpa plateada":
-                        selectedTank.addFishes(new CarpaPlateada(fishSex));
-                        break;
-                    case "Lenguado europeo":
-                        selectedTank.addFishes(new LenguadoEuropeo(fishSex));
-                        break;
-                    case "Lubina europea":
-                        selectedTank.addFishes(new LubinaEuropea(fishSex));
-                        break;
-                    case "Lubina rayada":
-                        selectedTank.addFishes(new LubinaRayada(fishSex));
-                        break;
-                    case "Lucio del norte":
-                        selectedTank.addFishes(new LucioDelNorte(fishSex));
-                        break;
-                    case "Pejerrey":
-                        selectedTank.addFishes(new Pejerrey(fishSex));
-                        break;
-                    case "Perca europea":
-                        selectedTank.addFishes(new PercaEuropea(fishSex));
-                        break;
-                    case "Róbalo":
-                        selectedTank.addFishes(new Robalo(fishSex));
-                        break;
-                    case "Salmón atlántico":
-                        selectedTank.addFishes(new SalmonAtlantico(fishSex));
-                        break;
-                    case "Salmón chinook":
-                        selectedTank.addFishes(new SalmonChinook(fishSex));
-                        break;
-                    default:
-                        System.out.println("No se ha encontrado el pez");
-                        break;
-                }
-                this.monedas.pagar(fishPrice);
+                if(this.monedas.getMonedas() >= fishPrice) {
+                    switch (selectedFish) {
+                        case "Besugo":
+                            selectedTank.addFishes(new Besugo(fishSex));
+                            break;
+                        case "Caballa":
+                            selectedTank.addFishes(new Caballa(fishSex));
+                            break;
+                        case "Carpa plateada":
+                            selectedTank.addFishes(new CarpaPlateada(fishSex));
+                            break;
+                        case "Lenguado europeo":
+                            selectedTank.addFishes(new LenguadoEuropeo(fishSex));
+                            break;
+                        case "Lubina europea":
+                            selectedTank.addFishes(new LubinaEuropea(fishSex));
+                            break;
+                        case "Lubina rayada":
+                            selectedTank.addFishes(new LubinaRayada(fishSex));
+                            break;
+                        case "Lucio del norte":
+                            selectedTank.addFishes(new LucioDelNorte(fishSex));
+                            break;
+                        case "Pejerrey":
+                            selectedTank.addFishes(new Pejerrey(fishSex));
+                            break;
+                        case "Perca europea":
+                            selectedTank.addFishes(new PercaEuropea(fishSex));
+                            break;
+                        case "Róbalo":
+                            selectedTank.addFishes(new Robalo(fishSex));
+                            break;
+                        case "Salmón atlántico":
+                            selectedTank.addFishes(new SalmonAtlantico(fishSex));
+                            break;
+                        case "Salmón chinook":
+                            selectedTank.addFishes(new SalmonChinook(fishSex));
+                            break;
+                        default:
+                            System.out.println("No se ha encontrado el pez");
+                            break;
+                    }
+                    this.monedas.pagar(fishPrice);
+                }else{
+                    System.out.println("No se ha añadido el pez");
+                    return;
+                }    
             }
         } catch (InputMismatchException e) {
             System.out.println("Se ha introducido una opción inválida");
@@ -957,12 +966,39 @@ public class Simulador {
 
     /**
      * Metodo oculto que añade 1000 monedas al saldo
-     * 
      */
     public void procesaOpcion99() {
         this.monedas.setMonedas(this.monedas.getMonedas() + 1000);
         System.out.println("Se han añadido 1000 monedas al saldo");
         System.out.println("Monedas actuales: " + SISMonedas.getInstance().getMonedas());
+    }
+
+    /**
+     * Método que busca cuantas Piscifactorías de Mar hay
+     * @return el número de Piscifactorías de Mar
+     */
+    public int getSeaFishfarms() {
+        int seaFishfarms = 0;
+        for (Piscifactoria piscifactoria : fishFarms) {
+            if(piscifactoria instanceof PiscifactoriaMar){
+                seaFishfarms += 1;
+            }
+        }
+        return seaFishfarms;
+    }
+
+    /**
+     * Método que busca cuantas Piscifactorías de Río hay
+     * @return el número de Piscifactorías de Río
+     */
+    public int getRiverFishfarms() {
+        int riverFishFarms = 0;
+        for (Piscifactoria piscifactoria : fishFarms) {
+            if(piscifactoria instanceof PiscifactoriaRio) {
+                riverFishFarms += 1;
+            }
+        }
+        return riverFishFarms;
     }
 
     public static void main(String[] args) {
