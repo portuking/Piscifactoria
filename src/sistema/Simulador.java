@@ -124,7 +124,7 @@ public class Simulador {
                     this.showIctio();
                     break;
                 case 6:
-                    nextDay(opcion);
+                    nextDay(1);
                     break;
                 case 7:
                     this.addFood();
@@ -143,6 +143,9 @@ public class Simulador {
                     break;
                 case 12:
                     this.upgrade();
+                    break;
+                case 13:
+                    this.nextDay(5);
                     break;
                 case 14:
                     exit = true;
