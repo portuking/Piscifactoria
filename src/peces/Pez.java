@@ -56,10 +56,11 @@ public  abstract class Pez {
     public void showStatus() {
         System.out.println("---------------"+this.getName()+"---------------");
         System.out.println("Edad: " + this.age + " días");
-        System.out.println(sex ? "Sexo: H" : "Sexo: M");
-        System.out.println(eat ? "Alimentado: Si" : "Alimentado: No");
-        System.out.println(mature ? "Adulto: Si" : "Adulto: No");
-        System.out.println(fertile ? "Fértil: Si" : "Fértil: No");
+        System.out.println(this.sex ? "Sexo: H" : "Sexo: M");
+        System.out.println(this.alive ?"Vivo: Si" : "Vivo: No");
+        System.out.println(this.eat ? "Alimentado: Si" : "Alimentado: No");
+        System.out.println(this.mature ? "Adulto: Si" : "Adulto: No");
+        System.out.println(this.fertile ? "Fértil: Si" : "Fértil: No");
     }
 
     /**
