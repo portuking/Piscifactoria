@@ -217,10 +217,9 @@ public abstract class Piscifactoria {
 
     /**
      * Método que hace que todos los Peces de la Piscifactoria pasen de día
-     * -------------------IMPLEMENTAR
      */
     public void nextDay() {
-    
+        
     }
 
     /**
