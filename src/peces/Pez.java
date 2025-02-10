@@ -83,10 +83,28 @@ public  abstract class Pez {
         }else{
             Random r = new Random();
             if(!this.eat) {
+                this.eat();
+                this.eat = true;
                 if(r.nextBoolean()){
                     this.alive = false;
                     return;
                 }
+                this.age++;
+                if(this.mature){
+                    if(this.fertile && this.isFemale()){
+                        this.reproduce(fishes, tank);
+                    }
+                }else{
+                    if(this.age % 2 == 0) {
+                        int dead = r.nextInt(100) + 1;
+                        if(dead <= 5) {
+                            this.alive = false;
+                            return;
+                        }
+                    }
+                }
+            }else{
+                this.eat = false;
                 this.age++;
                 if(this.mature){
                     if(this.fertile && this.isFemale()){
