@@ -27,6 +27,7 @@ import peces.especies.SalmonAtlantico;
 import peces.especies.SalmonChinook;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
+import propiedades.PecesProps;
 
 /**
  * IMPLEMENNTAR CLASE
@@ -320,6 +321,23 @@ public class Simulador {
             System.out.println("Ciclo: " + pezSeleccionado.getCiclo());
             System.out.println("Madurez: " + pezSeleccionado.getMadurez());
             System.out.println("Edad óptima: " + pezSeleccionado.getOptimo());
+            PecesProps[] propiedades = pezSeleccionado.getPropiedades();
+            System.out.print("Alimentación: ");
+            for (int i = 0; i < propiedades.length; i++) {
+                switch (propiedades[i]) {
+                    case CARNIVORO:
+                        System.out.print("Carnívoro\n");
+                        break;
+                    case FILTRADOR:
+                        System.out.print("Herbívoro\n");
+                        break;
+                    case OMNIVORO:
+                        System.out.print("Omnívoro\n");
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
     }
