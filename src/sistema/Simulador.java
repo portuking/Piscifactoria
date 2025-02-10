@@ -724,18 +724,26 @@ public class Simulador {
                             System.out.print("Tipo de Piscifactoría Rio / Mar: ");
                             String type = sc.nextLine();
                             if (type.equals("Rio") || type.equals("rio")) {
-                                Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
-                                fishFarms.add(newRiverFishFarm);
-                                this.monedas.pagar(500 * (this.getRiverFishfarms()));
+                                if(this.monedas.pagar(500 * this.getRiverFishfarms())) {
+                                    Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
+                                    fishFarms.add(newRiverFishFarm);
+                                    this.monedas.pagar(500 * (this.getRiverFishfarms()));
+                                }
                                 validType = true;
                                 validSelection = true;
                             } else if (type.equals("Mar") || type.equals("mar")) {
-                                Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
-                                fishFarms.add(newSeaFishFarm);
                                 if(this.getSeaFishfarms() > 0) {
-                                    this.monedas.pagar(2000 * getSeaFishfarms());
+                                    if(this.monedas.pagar(2000 * this.getSeaFishfarms())) {
+                                        Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
+                                        fishFarms.add(newSeaFishFarm);
+                                        this.monedas.pagar(2000 * getSeaFishfarms());
+                                    }
                                 }else{
-                                    this.monedas.pagar(2000);
+                                    if(this.monedas.pagar(2000)) {
+                                        Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
+                                        fishFarms.add(newSeaFishFarm);
+                                        this.monedas.pagar(2000 * getSeaFishfarms());
+                                    }
                                 }
                                 validType = true;
                                 validSelection = true;

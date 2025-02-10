@@ -102,6 +102,4 @@ public class AlmacenCentral {
         "Cantidad de comida almacenada en el almacnén central " + "\n" +
         "Capacidad máxima del almacen central " + this.maxCap;
     }
-
-    
 }
