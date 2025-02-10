@@ -15,22 +15,20 @@ public class LenguadoEuropeo extends AlimentacionCarnivoro{
      * Constructor de Lenguado Europeo
      * @param sex Sexo del Pez
      */
-
     public LenguadoEuropeo(boolean sex) {
-        super(AlmacenPropiedades.LENGUADO_EUROPEO, sex);
-       
+        super(AlmacenPropiedades.LENGUADO_EUROPEO, sex);  
     }
     
     /**
-     * @return Nueva instancia de Lenguado Europeo
+     * Método que crea un pez
+     * @return Una cría de Lenguado Europeo
      */
-
-     public Pez getInstance(){
+    @Override
+    public Pez reproduce(boolean sex) {
         return new LenguadoEuropeo(sex);
-     }
+    }
 
-
-     @Override
+    @Override
     public String toString() {
         return "===== Estado del pez =====\n" +
             "Especie: " + AlmacenPropiedades.LENGUADO_EUROPEO + "\n"+

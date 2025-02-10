@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import edificios.piscifactoria.Piscifactoria;
 import peces.Pez;
+import peces.alimentacion.AlimentacionCarnivoro;
+import peces.alimentacion.AlimentacionCarnivoroActivo;
+import peces.alimentacion.AlimentacionFiltrador;
 import sistema.SISMonedas;
 
 /**
@@ -146,33 +149,53 @@ public class Tanque {
      * Método que hace crecer todos los peces del Tanque y vende 
      * los que hayan llegado a la edad óptima
      */
-    public void nextDay(){
+    public void nextDay(Piscifactoria p){
+        int vendidos = 0;
+        int ganancias = 0;
+        SISMonedas sisMonedas = SISMonedas.getInstance();
         for (Pez pez : fishes) {
-            if(pez.isAlive()){
-                pez.grow(fishes, this);
+            if(pez.isAlive() == true){
+                int consumida;
+                boolean comio = false;
+                if(pez instanceof AlimentacionCarnivoro || pez instanceof AlimentacionCarnivoroActivo){
+                    consumida = pez.eat();
+                    if(consumida > 0){
+                        p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
+                        comio = true;
+                    }else{
+                        comio = false;
+                    }   
+                }else if(pez instanceof AlimentacionFiltrador) {
+                    consumida = pez.eat();
+                    if(consumida > 0) {
+                        p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
+                        comio = true;
+                    }else{
+                        comio = false;
+                    }
+                }
+                pez.grow(comio);
+                if(fishMatch()) {
+                    for (int i = 0; i < pez.getFishStats().getHuevos(); i++) {
+                        boolean sex;
+                        if(this.fishesF() <= this.fishesM()) {
+                            sex = true;
+                        }else{
+                            sex = false;
+                        }
+                        this.addFishes(pez.reproduce(sex));                       
+                    }
+                }
+                if(pez.getAge() == pez.getFishStats().getOptimo()) {
+                    vendidos += 1;
+                    ganancias += pez.getFishStats().getMonedas();
+                    fishes.remove(pez);
+                }
             }
         }
-        int soldFishes = 0;
-        int earnings = 0;
-        for (int i = 0; i < fishes.size(); i++) {
-            Pez pez = fishes.get(i);
-            if(pez.isAlive() && pez.getAge()>= pez.getFishStats().getOptimo()) {
-                earnings+= pez.getFishStats().getMonedas();
-                fishes.remove(i);
-                i--;
-                soldFishes++;
-            }
-        }
-        if(soldFishes > 0){
-            SISMonedas sisMonedas = SISMonedas.getInstance();
-            int currentMoney = sisMonedas.getMonedas();
-            sisMonedas.setMonedas(currentMoney + earnings);
-
-            System.out.println("Se han vendido: " + soldFishes + " peces");
-            System.out.println("Se han ganado " + earnings + " Monedas");
-        }else{
-            System.out.println("No se ha vendido ningún Pez");
-        }
+        sisMonedas.setMonedas(sisMonedas.getMonedas() + ganancias);
+        System.out.println("Se han vendido: " + vendidos + " peces");
+        System.out.println("Se han ganado: " + ganancias + " monedas"); 
     }
 
     /**

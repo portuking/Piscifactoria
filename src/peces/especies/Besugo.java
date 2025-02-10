@@ -20,13 +20,6 @@ public class Besugo extends AlimentacionCarnivoro{
         super(AlmacenPropiedades.BESUGO, sex);
     }
 
-    /**
-     * @return Nueva instancia de Besugo
-     */
-    public Pez getInstance() {
-        return new Besugo(sex);
-    }
-
 
     @Override
     public String toString() {
@@ -52,5 +45,12 @@ public class Besugo extends AlimentacionCarnivoro{
             "===========================";
     }
 
-
+    /**
+     * Método que crea un pez
+     * @return Una cría de Besugo
+     */
+    @Override
+    public Pez reproduce(boolean sex) {
+        return new Besugo(sex);
+    }
 }

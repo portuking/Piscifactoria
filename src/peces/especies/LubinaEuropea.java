@@ -19,11 +19,13 @@ public class LubinaEuropea extends AlimentacionCarnivoro{
         super(AlmacenPropiedades.LUBINA_EUROPEA, sex);
         
     }
+    
     /**
-     * 
-     * @return Nueva instancia de Lubina Europea
+     * Método que crea un pez
+     * @return Una cría de Lubina Europea
      */
-    public Pez getInstance(){
+    @Override
+    public Pez reproduce(boolean sex) {
         return new LubinaEuropea(sex);
     }
 

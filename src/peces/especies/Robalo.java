@@ -13,23 +13,22 @@ import propiedades.AlmacenPropiedades;
 
 public class Robalo extends AlimentacionCarnivoro {
 
-/**
- * Constructor de Robalo
- * @param sex
- */
+    /**
+     * Constructor de Robalo
+     * @param sex
+     */
     public Robalo(boolean sex) {
         super(AlmacenPropiedades.ROBALO, sex);
-
     }
 
-
     /**
-     * @return Nueva instancia de Robalo
+     * Método que crea un pez
+     * @return Una cría de Robalo
      */
-
-     public Pez getInstance(){
+    @Override
+    public Pez reproduce(boolean sex) {
         return new Robalo(sex);
-     }
+    }
 
 
      @Override
@@ -54,7 +53,7 @@ public class Robalo extends AlimentacionCarnivoro {
              "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
              "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
              "===========================";
-     }
+    }
 
 
 }

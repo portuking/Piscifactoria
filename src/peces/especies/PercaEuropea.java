@@ -17,18 +17,18 @@ public class PercaEuropea extends AlimentacionCarnivoroActivo {
      * Constructor de PercaEuropea
      * @param sex Sexo del pez
      */
-
      public PercaEuropea(boolean sex){
         super(AlmacenPropiedades.PERCA_EUROPEA, sex);
-     }
+    }
      
-     /**
-      * 
-      * @return Nueva instancia de Perca Europea
-      */
-     public Pez getInstance(){
-      return new PercaEuropea(sex);
-     }
+    /**
+     * Método que crea un pez
+     * @return Una cría de Besugo
+     */
+    @Override
+    public Pez reproduce(boolean sex) {
+        return new PercaEuropea(sex);
+    }
 
 
 
@@ -54,6 +54,6 @@ public class PercaEuropea extends AlimentacionCarnivoroActivo {
              "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
              "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
              "===========================";
-     }
+    }
 
 }

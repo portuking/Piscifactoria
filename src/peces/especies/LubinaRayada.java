@@ -18,17 +18,16 @@ public class LubinaRayada extends AlimentacionCarnivoro{
      */
     public LubinaRayada( boolean sex) {
         super(AlmacenPropiedades.LUBINA_RAYADA,  sex);
-    
-    
+    }
 
-}
-     /**
-     * @return Nueva instancia de LUbina Rayada
+    /**
+     * Método que crea un pez
+     * @return Una cría de Lubina Rayada
      */
-
-     public Pez getInstance(){
+    @Override
+    public Pez reproduce(boolean sex) {
         return new LubinaRayada(sex);
-     }
+    }
 
      @Override
      public String toString() {
@@ -52,6 +51,5 @@ public class LubinaRayada extends AlimentacionCarnivoro{
              "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
              "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
              "===========================";
-     }
-
+    }
 }
