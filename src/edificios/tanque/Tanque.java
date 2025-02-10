@@ -149,55 +149,65 @@ public class Tanque {
      * Método que hace crecer todos los peces del Tanque y vende 
      * los que hayan llegado a la edad óptima
      */
-    public void nextDay(Piscifactoria p){
-        int vendidos = 0;
-        int ganancias = 0;
-        SISMonedas sisMonedas = SISMonedas.getInstance();
-
-        for (int i = fishes.size(); i >= 0; i--) {
-            if(fishes.get(i).isAlive() == true){
-                int consumida;
-                boolean comio = false;
-                if(fishes.get(i) instanceof AlimentacionCarnivoro || fishes.get(i) instanceof AlimentacionCarnivoroActivo){
-                    consumida = fishes.get(i).eat();
-                    if(consumida > 0){
-                        p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
-                        comio = true;
-                    }else{
-                        comio = false;
-                    }   
-                }else if(fishes.get(i) instanceof AlimentacionFiltrador) {
-                    consumida = fishes.get(i).eat();
-                    if(consumida > 0) {
-                        p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
-                        comio = true;
-                    }else{
-                        comio = false;
-                    }
+    public void nextDay(Piscifactoria p) {
+    int vendidos = 0;
+    int ganancias = 0;
+    SISMonedas sisMonedas = SISMonedas.getInstance();
+    
+    ArrayList<Pez> nuevosPeces = new ArrayList<>(); 
+    for (Pez pez : fishes) {
+        if (pez.isAlive()) {
+            int consumida;
+            boolean comio = false;
+            if (pez instanceof AlimentacionCarnivoro || pez instanceof AlimentacionCarnivoroActivo) {
+                consumida = pez.eat();
+                if (consumida > 0) {
+                    p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
+                    comio = true;
                 }
-                fishes.get(i).grow(comio);
-                if(fishMatch()) {
-                    for (int j = 0; j < fishes.get(i).getFishStats().getHuevos(); j++) {
-                        boolean sex;
-                        if(this.fishesF() <= this.fishesM()) {
-                            sex = true;
-                        }else{
-                            sex = false;
-                        }
-                        this.addFishes(fishes.get(i).reproduce(sex));                       
-                    }
+            } else if (pez instanceof AlimentacionFiltrador) {
+                consumida = pez.eat();
+                if (consumida > 0) {
+                    p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
+                    comio = true;
                 }
-                if(fishes.get(i).getAge() == fishes.get(i).getFishStats().getOptimo()) {
-                    vendidos += 1;
-                    ganancias += fishes.get(i).getFishStats().getMonedas();
-                    fishes.remove(fishes.get(i));
+            }
+            pez.grow(comio);
+            if (pez.isFemale() && pez.isFertile() && fishMatch()) {
+                int huevosGenerados = 0;
+                for (int j = 0; j < pez.getFishStats().getHuevos(); j++) {
+                    if (!this.isFull() && huevosGenerados < this.getMaxCapacity() - this.fishes.size()) {
+                        boolean sex = this.fishesF() <= this.fishesM(); 
+                        Pez nuevoPez = pez.reproduce(sex);
+                        nuevosPeces.add(nuevoPez); 
+                        huevosGenerados++;
+                    } else {
+                        System.out.println("El tanque está lleno, no se pueden añadir más peces.");
+                        break;
+                    }
                 }
             }
         }
-        sisMonedas.setMonedas(sisMonedas.getMonedas() + ganancias);
-        System.out.println("Se han vendido: " + vendidos + " peces");
-        System.out.println("Se han ganado: " + ganancias + " monedas"); 
     }
+
+    // 🔹 Segunda pasada: Venta de peces adultos (sin modificar la lista durante la iteración)
+    for (int i = fishes.size() - 1; i >= 0; i--) {
+        if (fishes.get(i).getAge() == fishes.get(i).getFishStats().getOptimo()) {
+            vendidos++;
+            ganancias += fishes.get(i).getFishStats().getMonedas();
+            fishes.remove(i); // ✅ Se elimina sin causar ConcurrentModificationException
+        }
+    }
+
+    // 🔹 Se añaden los peces nacidos en el tanque
+    fishes.addAll(nuevosPeces);
+
+    // 🔹 Se actualizan las monedas obtenidas por las ventas
+    sisMonedas.setMonedas(sisMonedas.getMonedas() + ganancias);
+    System.out.println("Se han vendido: " + vendidos + " peces");
+    System.out.println("Se han ganado: " + ganancias + " monedas");
+}
+
 
     /**
      * Método que vende los peces vivos y maduros
