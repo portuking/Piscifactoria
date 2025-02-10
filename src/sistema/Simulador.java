@@ -88,79 +88,83 @@ public class Simulador {
         boolean exit = false;
 
         while (!exit) {
-            System.out.println("===========Menú Principal===========");
-            System.out.println("1. Estado general"); // rarete
-            System.out.println("2. Estado piscifactoría"); // funciona
-            System.out.println("3. Estado Tanques"); // perfecto
-            System.out.println("4. Informes"); // perfecto
-            System.out.println("5. Ictiopedia"); // perfecto
-            System.out.println("6. Pasar día"); // necesita implementar
-            System.out.println("7. Comprar comida"); // funciona
-            System.out.println("8. Comprar peces"); // perfecto
-            System.out.println("9. Vender peces"); // implementar
-            System.out.println("10. Limpiar tanques"); // comprobar
-            System.out.println("11. Vaciar tanques"); // comprobar
-            System.out.println("12. Mejorar"); // terminar
-            System.out.println("13. Pasar varios días"); // implementar
-            System.out.println("14. Salir");
-            System.out.print("Escoja una opción: ");
+            try {
+                System.out.println("===========Menú Principal===========");
+                System.out.println("1. Estado general"); // rarete
+                System.out.println("2. Estado piscifactoría"); // funciona
+                System.out.println("3. Estado Tanques"); // perfecto
+                System.out.println("4. Informes"); // perfecto
+                System.out.println("5. Ictiopedia"); // perfecto
+                System.out.println("6. Pasar día"); // necesita implementar
+                System.out.println("7. Comprar comida"); // funciona
+                System.out.println("8. Comprar peces"); // perfecto
+                System.out.println("9. Vender peces"); // implementar
+                System.out.println("10. Limpiar tanques"); // comprobar
+                System.out.println("11. Vaciar tanques"); // comprobar
+                System.out.println("12. Mejorar"); // terminar
+                System.out.println("13. Pasar varios días"); // implementar
+                System.out.println("14. Salir");
+                System.out.print("Escoja una opción: ");
 
-            int opcion = sc.nextInt();
+                int opcion = sc.nextInt();
 
-            switch (opcion) {
-                case 1:
-                    this.showGeneralStatus();
-                    break;
-                case 2:
-                    this.showSpecificStatus();
-                    break;
-                case 3:
-                    this.showTankStatus();
-                    break;
-                case 4:
-                    this.showStats();
-                    break;
-                case 5:
-                    this.showIctio();
-                    break;
-                case 6:
-                    nextDay(1);
-                    break;
-                case 7:
-                    this.addFood();
-                    break;
-                case 8:
-                    this.addFish();
-                    break;
-                case 9:
-                    this.sellFish();
-                    break;
-                case 10:
-                    this.cleanTank();
-                    break;
-                case 11:
-                    this.emptyTank();
-                    break;
-                case 12:
-                    this.upgrade();
-                    break;
-                case 13:
-                    this.nextDay(5);
-                    break;
-                case 14:
-                    exit = true;
-                    break;
-                case 98:
-                    this.addFishAmmount();
-                    break;
-                case 99:
-                    this.procesaOpcion99();
-                    break;
-                default:
-                    break;
+                switch (opcion) {
+                    case 1:
+                        this.showGeneralStatus();
+                        break;
+                    case 2:
+                        this.showSpecificStatus();
+                        break;
+                    case 3:
+                        this.showTankStatus();
+                        break;
+                    case 4:
+                        this.showStats();
+                        break;
+                    case 5:
+                        this.showIctio();
+                        break;
+                    case 6:
+                        nextDay(1);
+                        break;
+                    case 7:
+                        this.addFood();
+                        break;
+                    case 8:
+                        this.addFish();
+                        break;
+                    case 9:
+                        this.sellFish();
+                        break;
+                    case 10:
+                        this.cleanTank();
+                        break;
+                    case 11:
+                        this.emptyTank();
+                        break;
+                    case 12:
+                        this.upgrade();
+                        break;
+                    case 13:
+                        this.nextDay(5);
+                        break;
+                    case 14:
+                        exit = true;
+                        break;
+                    case 98:
+                        this.addFishAmmount();
+                        break;
+                    case 99:
+                        this.procesaOpcion99();
+                        break;
+                    default:
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada no válida. Solo opciones del 1-14");
+                sc.nextLine();
             }
         }
-
     }
 
     /**
@@ -729,7 +733,7 @@ public class Simulador {
                             System.out.print("Tipo de Piscifactoría Rio / Mar: ");
                             String type = sc.nextLine();
                             if (type.equals("Rio") || type.equals("rio")) {
-                                if((500 * this.getRiverFishfarms()) <= this.monedas.getMonedas()) {
+                                if ((500 * this.getRiverFishfarms()) <= this.monedas.getMonedas()) {
                                     Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
                                     fishFarms.add(newRiverFishFarm);
                                     this.monedas.pagar(500 * (this.getRiverFishfarms()));
@@ -737,14 +741,14 @@ public class Simulador {
                                 validType = true;
                                 validSelection = true;
                             } else if (type.equals("Mar") || type.equals("mar")) {
-                                if(this.getSeaFishfarms() > 0) {
-                                    if((2000 * this.getSeaFishfarms()) <= this.monedas.getMonedas()) {
+                                if (this.getSeaFishfarms() > 0) {
+                                    if ((2000 * this.getSeaFishfarms()) <= this.monedas.getMonedas()) {
                                         Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                         fishFarms.add(newSeaFishFarm);
                                         this.monedas.pagar(2000 * getSeaFishfarms());
                                     }
-                                }else{
-                                    if(2000 <= this.monedas.getMonedas()) {
+                                } else {
+                                    if (2000 <= this.monedas.getMonedas()) {
                                         Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                         fishFarms.add(newSeaFishFarm);
                                         this.monedas.pagar(2000 * getSeaFishfarms());
@@ -924,7 +928,7 @@ public class Simulador {
                 } else {
                     fishSex = false;
                 }
-                if(this.monedas.getMonedas() >= fishPrice) {
+                if (this.monedas.getMonedas() >= fishPrice) {
                     switch (selectedFish) {
                         case "Besugo":
                             selectedTank.addFishes(new Besugo(fishSex));
@@ -967,10 +971,10 @@ public class Simulador {
                             break;
                     }
                     this.monedas.pagar(fishPrice);
-                }else{
+                } else {
                     System.out.println("No se ha añadido el pez");
                     return;
-                }    
+                }
             }
         } catch (InputMismatchException e) {
             System.out.println("Se ha introducido una opción inválida");
@@ -993,11 +997,12 @@ public class Simulador {
         Tanque tanque = this.selectTank();
         ArrayList<PecesDatos> pecesCompatibles = new ArrayList<>();
         Random r = new Random();
-        if(tanque != null) {
+        if (tanque != null) {
             if (tanque.getType()) {
                 if (tanque.getFishType() == null) {
                     for (int i = 0; i < pecesDisponibles.length; i++) {
-                        if (pecesDisponibles[i].getPiscifactoria().getName().equals("Río") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) {
+                        if (pecesDisponibles[i].getPiscifactoria().getName().equals("Río")
+                                || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) {
                             pecesCompatibles.add(pecesDisponibles[i]);
                         }
                     }
@@ -1011,7 +1016,8 @@ public class Simulador {
             } else {
                 if (tanque.getFishType() == null) {
                     for (int i = 0; i < pecesDisponibles.length; i++) {
-                        if (pecesDisponibles[i].getPiscifactoria().getName().equals("Mar") || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) {
+                        if (pecesDisponibles[i].getPiscifactoria().getName().equals("Mar")
+                                || pecesDisponibles[i].getPiscifactoria().getName().equals("Río y mar")) {
                             pecesCompatibles.add(pecesDisponibles[i]);
                         }
                     }
@@ -1079,12 +1085,13 @@ public class Simulador {
 
     /**
      * Método que busca cuantas Piscifactorías de Mar hay
+     * 
      * @return el número de Piscifactorías de Mar
      */
     public int getSeaFishfarms() {
         int seaFishfarms = 0;
         for (Piscifactoria piscifactoria : fishFarms) {
-            if(piscifactoria instanceof PiscifactoriaMar){
+            if (piscifactoria instanceof PiscifactoriaMar) {
                 seaFishfarms += 1;
             }
         }
@@ -1093,12 +1100,13 @@ public class Simulador {
 
     /**
      * Método que busca cuantas Piscifactorías de Río hay
+     * 
      * @return el número de Piscifactorías de Río
      */
     public int getRiverFishfarms() {
         int riverFishFarms = 0;
         for (Piscifactoria piscifactoria : fishFarms) {
-            if(piscifactoria instanceof PiscifactoriaRio) {
+            if (piscifactoria instanceof PiscifactoriaRio) {
                 riverFishFarms += 1;
             }
         }
