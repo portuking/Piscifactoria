@@ -28,16 +28,6 @@ public class Besugo extends AlimentacionCarnivoro{
     }
 
 
-    /*
-    @Override
-    public String toString() {
-        return "===== Lucio del Norte=====\n" +
-               "Especie: " + AlmacenPropiedades.LUCIO_NORTE + "\n" +
-               "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
-               "===================";
-    }
-}*/
-
     @Override
     public String toString() {
         return "===== Estado del pez =====\n" +
