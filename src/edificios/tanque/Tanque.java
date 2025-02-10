@@ -153,20 +153,21 @@ public class Tanque {
         int vendidos = 0;
         int ganancias = 0;
         SISMonedas sisMonedas = SISMonedas.getInstance();
-        for (Pez pez : fishes) {
-            if(pez.isAlive() == true){
+
+        for (int i = fishes.size(); i >= 0; i--) {
+            if(fishes.get(i).isAlive() == true){
                 int consumida;
                 boolean comio = false;
-                if(pez instanceof AlimentacionCarnivoro || pez instanceof AlimentacionCarnivoroActivo){
-                    consumida = pez.eat();
+                if(fishes.get(i) instanceof AlimentacionCarnivoro || fishes.get(i) instanceof AlimentacionCarnivoroActivo){
+                    consumida = fishes.get(i).eat();
                     if(consumida > 0){
                         p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
                         comio = true;
                     }else{
                         comio = false;
                     }   
-                }else if(pez instanceof AlimentacionFiltrador) {
-                    consumida = pez.eat();
+                }else if(fishes.get(i) instanceof AlimentacionFiltrador) {
+                    consumida = fishes.get(i).eat();
                     if(consumida > 0) {
                         p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
                         comio = true;
@@ -174,22 +175,22 @@ public class Tanque {
                         comio = false;
                     }
                 }
-                pez.grow(comio);
+                fishes.get(i).grow(comio);
                 if(fishMatch()) {
-                    for (int i = 0; i < pez.getFishStats().getHuevos(); i++) {
+                    for (int j = 0; j < fishes.get(i).getFishStats().getHuevos(); j++) {
                         boolean sex;
                         if(this.fishesF() <= this.fishesM()) {
                             sex = true;
                         }else{
                             sex = false;
                         }
-                        this.addFishes(pez.reproduce(sex));                       
+                        this.addFishes(fishes.get(i).reproduce(sex));                       
                     }
                 }
-                if(pez.getAge() == pez.getFishStats().getOptimo()) {
+                if(fishes.get(i).getAge() == fishes.get(i).getFishStats().getOptimo()) {
                     vendidos += 1;
-                    ganancias += pez.getFishStats().getMonedas();
-                    fishes.remove(pez);
+                    ganancias += fishes.get(i).getFishStats().getMonedas();
+                    fishes.remove(fishes.get(i));
                 }
             }
         }
@@ -241,9 +242,9 @@ public class Tanque {
      */
     public void cleanDeadFishes(){
         if(!this.isEmpty()){
-            for (int i = 0; i < fishes.size(); i++) {
-                if (fishes.get(i).isAlive() == false) {
-                    fishes.remove(i);
+            for (int i = fishes.size() - 1; i >= 0; i--) {
+                if(!fishes.get(i).isAlive()) {
+                    fishes.remove(fishes.get(i));
                 }
             }
         }else{

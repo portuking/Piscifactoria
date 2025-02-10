@@ -681,8 +681,8 @@ public class Simulador {
      * Piscifactoria
      */
     public void cleanTank() {
-        Piscifactoria selectedFishFarm = selectPisc();
-        selectedFishFarm.cleanDeadFishes();
+        Tanque tanque = this.selectTank();
+        tanque.cleanDeadFishes();
     }
 
     /**
@@ -1134,21 +1134,6 @@ public class Simulador {
     public static void main(String[] args) {
         Simulador sim = new Simulador();
         sim.init();
-        // sim.showIctio();
         sim.menu();
-        // sim.menuPisc();
-        // System.out.println(sim.selectPisc());
-        // Piscifactoria p = new Piscifactoria("Pisc1", false, 50);
-        // p.listTanks();
-        // sim.showGeneralStatus();
-        // sim.showSpecificStatus();
-        // sim.selectTank();
-        // sim.showTankStatus();
-        // sim.cleanTank();
-        // sim.emptyTank();
-        // sim.upgrade();
-        // sim.buyBuildings();
-        // sim.menuPisc();
-        // sim.selectPisc();
     }
 }
