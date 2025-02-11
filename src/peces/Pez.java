@@ -1,9 +1,6 @@
 package peces;
 
-import java.util.List;
 import java.util.Random;
-
-import edificios.tanque.Tanque;
 import propiedades.PecesDatos;
 
 /**
