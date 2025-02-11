@@ -59,6 +59,8 @@ public class Simulador {
             propiedades.AlmacenPropiedades.SALMON_CHINOOK };
 
     Scanner sc = new Scanner(System.in);
+    /*Instancia objeto helper una sola vez*/
+    private Helper helper = new Helper();
 
     /**
      * Método que inicializa el Sistema
@@ -89,81 +91,82 @@ public class Simulador {
         boolean exit = false;
 
         while (!exit) {
-            try {
-                System.out.println("===========Menú Principal===========");
-                System.out.println("1. Estado general"); // rarete
-                System.out.println("2. Estado piscifactoría"); // funciona
-                System.out.println("3. Estado Tanques"); // perfecto
-                System.out.println("4. Informes"); // perfecto
-                System.out.println("5. Ictiopedia"); // perfecto
-                System.out.println("6. Pasar día"); // necesita implementar
-                System.out.println("7. Comprar comida"); // funciona
-                System.out.println("8. Comprar peces"); // perfecto
-                System.out.println("9. Vender peces"); // implementar
-                System.out.println("10. Limpiar tanques"); // comprobar
-                System.out.println("11. Vaciar tanques"); // comprobar
-                System.out.println("12. Mejorar"); // terminar
-                System.out.println("13. Pasar varios días"); // implementar
-                System.out.println("14. Salir");
-                System.out.print("Escoja una opción: ");
+            /*
+            System.out.println("===========Menú Principal===========");
+            System.out.println("1. Estado general"); // rarete
+            System.out.println("2. Estado piscifactoría"); // funciona
+            System.out.println("3. Estado Tanques"); // perfecto
+            System.out.println("4. Informes"); // perfecto
+            System.out.println("5. Ictiopedia"); // perfecto
+            System.out.println("6. Pasar día"); // necesita implementar
+            System.out.println("7. Comprar comida"); // funciona
+            System.out.println("8. Comprar peces"); // perfecto
+            System.out.println("9. Vender peces"); // implementar
+            System.out.println("10. Limpiar tanques"); // comprobar
+            System.out.println("11. Vaciar tanques"); // comprobar
+            System.out.println("12. Mejorar"); // terminar
+            System.out.println("13. Pasar varios días"); // implementar
+            System.out.println("14. Salir");
+            System.out.print("Escoja una opción: ");*/
 
-                int opcion = sc.nextInt();
+            String[] opciones = { "Estado general", "Estado piscifactoría", "Estado Tanques", "Informes", "Ictiopedia",
+                    "Pasar día", "Comprar comida", "Comprar peces", "Vender peces", "Limpiar tanques", "Vaciar tanques",
+                    "Mejorar", "Pasar varios días" };
+            int[] extraOps = { 98, 99 };
+            Helper helper = new Helper();
+            int opcion = helper.mostrarMenu("Menu Principal", opciones, extraOps);
 
-                switch (opcion) {
-                    case 1:
-                        this.showGeneralStatus();
-                        break;
-                    case 2:
-                        this.showSpecificStatus();
-                        break;
-                    case 3:
-                        this.showTankStatus();
-                        break;
-                    case 4:
-                        this.showStats();
-                        break;
-                    case 5:
-                        this.showIctio();
-                        break;
-                    case 6:
-                        nextDay(1);
-                        break;
-                    case 7:
-                        this.addFood();
-                        break;
-                    case 8:
-                        this.addFish();
-                        break;
-                    case 9:
-                        this.sellFish();
-                        break;
-                    case 10:
-                        this.cleanTank();
-                        break;
-                    case 11:
-                        this.emptyTank();
-                        break;
-                    case 12:
-                        this.upgrade();
-                        break;
-                    case 13:
-                        this.nextDay(5);
-                        break;
-                    case 14:
-                        exit = true;
-                        break;
-                    case 98:
-                        this.addFishAmmount();
-                        break;
-                    case 99:
-                        this.procesaOpcion99();
-                        break;
-                    default:
-                        break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Solo opciones del 1-14");
-                sc.nextLine();
+            switch (opcion) {
+                case 1:
+                    this.showGeneralStatus();
+                    break;
+                case 2:
+                    this.showSpecificStatus();
+                    break;
+                case 3:
+                    this.showTankStatus();
+                    break;
+                case 4:
+                    this.showStats();
+                    break;
+                case 5:
+                    this.showIctio();
+                    break;
+                case 6:
+                    nextDay(1);
+                    break;
+                case 7:
+                    this.addFood();
+                    break;
+                case 8:
+                    this.addFish();
+                    break;
+                case 9:
+                    this.sellFish();
+                    break;
+                case 10:
+                    this.cleanTank();
+                    break;
+                case 11:
+                    this.emptyTank();
+                    break;
+                case 12:
+                    this.upgrade();
+                    break;
+                case 13:
+                    this.nextDay(5);
+                    break;
+                case 14:
+                    exit = true;
+                    break;
+                case 98:
+                    this.addFishAmmount();
+                    break;
+                case 99:
+                    this.procesaOpcion99();
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -240,27 +243,12 @@ public class Simulador {
         }
     }
 
-    public void menupeces() {
-        System.out.println("Seleccione un pez para ver más detalles:(0 para ancelar)");
-        System.out.println("1. Besugo");
-        System.out.println("2. Caballa");
-        System.out.println("3. Carpa Plateada");
-        System.out.println("4. Lenguado Europeo");
-        System.out.println("5. Lubina Europea");
-        System.out.println("6. Lubina Rayada");
-        System.out.println("7. Lucio del norte");
-        System.out.println("8. Pejerrey");
-        System.out.println("9. Perca Europea");
-        System.out.println("10. Robalo");
-        System.out.println("11. Salmón Atlantico");
-        System.out.println("12. Salmón Chinook");
-        System.out.println("0. Cancelar");
-        System.out.print("Seleccione una opción: ");
-    }
-
     public void showIctio() {
-        menupeces();
-        int opcion = sc.nextInt();
+        String peces[] = { "Besugo", "Caballa", "Carpa Plateada", "Lenguado Europeo", "Lubina Europea", "Lubina Rayada",
+                "Lucio del norte", "Pejerrey", "Perca Europea", "Robalo", "Salmón Atlantico", "Salmón Chinook" };
+       // menupeces();
+       int opcion = helper.mostrarMenu("Menú Peces", peces, null);
+        //int opcion = sc.nextInt();
 
         if (opcion == 0) {
             return;
