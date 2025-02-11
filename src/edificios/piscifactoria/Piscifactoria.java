@@ -3,6 +3,7 @@ package edificios.piscifactoria;
 import java.util.ArrayList;
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
+import estadisticas.Estadisticas;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import peces.alimentacion.AlimentacionCarnivoroActivo;
@@ -223,9 +224,9 @@ public abstract class Piscifactoria {
     /**
      * Método que hace que todos los Peces de la Piscifactoria pasen de día
      */
-    public void nextDay() {
+    public void nextDay(Estadisticas estadisticas) {
         for (Tanque tanque : tanques) {
-            tanque.nextDay(this);
+            tanque.nextDay(this, estadisticas);
         }
     }
 

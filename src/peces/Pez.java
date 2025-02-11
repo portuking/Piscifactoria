@@ -193,15 +193,15 @@ public  abstract class Pez {
     /**
      * @return Si el Pez es fértil
      */
-    public boolean isFertile(){
-        if(this.age < this.fishStats.getCiclo()){
-            this.reproductionCycle --;
-            this.fertile = false;
-        }else{
+    public boolean isFertile() {
+        if (this.age >= this.fishStats.getCiclo()) {
             this.fertile = true;
+        } else {
+            this.fertile = false;
         }
         return this.fertile;
     }
+    
 
     /**
      * @return true si el pez es macho

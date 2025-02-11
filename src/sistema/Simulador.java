@@ -57,11 +57,24 @@ public class Simulador {
             propiedades.AlmacenPropiedades.ROBALO,
             propiedades.AlmacenPropiedades.SALMON_ATLANTICO,
             propiedades.AlmacenPropiedades.SALMON_CHINOOK };
-
     Scanner sc = new Scanner(System.in);
     /*Instancia objeto helper una sola vez*/
     private Helper helper = new Helper();
-
+    private static String[] fishesNames = {
+        propiedades.AlmacenPropiedades.BESUGO.getNombre(),
+            propiedades.AlmacenPropiedades.CABALLA.getNombre(),
+            propiedades.AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
+            propiedades.AlmacenPropiedades.LENGUADO_EUROPEO.getNombre(),
+            propiedades.AlmacenPropiedades.LUBINA_EUROPEA.getNombre(),
+            propiedades.AlmacenPropiedades.LUBINA_RAYADA.getNombre(),
+            propiedades.AlmacenPropiedades.LUCIO_NORTE.getNombre(),
+            propiedades.AlmacenPropiedades.PEJERREY.getNombre(),
+            propiedades.AlmacenPropiedades.PERCA_EUROPEA.getNombre(),
+            propiedades.AlmacenPropiedades.ROBALO.getNombre(),
+            propiedades.AlmacenPropiedades.SALMON_ATLANTICO.getNombre(),
+            propiedades.AlmacenPropiedades.SALMON_CHINOOK.getNombre()};
+    private static Estadisticas estadisticas = new Estadisticas(fishesNames);
+    
     /**
      * Método que inicializa el Sistema
      */
@@ -383,7 +396,7 @@ public class Simulador {
         this.days += days;
         for (int i = 0; i < days; i++) {
             for (Piscifactoria piscifactoria : fishFarms) {
-                piscifactoria.nextDay();
+                piscifactoria.nextDay(estadisticas);
             }
         }
     }
@@ -618,12 +631,7 @@ public class Simulador {
      * Método que muestra las estadisticas de los peces de la piscifactoria
      */
     public void showStats() {
-        String[] peces = new String[12];
-        for (int i = 0; i < pecesDisponibles.length; i++) {
-            peces[i] = pecesDisponibles[i].getNombre();
-        }
-        estadisticas.Estadisticas stats = new Estadisticas(peces);
-        stats.mostrar();
+        estadisticas.mostrar();
     }
 
     /**
@@ -865,7 +873,7 @@ public class Simulador {
      * Método para mejorar el Almacén Central
      */
     public void upgradeCentralWarehouse() {
-
+        
     }
 
     /**
@@ -981,6 +989,7 @@ public class Simulador {
                     System.out.println("No se ha añadido el pez");
                     return;
                 }
+                estadisticas.registrarNacimiento(selectedFish);
             }
         } catch (InputMismatchException e) {
             System.out.println("Se ha introducido una opción inválida");
@@ -1085,6 +1094,7 @@ public class Simulador {
                         System.out.println("No se ha encontrado el pez");
                         break;
                 }
+                estadisticas.registrarNacimiento(pecesCompatibles.get(pezRandom).getNombre());
             }
         }
     }
