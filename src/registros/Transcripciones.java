@@ -40,7 +40,8 @@ public class Transcripciones {
     }
 
     /**
-     * Obtiene la única instancia de la clase, asegurando que solo haya una por partida.
+     * Obtiene la única instancia de la clase, asegurando que solo haya una por
+     * partida.
      * 
      * @param nombrePartida Nombre de la partida para generar el archivo.
      * @return Instancia única de Transcripciones.
@@ -67,101 +68,121 @@ public class Transcripciones {
     }
 
     /**
-     * Registra el inicio de la partida junto con la informacion principal del sistema.
-     * @param nombrePartida Nombre de la partida.
-     * @param monedas Dinero inicial.
+     * Registra el inicio de la partida junto con la informacion principal del
+     * sistema.
+     * 
+     * @param nombrePartida      Nombre de la partida.
+     * @param monedas            Dinero inicial.
      * @param pecesImplementados Lista de peces implementados.
-     * @param pisciInicial Piscifactoria inicial.
+     * @param pisciInicial       Piscifactoria inicial.
      */
-    public void start(String nombrePartida, int monedas, String[] pecesImplementados, String pisciInicial ) {
-        escribir("=========Arranque=========\nEmpieza el sistema "+nombrePartida+
-        ".\n=========Dinero=========\nDinero: "+monedas+" monedas.\n=========Peces=========\nRio:\n");
+    public void start(String nombrePartida, int monedas, String[] pecesImplementados, String pisciInicial) {
+        escribir("=========Arranque=========\nEmpieza el sistema " + nombrePartida +
+                ".\n=========Dinero=========\nDinero: " + monedas + " monedas.\n=========Peces=========\nRio:\n");
         for (int i = 0; i < pecesImplementados.length; i++) {
-            if(propiedades.AlmacenPropiedades.getPropByName(pecesImplementados[i]).getPiscifactoria().getName().equals("Río")){
+            if (propiedades.AlmacenPropiedades.getPropByName(pecesImplementados[i]).getPiscifactoria().getName()
+                    .equals("Río")) {
                 escribir("-" + pecesImplementados[i] + "\n");
             }
         }
         escribir("Mar:\n");
         for (int i = 0; i < pecesImplementados.length; i++) {
-            if(propiedades.AlmacenPropiedades.getPropByName(pecesImplementados[i]).getPiscifactoria().getName().equals("Mar")){
+            if (propiedades.AlmacenPropiedades.getPropByName(pecesImplementados[i]).getPiscifactoria().getName()
+                    .equals("Mar")) {
                 escribir("-" + pecesImplementados[i] + "\n");
             }
         }
         escribir("Río y mar:\n");
         for (int i = 0; i < pecesImplementados.length; i++) {
-            if(propiedades.AlmacenPropiedades.getPropByName(pecesImplementados[i]).getPiscifactoria().getName().equals("Río y mar")){
+            if (propiedades.AlmacenPropiedades.getPropByName(pecesImplementados[i]).getPiscifactoria().getName()
+                    .equals("Río y mar")) {
                 escribir("-" + pecesImplementados[i] + "\n");
             }
         }
         escribir("-------------------------------------------\n");
-        escribir("Piscifactoria incial: "+pisciInicial+".\n");
+        escribir("Piscifactoria incial: " + pisciInicial + ".\n");
 
-        //TODO implementar EXTRAS
+        // TODO implementar EXTRAS
     }
 
     /**
      * Registra la informacion cuando compra la comida
-     * @param cantidadComida Cantidad de comida comprada
-     * @param tipoComida Tipo de comida comprada
+     * 
+     * @param cantidadComida  Cantidad de comida comprada
+     * @param tipoComida      Tipo de comida comprada
      * @param monedasGastadas Monedas gastadas
-     * @param almacenado Indica si se almacena en una piscifactoria o en el almacen central
-     * @param piscifactoria Piscifactoria en la que se almacena
+     * @param almacenado      Indica si se almacena en una piscifactoria o en el
+     *                        almacen central
+     * @param piscifactoria   Piscifactoria en la que se almacena
      */
-    public void comprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, String almacenado, Piscifactoria piscifactoria) { 
-        escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprado por " + monedasGastadas + " monedas. Se almacena en la piscifactoria " + almacenado);//PISCIFACTORIA O ALMACEN 
+    public void comprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, String almacenado,
+            Piscifactoria piscifactoria) {
+        escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprado por " + monedasGastadas
+                + " monedas. Se almacena en la piscifactoria " + almacenado);// PISCIFACTORIA O ALMACEN
     }
 
-    public void comprarPeces(){
+    public void comprarPeces() {
         escribir("X (M/H) comprado por Y monedas. Añadido al tanque Y de la piscifactoría Z.");
     }
 
-    public void venderPeces(){
+    public void venderPeces() {
         escribir("Vendidos X peces de la piscifactoría Y de forma manual por Z monedas.");
     }
 
     /**
      * Registra la informacion de la limpieza de un tanque.
-     * @param tanque tanque donde se va a limpiar
+     * 
+     * @param tanque        tanque donde se va a limpiar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void limpiarTanque(int tanque , String piscifactoria){
-       escribir("Limpiado el tanque "+ tanque + " de la piscifactoría " + piscifactoria + ".\n"); 
+    public void limpiarTanque(int tanque, String piscifactoria) {
+        escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
     /**
      * Registra la informacion de vaciar un tanque.
-     * @param tanque tanque que se va a vaciar
+     * 
+     * @param tanque        tanque que se va a vaciar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void vaciarTanque(int tanque , String piscifactoria){
-        escribir("Limpiado el tanque "+ tanque + " de la piscifactoría " + piscifactoria + ".\n"); 
+    public void vaciarTanque(int tanque, String piscifactoria) {
+        escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
-    public void compraEdificio(){
-        escribir("Comprada la piscifactoría de río/mar X por Y monedas.\r\n" + //
-                        "Comprado un tanque número X de la piscifactoría Y.\r\n" + //
-                        "Comprado el almacén central");
+    public void compraEdificio(String tipoEdificio, int monedas, int tanque, String piscifactoria) {
+        switch (tipoEdificio) {
+            case "tanque":
+                escribir("Comprado un tanque número " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+                break;
+            case "almacen":
+                escribir("Comprado el almacén central.\n");
+                break;
+            default:
+                escribir("Comprada la piscifactoría de río/mar " + piscifactoria +" por "+monedas+" monedas.\n"); //
+                break;
+        }
     }
 
-    public void mejoraEdificio(){
-        escribir("Mejorada la piscifactoría X aumentando su capacidad de comida hasta un total de Y por Z\r\n" + //
-                        "monedas");
+    public void mejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {
+        escribir("Mejorada la piscifactoría "+piscifactoria+" aumentando su capacidad de comida hasta un total de "+aumentoComida+" por " +monedas+ " \n" + //
+                "monedas");
     }
 
-    public void nextDay(){
-        escribir("Fin del día X.\r\n" + //
-                        "Peces actuales, X de río Y de mar.\r\n" + //
-                        "X monedas ganadas por un total de Y.");
-                        //TODO mirar la documentacion del proyecto no sAe que movie con las >>> al pasar de dio
+    public void nextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
+        escribir("Fin del día " + dia + ".\n" +
+                "Peces actuales, " + pecesRio + " de río " + pecesMar + "de mar.\n" +
+                monedas + "monedas ganadas por un total de " + pecesVendidos + ".\n" +
+                "-------------------------\n>>>Inicio del dia " + (dia + 1) + ".\n");
     }
 
-    public void opsOcultas(int codOp , String piscifactoria , int cantidadDolares){
-        switch(codOp){
+    public void opsOcultas(int codOp, String piscifactoria, int cantidadDolares) {
+        switch (codOp) {
             case 98:
-                escribir("Añadidos peces mediante la opción oculta a la piscifactoría "+piscifactoria+".\n");
+                escribir("Añadidos peces mediante la opción oculta a la piscifactoría " + piscifactoria + ".\n");
                 break;
             case 99:
-                escribir("Añadidas 1000 monedas mediante la opción oculta. Monedas actuales, "+cantidadDolares+".\n");
+                escribir("Añadidas 1000 monedas mediante la opción oculta. Monedas actuales, " + cantidadDolares
+                        + ".\n");
                 break;
         }
     }
@@ -179,4 +200,3 @@ public class Transcripciones {
         }
     }
 }
-
