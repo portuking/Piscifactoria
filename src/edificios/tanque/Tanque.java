@@ -184,7 +184,7 @@ public class Tanque {
             pez.grow(comio);
             if (pez.isFemale() && pez.isFertile() && fishMatch()) {
                 for (int j = 0; j < pez.getFishStats().getHuevos(); j++) {
-                    if (!this.isFull()) {
+                    if (!this.isFull() && (fishes.size() + nuevosPeces.size() < this.getMaxCapacity())) {
                         boolean sex; 
                         if(this.fishesF() <= this.fishesM()){
                             sex = true;
@@ -211,7 +211,13 @@ public class Tanque {
             fishes.remove(i);
         }
     }
-    fishes.addAll(nuevosPeces);
+    for (Pez nuevoPez : nuevosPeces) {
+        if (!this.isFull()) {
+            fishes.add(nuevoPez);
+        } else {
+            break;
+        }
+    }
     sisMonedas.setMonedas(sisMonedas.getMonedas() + ganancias);
     System.out.println("Se han vendido: " + vendidos + " peces");
     System.out.println("Se han ganado: " + ganancias + " monedas");
