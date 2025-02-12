@@ -12,7 +12,7 @@ public class AlmacenCentral {
     /**Stock del Almacén central */
     private int stock;
     /**Precio de el Almacén Central */
-    private int price;
+    private final int price;
     /**Almacén de comida Animal*/
     private AlmacenComida warehouseA;
     /**Almacén de comida Vegetal*/
@@ -60,10 +60,14 @@ public class AlmacenCentral {
     }
 
     /**
-     * Método que añade 50 espacios al Almacén central
+     * Método que añade 100 espacios al Almacén central:
+     * 50 espacios para la comida animal
+     * 50 espacios para la comida vegetal
      */
     public void upgrade() {
-        this.maxCap += 50; 
+        this.maxCap += 100;
+        this.warehouseA.upgrade(50);
+        this.warehouseV.upgrade(50); 
     }
 
     /**

@@ -193,7 +193,8 @@ public class Tanque {
                         }
                         Pez nuevoPez = pez.reproduce(sex);
                         nuevosPeces.add(nuevoPez);
-                        estadisticas.registrarNacimiento(nuevoPez.getFishStats().getNombre()); 
+                        estadisticas.registrarNacimiento(nuevoPez.getFishStats().getNombre());
+                        System.out.println("Ha nacido un nuevo: " + nuevoPez.getFishStats().getNombre());
                     } else {
                         System.out.println("El tanque está lleno, no se pueden añadir más peces.");
                         break;

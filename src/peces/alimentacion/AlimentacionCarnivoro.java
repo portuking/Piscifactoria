@@ -39,5 +39,4 @@ public abstract class AlimentacionCarnivoro extends Pez {
      */
     @Override
     public abstract Pez reproduce(boolean sex);
-
 }
