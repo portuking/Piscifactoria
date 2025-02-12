@@ -59,6 +59,7 @@ public class Registros {
 
     public static void registrarComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria){
         transcripciones.comprarPeces(nombrePez, tipoSex, monedas, tanque, piscifactoria);
+        log.comprarPeces(nombrePez, tipoSex, tanque, piscifactoria);
     }
 
     public static void registrarVenderPeces(){
