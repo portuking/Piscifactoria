@@ -155,9 +155,15 @@ public class Transcripciones {
                         //TODO mirar la documentacion del proyecto no sAe que movie con las >>> al pasar de dio
     }
 
-    public void opsOcultas(){
-        escribir("Añadidos peces mediante la opción oculta a la piscifactoría X.\r\n" + //
-                        "Añadidas 1000 monedas mediante la opción oculta. Monedas actuales, X.");
+    public void opsOcultas(int codOp , String piscifactoria , int cantidadDolares){
+        switch(codOp){
+            case 98:
+                escribir("Añadidos peces mediante la opción oculta a la piscifactoría "+piscifactoria+".\n");
+                break;
+            case 99:
+                escribir("Añadidas 1000 monedas mediante la opción oculta. Monedas actuales, "+cantidadDolares+".\n");
+                break;
+        }
     }
 
     /**

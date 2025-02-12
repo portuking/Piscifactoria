@@ -89,7 +89,7 @@ public class Registros {
         transcripciones.nextDay();
     }
 
-    public static void registraropsOcultas(){
-        transcripciones.opsOcultas();
+    public static void registraropsOcultasint(int codOp , String piscifactoria , int cantidadDolares){
+        transcripciones.opsOcultas(codOp , piscifactoria , cantidadDolares);
     }
 }

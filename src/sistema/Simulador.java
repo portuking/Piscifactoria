@@ -1118,6 +1118,7 @@ public class Simulador {
         this.monedas.setMonedas(this.monedas.getMonedas() + 1000);
         System.out.println("Se han añadido 1000 monedas al saldo");
         System.out.println("Monedas actuales: " + SISMonedas.getInstance().getMonedas());
+        Registros.registraropsOcultasint(99, "", SISMonedas.getInstance().getMonedas());
     }
 
     /**
@@ -1210,7 +1211,9 @@ public class Simulador {
                         break;
                 }
                 estadisticas.registrarNacimiento(pecesCompatibles.get(pezRandom).getNombre());
+                
             }
+            Registros.registraropsOcultasint(98, selectedFish, 4);
         }
     }
 
