@@ -92,6 +92,14 @@ public class Log {
         write(cantidadComida + "de comida de tipo " + tipoComida + " comprada. Se almacena en" + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + "."));
     }
 
+    public void comprarPeces(String nombrePez, boolean tipoSex, int tanque, String piscifactoria){
+        write(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado. Añadido al tanque " + tanque + " de la piscifactoria " + piscifactoria );
+    }
+
+    public void mejorarEdificio(){
+
+    }
+
     /**
      * Cierra el archivo de log liberando los recursos.
      */
