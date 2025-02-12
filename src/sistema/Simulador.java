@@ -29,6 +29,7 @@ import peces.especies.SalmonChinook;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
 import propiedades.PecesProps;
+import registros.Log;
 import registros.Registros;
 import registros.Transcripciones;
 
@@ -86,9 +87,11 @@ public class Simulador {
             crearCarpetas("transcripciones", "logs");
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
-            Transcripciones.getInstance(this.name);
+            //Transcripciones.getInstance(this.name);
             System.out.print("Escriba el nombre de su primera Piscifactoría: ");
             String fishfarmName = sc.nextLine();
+            Registros.getInstance().crearRegistro(this.name);
+            //Log.getInstance(fishfarmName);
             this.days = 0;
             this.fishFarms = new ArrayList<Piscifactoria>();
             this.monedas = SISMonedas.getInstance();
@@ -96,8 +99,8 @@ public class Simulador {
             Piscifactoria initialRiverFishfarm = new PiscifactoriaRio(fishfarmName, 25);
             fishFarms.add(initialRiverFishfarm);
             this.centralWarehouse = null;
-            Registros.getInstance().crearRegistro(this.name);
             Registros.registrarInicio(this.name, this.monedas.getMonedas(), fishesNames, fishfarmName);
+            
         } catch (InputMismatchException e) {
             System.out.println("El nombre es incorrecto");
         }
@@ -593,6 +596,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= 5) {
                                             this.monedas.pagar(5);
                                             this.centralWarehouse.getWarehouseA().addFood(5);
+                                            Registros.registrarCompraComida(5, "animal", 5,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -600,6 +604,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             this.centralWarehouse.getWarehouseA().addFood(spaceA);
+                                            Registros.registrarCompraComida(spaceA, "animal", spaceA,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -609,6 +614,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= 5) {
                                             this.monedas.pagar(5);
                                             this.centralWarehouse.getWarehouseV().addFood(5);
+                                            Registros.registrarCompraComida(5, "5", spaceA,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -616,6 +622,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             this.centralWarehouse.getWarehouseV().addFood(spaceV);
+                                            Registros.registrarCompraComida(spaceV, "animal", spaceV,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -628,6 +635,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= 10) {
                                             this.monedas.pagar(10);
                                             this.centralWarehouse.getWarehouseA().addFood(10);
+                                            Registros.registrarCompraComida(10, "animal", 10,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -635,6 +643,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             this.centralWarehouse.getWarehouseA().addFood(spaceA);
+                                            Registros.registrarCompraComida(spaceA, "animal", spaceA,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -644,6 +653,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= 10) {
                                             this.monedas.pagar(10);
                                             this.centralWarehouse.getWarehouseV().addFood(10);
+                                            Registros.registrarCompraComida(10, "vegetal", 10,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -651,6 +661,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             this.centralWarehouse.getWarehouseV().addFood(spaceV);
+                                            Registros.registrarCompraComida(spaceV, "vegetal", spaceV,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -663,6 +674,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= 20) {
                                             this.monedas.pagar(20);
                                             this.centralWarehouse.getWarehouseA().addFood(25);
+                                            Registros.registrarCompraComida(25, "animal", 20,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -670,6 +682,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             this.centralWarehouse.getWarehouseA().addFood(spaceA);
+                                            Registros.registrarCompraComida(spaceA, "animal", spaceA ,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -679,6 +692,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= 20) {
                                             this.monedas.pagar(20);
                                             this.centralWarehouse.getWarehouseV().addFood(25);
+                                            Registros.registrarCompraComida(25, "vegetal", 20,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -686,6 +700,7 @@ public class Simulador {
                                         if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             this.centralWarehouse.getWarehouseV().addFood(spaceV);
+                                        Registros.registrarCompraComida(spaceV, "vegetal", spaceV,false, selectPisc().getName());
                                         } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
@@ -704,6 +719,7 @@ public class Simulador {
                                     if (this.monedas.getMonedas() >= payment) {
                                         this.monedas.pagar(payment);
                                         this.centralWarehouse.getWarehouseA().addFood(payment);
+                                        Registros.registrarCompraComida(payment, "animal", payment,false, selectPisc().getName());
                                     } else {
                                         System.out.println("No se ha realizado la operación");
                                     }
@@ -718,6 +734,7 @@ public class Simulador {
                                     if (this.monedas.getMonedas() >= payment) {
                                         this.monedas.pagar(payment);
                                         this.centralWarehouse.getWarehouseV().addFood(payment);
+                                        Registros.registrarCompraComida(payment, "vegetal", payment,false, selectPisc().getName());
                                     } else {
                                         System.out.println("No se ha realizado la operación");
                                     }
@@ -1118,6 +1135,7 @@ public class Simulador {
                     return;
                 }
                 estadisticas.registrarNacimiento(selectedFish);
+                Registros.registrarComprarPeces(selectedFish, fishSex, fishPrice, selectedTank.getTankNum(), selectPisc().getName());
             }
         } catch (InputMismatchException e) {
             System.out.println("Se ha introducido una opción inválida");

@@ -5,6 +5,7 @@ import edificios.piscifactoria.Piscifactoria;
 public class Registros {
     /**Instancia utilizada para delegar las transcripciones de eventos */
     private static Transcripciones transcripciones = null;
+    private static Log log = null;
     /**Instancia única de la clase */
     private static Registros instance = null;
     /**
@@ -25,6 +26,7 @@ public class Registros {
      */
     public void crearRegistro(String nombrePartida) {
         transcripciones = Transcripciones.getInstance(nombrePartida);
+        log = Log.getInstance(nombrePartida);
 
     }
     /**
@@ -37,7 +39,10 @@ public class Registros {
      */
     public static void registrarInicio(String nombrePartida, int monedas, String[] pecesImplementados, String pisciInicial) {
         transcripciones.start(nombrePartida, monedas, pecesImplementados, pisciInicial);
+        log.start(nombrePartida, pisciInicial);
     }
+
+        
     /**
      * Registra la compra de comida.
      * 
@@ -47,12 +52,13 @@ public class Registros {
      * @param almacenado Almacenamiento de la comida. 
      * @param piscifactoria Piscifactoría en la que se realiza la compra.
      */
-    public static void registrarCompraComida(int cantidadComida, String tipoComida, int monedasGastadas, String almacenado, Piscifactoria piscifactoria){
-        transcripciones.comprarComdida(cantidadComida, tipoComida, monedasGastadas, almacenado, piscifactoria);
+    public static void registrarCompraComida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen, String piscifactoria){
+        transcripciones.comprarComdida(cantidadComida, tipoComida, monedasGastadas, almacen, piscifactoria);
+        log.comprarComida(cantidadComida, tipoComida, almacen, piscifactoria);//TODO CHEKEAR SI REGISTRA LA COMIDA LLENA
     }
 
-    public static void registrarComprarPeces(){
-        transcripciones.comprarPeces();
+    public static void registrarComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria){
+        transcripciones.comprarPeces(nombrePez, tipoSex, monedas, tanque, piscifactoria);
     }
 
     public static void registrarVenderPeces(){

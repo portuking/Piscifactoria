@@ -115,17 +115,15 @@ public class Transcripciones {
      *                        almacen central
      * @param piscifactoria   Piscifactoria en la que se almacena
      */
-    public void comprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, String almacenado,
-            Piscifactoria piscifactoria) {
-        escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprado por " + monedasGastadas
-                + " monedas. Se almacena en la piscifactoria " + almacenado);// PISCIFACTORIA O ALMACEN
+    public void comprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen, String piscifactoria) {
+        escribir(cantidadComida + "de comida de tipo " + tipoComida + " comprada por " + monedasGastadas+ " monedas. Se almacena en" + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + "."));// PISCIFACTORIA O ALMACEN
     }
 
-    public void comprarPeces() {
-        escribir("X (M/H) comprado por Y monedas. Añadido al tanque Y de la piscifactoría Z.");
+    public void comprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {//hecho
+        escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por "+monedas+" monedas. Añadido al tanque " + tanque+ " de la piscifactoría " +piscifactoria+" .\n");
     }
 
-    public void venderPeces() {
+    public void venderPeces() {//????
         escribir("Vendidos X peces de la piscifactoría Y de forma manual por Z monedas.");
     }
 
@@ -135,7 +133,7 @@ public class Transcripciones {
      * @param tanque        tanque donde se va a limpiar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void limpiarTanque(int tanque, String piscifactoria) {
+    public void limpiarTanque(int tanque, String piscifactoria) {//hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
@@ -145,10 +143,10 @@ public class Transcripciones {
      * @param tanque        tanque que se va a vaciar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void vaciarTanque(int tanque, String piscifactoria) {
+    public void vaciarTanque(int tanque, String piscifactoria) {//hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
-
+    /**FALTA TANQUE */
     public void compraEdificio(String tipoEdificio, int monedas, int tanque, String piscifactoria) {
         switch (tipoEdificio) {
             case "tanque":
@@ -163,11 +161,11 @@ public class Transcripciones {
         }
     }
 
-    public void mejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {
-        escribir("Mejorada la piscifactoría "+piscifactoria+" aumentando su capacidad de comida hasta un total de "+aumentoComida+" por " +monedas+ " \n" + //
-                "monedas");
+    public void mejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {//hecho
+        escribir("Mejorada la piscifactoría "+piscifactoria+" aumentando su capacidad de comida hasta un total de "+aumentoComida+" por " +monedas+
+                "monedas\n");
     }
-
+    /*FALTA IMPLEMENTAR */
     public void nextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
         escribir("Fin del día " + dia + ".\n" +
                 "Peces actuales, " + pecesRio + " de río " + pecesMar + "de mar.\n" +
@@ -175,7 +173,7 @@ public class Transcripciones {
                 "-------------------------\n>>>Inicio del dia " + (dia + 1) + ".\n");
     }
 
-    public void opsOcultas(int codOp, String piscifactoria, int cantidadDolares) {
+    public void opsOcultas(int codOp, String piscifactoria, int cantidadDolares) {//hecho
         switch (codOp) {
             case 98:
                 escribir("Añadidos peces mediante la opción oculta a la piscifactoría " + piscifactoria + ".\n");
