@@ -5,19 +5,20 @@ import java.util.Random;
 import propiedades.PecesDatos;
 
 /**
- * Clase que representa la alimentación filtrador de un pez
- * @author Manuel Abalo Rietz
- * @author Adrián Ces López
- * @author Pablo Dopazo Suárez
+ * Clase que representa la alimentación omnívora de un pez
+ * Se pueden alimentar de comida vegetal y animal. 25% de no consumir comida.
+ * @autor Manuel Abalo Rietz
+ * @autor Adrián Ces López
+ * @autor Pablo Dopazo Suárez
  */
-public abstract class AlimentacionFiltrador extends Pez {
+public abstract class AlimentacionOmnivoro extends Pez {
 
     /**
-     * Constructor para crear un nuevo pez filtrador.
+     * Constructor para crear un nuevo pez omnívoro.
      * @param fishStats Objeto de tipo PecesDatos que contiene las estadísticas del pez.
      * @param sex booleano que indica el sexo del pez (true si es macho, false si es hembra).
      */
-    public AlimentacionFiltrador(PecesDatos fishStats, boolean sex) {
+    public AlimentacionOmnivoro(PecesDatos fishStats, boolean sex) {
         super(sex, fishStats);
     }
 
@@ -29,21 +30,22 @@ public abstract class AlimentacionFiltrador extends Pez {
     public abstract Pez reproduce(boolean sex);
 
     /**
-     * Método que simula la acción de comer del pez filtrador.
-     * @return La cantidad de comida consumida (0 si no ha comido o 1 si ha comido).
+     * Método que simula la acción de comer del pez omnívoro.
+     * @return La cantidad de comida consumida (0, 1 o 2 si ha comido).
      */
     @Override
     public int eat() {
         int comidaConsumida = 0;
+        int probabilidad = 0;
         if (this.isAlive() && !this.isEat()) {
             Random r = new Random();
-            if (r.nextBoolean()) {
-                comidaConsumida = 0;
-            } else {
+            probabilidad = r.nextInt(4); 
+            if(probabilidad < 4) {
                 comidaConsumida = 1;
+            }else{
+                comidaConsumida = 0;
             }
         }
         return comidaConsumida;
     }
-
 }

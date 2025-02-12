@@ -12,7 +12,7 @@ public class AlmacenCentral {
     /**Stock del Almacén central */
     private int stock;
     /**Precio de el Almacén Central */
-    private int price;
+    private final int price;
     /**Almacén de comida Animal*/
     private AlmacenComida warehouseA;
     /**Almacén de comida Vegetal*/
@@ -22,54 +22,82 @@ public class AlmacenCentral {
      * Constructor de Almacén Central
      */
     public AlmacenCentral() {
-        this.warehouseA = new AlmacenComida(200);
-        this.warehouseV = new AlmacenComida(200);
+        this.warehouseA = new AlmacenComida(200, 0);
+        this.warehouseV = new AlmacenComida(200, 0);
         this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;
     }
 
     /**
-     * Método que reparte la mitad del Stock a cada Almacén
+     * Método que añade comida vegetal al Almacén Central
+     * @param ammount Cantidad de comida a añadir
      */
-    public void distribute(){
-        if(this.stock > 1 ){
-            int halfStock = this.stock / 2;
-            this.warehouseA.addFood(halfStock);
-            this.warehouseV.addFood(halfStock);
-            this.stock = 0;
-        }else{
-            System.out.println("Operación Incorrecta: El número de Comida a añadir es muy pequeño");
-        }
+    public void addVegtalFood(int ammount){
+        this.warehouseV.addFood(ammount);
+        this.stock += ammount;
     }
 
     /**
-     * Método que añade comida al Almacén central
-     * @param food unidades de comida a añadir
+     * Método que añade comida animal al Almacén Central
+     * @param ammount Cantidad de comida a añadir
      */
-    public void addFood(int food){
-        int free = this.maxCap - this.stock;
-        if(food > 0){
-            if(food >= 400){
-                int leftovers = food - this.stock;
-                this.stock = 400;
-                System.out.println("Han sobrado " + leftovers + " unidades de comida");
-                distribute();
-            }else{
-                
-                if(free >= food) {
-                    this.stock += food;
-                    distribute();
-                }else{
-                    int added = food - free;
-                    this.stock += added;
-                    distribute();
-                }
-            }
-        }else{
-            System.out.println("Operacion Incorrecta: No se añade comida");
-        }      
+    public void addAnimalFood(int ammount) {
+        this.warehouseA.addFood(ammount);
+        this.stock += ammount;
     }
+
+    /**
+     * Método que muestra la ocupación del Almacén Central
+     */
+    public void getOcuped(){
+        System.out.println("--------Almacén Central--------");
+        System.out.println("Comida actual: " + this.getStock());
+        System.out.println("Capacidad máxima: " + this.getMaxCap());
+        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
+        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + (this.getWarehouseA().getStock()/this.getWarehouseA().getMaxCap())*100 + "%");
+        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + (this.getWarehouseV().getStock()/this.getWarehouseV().getMaxCap())*100 + "%");
+    }
+
+    /**
+     * Método que añade 100 espacios al Almacén central:
+     * 50 espacios para la comida animal
+     * 50 espacios para la comida vegetal
+     */
+    public void upgrade() {
+        this.maxCap += 100;
+        this.warehouseA.upgrade(50);
+        this.warehouseV.upgrade(50); 
+    }
+
+    /**
+     * @return Devuelve la capacidad maxima del almacen
+     */
+    public int getMaxCap() {
+        return maxCap;
+    }
+
+    /**
+     * @return Devuelve la comida que hay
+     */
+    public int getStock() {
+        return stock;
+    }
+
+    /**
+     * @return Almacén de comida animal
+     */
+    public AlmacenComida getWarehouseA() {
+        return warehouseA;
+    }
+
+    /**
+     * @return Almacén de comida vegetal
+     */
+    public AlmacenComida getWarehouseV() {
+        return warehouseV;
+    }
+
     @Override
     public String toString() {
         return "Precio del almacén central " + this.price + "\n" + 
@@ -78,6 +106,4 @@ public class AlmacenCentral {
         "Cantidad de comida almacenada en el almacnén central " + "\n" +
         "Capacidad máxima del almacen central " + this.maxCap;
     }
-
-    
 }

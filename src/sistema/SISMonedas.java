@@ -45,14 +45,18 @@ public class SISMonedas {
      * Si no hay suficiente saldo, se muestra un mensaje indicando que no hay suficientes monedas.
      *
      * @param cantidad El número de monedas a pagar.
+     * @return true si el pago se realizó con éxito, false en caso contrario.
      */
-    public void pagar(int cantidad){
-        if (this.monedas >= cantidad) {
+    public boolean pagar(int cantidad){
+        if (this.monedas >= cantidad && cantidad > 0) {
         this.monedas -= cantidad;
-        System.out.println("Pago realizado con exito");
-        } else {
-        System.out.println("No tienes suficientes momendas para comprar");
+        System.out.println("Pago realizado con exito. Le quedan " + monedas + " monedas restantes.");
+        return true;
+        } else{
+        System.out.println("La compra no se ha realizado. Le quedan " + monedas + " monedas restantes.");
+        return false;
         }
+        
     }
 
     /**
@@ -90,5 +94,12 @@ public class SISMonedas {
     public static void setSaldo(SISMonedas saldo) {
         SISMonedas.saldo = saldo;
     }
+
+    @Override
+    public String toString() {
+        return "===== Sistema de Monedas =====\n" +
+               "Saldo actual: " + monedas + " monedas\n" +
+                "===============================";
+}
 
 }

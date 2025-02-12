@@ -1,7 +1,5 @@
 package peces.especies;
 
-import peces.IMar;
-import peces.IRio;
 import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import propiedades.AlmacenPropiedades;
@@ -13,7 +11,7 @@ import propiedades.AlmacenPropiedades;
  * @author Pablo Dopazo Suárez
  */ 
 
-public class SalmonAtlantico extends AlimentacionCarnivoro implements IMar, IRio{
+public class SalmonAtlantico extends AlimentacionCarnivoro{
 
     /**
      * Constructor de Salmon Atlantico
@@ -26,10 +24,37 @@ public class SalmonAtlantico extends AlimentacionCarnivoro implements IMar, IRio
 
 
     /**
-     * @return nueva instancia de Salmon Atlantico
+     * Método que crea un pez
+     * @return Una cría de Salmón Atlántico
      */
-        public Pez getInstance(){
-            return new SalmonAtlantico(sex);
+    @Override
+    public Pez reproduce(boolean sex) {
+        return new SalmonAtlantico(sex);
+    }
+
+
+        @Override
+        public String toString() {
+            return "===== Estado del pez =====\n" +
+                "Especie: " + AlmacenPropiedades.SALMON_ATLANTICO + "\n"+
+                "Nombre comun: " + name + "\n" +
+                "Nombre cientifico: " + scientifcName + "\n" +
+                "Tipo de pez: " + fishStats.getTipo() + "\n" +
+                "Costo de compra: " + fishStats.getCoste() + " monedas\n" +
+                "Monedas al vender: " + fishStats.getMonedas() + " monedas\n" +
+                "Edad: " + age + " dias\n" +
+                "Sexo: " + (sex ? "Macho" : "Hembra") + "\n" +
+                "Estado:\n" +
+                "  - Vivo: " + (alive ? "Si" : "No") + "\n" +
+                "  - Alimentado: " + (eat ? "Si" : "No") + "\n" +
+                "  - Maduro: " + (mature ? "Si" : "No") + "\n" +
+                "  - Fertil: " + (fertile ? "Si" : "No") + "\n" +
+                "Ciclo de reproduccion: " + fishStats.getCiclo() + " dias\n" +
+                "Huevos por reproduccion: " + fishStats.getHuevos() + "\n" +
+                "Madurez alcanzada en: " + fishStats.getMadurez() + " dias\n" +
+                "Optimo para venta en: " + fishStats.getOptimo() + " dias\n" +
+                "Piscifactoria compatible: " + fishStats.getPiscifactoria() + "\n" +
+                "===========================";
         }
 
 
