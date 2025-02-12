@@ -102,26 +102,7 @@ public class Simulador {
      */
     public void menu() {
         boolean exit = false;
-
         while (!exit) {
-            /*
-            System.out.println("===========Menú Principal===========");
-            System.out.println("1. Estado general"); // rarete
-            System.out.println("2. Estado piscifactoría"); // funciona
-            System.out.println("3. Estado Tanques"); // perfecto
-            System.out.println("4. Informes"); // perfecto
-            System.out.println("5. Ictiopedia"); // perfecto
-            System.out.println("6. Pasar día"); // necesita implementar
-            System.out.println("7. Comprar comida"); // funciona
-            System.out.println("8. Comprar peces"); // perfecto
-            System.out.println("9. Vender peces"); // implementar
-            System.out.println("10. Limpiar tanques"); // comprobar
-            System.out.println("11. Vaciar tanques"); // comprobar
-            System.out.println("12. Mejorar"); // terminar
-            System.out.println("13. Pasar varios días"); // implementar
-            System.out.println("14. Salir");
-            System.out.print("Escoja una opción: ");*/
-
             String[] opciones = { "Estado general", "Estado piscifactoría", "Estado Tanques", "Informes", "Ictiopedia",
                     "Pasar día", "Comprar comida", "Comprar peces", "Vender peces", "Limpiar tanques", "Vaciar tanques",
                     "Mejorar", "Pasar varios días" };
@@ -259,14 +240,10 @@ public class Simulador {
     public void showIctio() {
         String peces[] = { "Besugo", "Caballa", "Carpa Plateada", "Lenguado Europeo", "Lubina Europea", "Lubina Rayada",
                 "Lucio del norte", "Pejerrey", "Perca Europea", "Robalo", "Salmón Atlantico", "Salmón Chinook" };
-       // menupeces();
-       int opcion = helper.mostrarMenu("Menú Peces", peces, null);
-        //int opcion = sc.nextInt();
-
+        int opcion = helper.mostrarMenu("Menú Peces", peces, null);
         if (opcion == 0) {
             return;
         }
-
         switch (opcion) {
             case 1:
                 name = "Besugo";
@@ -389,15 +366,16 @@ public class Simulador {
 
     /**
      * Método que permite pasar varios días en las Piscifactorías
-     * 
      * @param days Número de días a pasar
      */
     public void nextDay(int days) {
         this.days += days;
         for (int i = 0; i < days; i++) {
+            System.out.println("==========Día: " + this.days + "==========");
             for (Piscifactoria piscifactoria : fishFarms) {
                 piscifactoria.nextDay(estadisticas);
             }
+            System.out.println("===========================================");
         }
     }
 
@@ -428,201 +406,323 @@ public class Simulador {
                         System.out.println("0.- Cancelar");
                         System.out.print("Seleccione una opción: ");
                         int option = sc.nextInt();
-                        int ammount = 0;
-                        int discount = 0;
+                        int spaceA = selectedFishFarm.getWarehouseA().getSpace();
+                        int spaceV = selectedFishFarm.getWarehouseV().getSpace();
+                        int disscount = 0;
                         switch (option) {
                             case 1:
                                 if (warehouseType == 1) {
-                                    if (selectedFishFarm.getWarehouseA().getSpace() < 5) {
-                                        ammount = selectedFishFarm.getWarehouseA().getSpace();
-                                        selectedFishFarm.getWarehouseA().addFood(ammount);
-                                    } else {
-                                        ammount = 5;
-                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    if(spaceA >= 5){
+                                        if(this.monedas.getMonedas() >= 5){
+                                            this.monedas.pagar(5);
+                                            selectedFishFarm.getWarehouseA().addFood(5);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceA) {
+                                            this.monedas.pagar(spaceA);
+                                            selectedFishFarm.getWarehouseA().addFood(spaceA);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if (selectedFishFarm.getWarehouseV().getSpace() < 5) {
-                                        ammount = selectedFishFarm.getWarehouseV().getSpace();
-                                        selectedFishFarm.getWarehouseV().addFood(ammount);
-                                    } else {
-                                        ammount = 5;
-                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    if(spaceV >= 5){
+                                        if(this.monedas.getMonedas() >= 5){
+                                            this.monedas.pagar(5);
+                                            selectedFishFarm.getWarehouseV().addFood(5);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceV) {
+                                            this.monedas.pagar(spaceV);
+                                            selectedFishFarm.getWarehouseV().addFood(spaceV);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
                                     }
                                 }
-                                this.monedas.pagar(ammount);
                                 break;
                             case 2:
                                 if (warehouseType == 1) {
-                                    if (selectedFishFarm.getWarehouseA().getSpace() < 10) {
-                                        ammount = selectedFishFarm.getWarehouseA().getSpace();
-                                        selectedFishFarm.getWarehouseA().addFood(ammount);
-                                    } else {
-                                        ammount = 10;
-                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    if(spaceA >= 10){
+                                        if(this.monedas.getMonedas() >= 10){
+                                            this.monedas.pagar(10);
+                                            selectedFishFarm.getWarehouseA().addFood(10);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceA) {
+                                            this.monedas.pagar(spaceA);
+                                            selectedFishFarm.getWarehouseA().addFood(spaceA);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if (selectedFishFarm.getWarehouseV().getSpace() < 10) {
-                                        ammount = selectedFishFarm.getWarehouseV().getSpace();
-                                        selectedFishFarm.getWarehouseV().addFood(ammount);
-                                    } else {
-                                        ammount = 10;
-                                        selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    if(spaceV >= 10){
+                                        if(this.monedas.getMonedas() >= 10){
+                                            this.monedas.pagar(10);
+                                            selectedFishFarm.getWarehouseV().addFood(10);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceV) {
+                                            this.monedas.pagar(spaceV);
+                                            selectedFishFarm.getWarehouseV().addFood(spaceV);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
                                     }
                                 }
-                                this.monedas.pagar(ammount);
                                 break;
                             case 3:
                                 if (warehouseType == 1) {
-                                    if (selectedFishFarm.getWarehouseA().getSpace() < 25) {
-                                        ammount = selectedFishFarm.getWarehouseA().getSpace();
-                                        selectedFishFarm.getWarehouseA().addFood(ammount);
-                                    } else {
-                                        ammount = 25;
-                                        selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    if(spaceA >= 25){
+                                        if(this.monedas.getMonedas() >= 20){
+                                            this.monedas.pagar(20);
+                                            selectedFishFarm.getWarehouseA().addFood(25);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceA) {
+                                            this.monedas.pagar(spaceA);
+                                            selectedFishFarm.getWarehouseA().addFood(spaceA);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if (selectedFishFarm.getWarehouseV().getSpace() < 25) {
-                                        ammount = selectedFishFarm.getWarehouseV().getSpace();
-                                        selectedFishFarm.getWarehouseV().addFood(ammount);
-                                    } else {
-                                        ammount = 25;
-                                        selectedFishFarm.getWarehouseV().addFood(ammount);
-                                    }
-                                    if (ammount > 25) {
-                                        discount = (ammount / 25) * 5;
-                                        monedas.pagar(discount);
-                                    } else {
-                                        monedas.pagar(ammount);
+                                    if(spaceV >= 25){
+                                        if(this.monedas.getMonedas() >= 20){
+                                            this.monedas.pagar(20);
+                                            selectedFishFarm.getWarehouseV().addFood(25);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceV) {
+                                            this.monedas.pagar(spaceV);
+                                            selectedFishFarm.getWarehouseV().addFood(spaceV);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
                                     }
                                 }
-                                this.monedas.pagar(20);
                                 break;
                             case 4:
                                 if (warehouseType == 1) {
-                                    ammount = selectedFishFarm.getWarehouseA().getSpace();
-                                    selectedFishFarm.getWarehouseA().addFood(ammount);
+                                    int payment = 0;
+                                    if(spaceA >= 25){
+                                        disscount = (int) (spaceA / 25) * 5;
+                                        payment = spaceA - disscount;
+                                    }else{
+                                        payment = spaceA;
+                                    }
+                                    if(this.monedas.getMonedas() >= payment) {
+                                        this.monedas.pagar(payment);
+                                        selectedFishFarm.getWarehouseA().addFood(payment);
+                                    }else{
+                                        System.out.println("No se ha realizado la operación");
+                                    }                    
                                 } else if (warehouseType == 2) {
-                                    ammount = selectedFishFarm.getWarehouseV().getSpace();
-                                    selectedFishFarm.getWarehouseV().addFood(ammount);
+                                    int payment = 0;
+                                    if(spaceV >= 25){
+                                        disscount = (int) (spaceV / 25) * 5;
+                                        payment = spaceV - disscount;
+                                    }else{
+                                        payment = spaceV;
+                                    }
+                                    if(this.monedas.getMonedas() >= payment) {
+                                        this.monedas.pagar(payment);
+                                        selectedFishFarm.getWarehouseV().addFood(payment);
+                                    }else{
+                                        System.out.println("No se ha realizado la operación");
+                                    }                   
                                 }
-                                if (ammount > 25) {
-                                    discount = (ammount / 25) * 5;
-                                    monedas.pagar(discount);
-                                } else {
-                                    monedas.pagar(ammount);
-                                }
+                                break;
                             default:
+                                System.out.println("Opción inválida");
                                 break;
                         }
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Selección incorrecta");
+                    System.out.println("Se ha introducido un tipo de opción incorrecta");
                 }
             }
         } else {
             while (!cancel) {
-                System.out.println("Tipo de Almacén: ");
-                System.out.println("1.- Almacén de comida animal");
-                System.out.println("2.- Almacén de comida vegetal");
-                System.out.println("0.- Cancelar");
-                System.out.print("Seleccione una opción: ");
-                warehouseType = sc.nextInt();
-                if (warehouseType == 0) {
-                    cancel = true;
-                } else {
-                    System.out.println("1.- 5");
-                    System.out.println("2.- 10");
-                    System.out.println("3.- 25");
-                    System.out.println("4.- Llenar");
+                try {
+                    System.out.println("Tipo de Almacén: ");
+                    System.out.println("1.- Almacén de comida animal");
+                    System.out.println("2.- Almacén de comida vegetal");
                     System.out.println("0.- Cancelar");
                     System.out.print("Seleccione una opción: ");
-                    int opcion = sc.nextInt();
-                    int discount = 0;
-                    int ammount = 0;
-                    switch (opcion) {
-                        case 1:
-                            if (warehouseType == 1) {
-                                if (this.centralWarehouse.getWarehouseA().getSpace() < 5) {
-                                    ammount = this.centralWarehouse.getWarehouseA().getSpace();
-                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
-                                } else {
-                                    ammount = 5;
-                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                    warehouseType = sc.nextInt();
+                    if (warehouseType == 0) {
+                        cancel = true;
+                    } else {
+                        System.out.println("Comida a añadir: ");
+                        System.out.println("1.- 5");
+                        System.out.println("2.- 10");
+                        System.out.println("3.- 25");
+                        System.out.println("4.- Llenar");
+                        System.out.println("0.- Cancelar");
+                        System.out.print("Seleccione una opción: ");
+                        int option = sc.nextInt();
+                        int spaceA = this.centralWarehouse.getWarehouseA().getSpace();
+                        int spaceV = this.centralWarehouse.getWarehouseV().getSpace();
+                        int disscount = 0;
+                        switch (option) {
+                            case 1:
+                                if (warehouseType == 1) {
+                                    if(spaceA >= 5){
+                                        if(this.monedas.getMonedas() >= 5){
+                                            this.monedas.pagar(5);
+                                            this.centralWarehouse.getWarehouseA().addFood(5);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceA) {
+                                            this.monedas.pagar(spaceA);
+                                            this.centralWarehouse.getWarehouseA().addFood(spaceA);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }
+                                } else if (warehouseType == 2) {
+                                    if(spaceV >= 5){
+                                        if(this.monedas.getMonedas() >= 5){
+                                            this.monedas.pagar(5);
+                                            this.centralWarehouse.getWarehouseV().addFood(5);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceV) {
+                                            this.monedas.pagar(spaceV);
+                                            this.centralWarehouse.getWarehouseV().addFood(spaceV);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }
                                 }
-                            } else if (warehouseType == 2) {
-                                if (this.centralWarehouse.getWarehouseV().getSpace() < 5) {
-                                    ammount = this.centralWarehouse.getWarehouseV().getSpace();
-                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
-                                } else {
-                                    ammount = 5;
-                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                break;
+                            case 2:
+                                if (warehouseType == 1) {
+                                    if(spaceA >= 10){
+                                        if(this.monedas.getMonedas() >= 10){
+                                            this.monedas.pagar(10);
+                                            this.centralWarehouse.getWarehouseA().addFood(10);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceA) {
+                                            this.monedas.pagar(spaceA);
+                                            this.centralWarehouse.getWarehouseA().addFood(spaceA);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }
+                                } else if (warehouseType == 2) {
+                                    if(spaceV >= 10){
+                                        if(this.monedas.getMonedas() >= 10){
+                                            this.monedas.pagar(10);
+                                            this.centralWarehouse.getWarehouseV().addFood(10);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceV) {
+                                            this.monedas.pagar(spaceV);
+                                            this.centralWarehouse.getWarehouseV().addFood(spaceV);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }
                                 }
-                            }
-                            this.monedas.pagar(ammount);
-                            break;
-                        case 2:
-                            if (warehouseType == 1) {
-                                if (this.centralWarehouse.getWarehouseA().getSpace() < 10) {
-                                    ammount = this.centralWarehouse.getWarehouseA().getSpace();
-                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
-                                } else {
-                                    ammount = 10;
-                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
+                                break;
+                            case 3:
+                                if (warehouseType == 1) {
+                                    if(spaceA >= 25){
+                                        if(this.monedas.getMonedas() >= 20){
+                                            this.monedas.pagar(20);
+                                            this.centralWarehouse.getWarehouseA().addFood(25);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceA) {
+                                            this.monedas.pagar(spaceA);
+                                            this.centralWarehouse.getWarehouseA().addFood(spaceA);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }
+                                } else if (warehouseType == 2) {
+                                    if(spaceV >= 25){
+                                        if(this.monedas.getMonedas() >= 20){
+                                            this.monedas.pagar(20);
+                                            this.centralWarehouse.getWarehouseV().addFood(25);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }else{
+                                        if(this.monedas.getMonedas() >= spaceV) {
+                                            this.monedas.pagar(spaceV);
+                                            this.centralWarehouse.getWarehouseV().addFood(spaceV);
+                                        }else{
+                                            System.out.println("No se ha realizado la operación");
+                                        }
+                                    }
                                 }
-                            } else if (warehouseType == 2) {
-                                if (this.centralWarehouse.getWarehouseV().getSpace() < 10) {
-                                    ammount = this.centralWarehouse.getWarehouseV().getSpace();
-                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
-                                } else {
-                                    ammount = 10;
-                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
+                                break;
+                            case 4:
+                                if (warehouseType == 1) {
+                                    int payment = 0;
+                                    if(spaceA >= 25){
+                                        disscount = (int) (spaceA / 25) * 5;
+                                        payment = spaceA - disscount;
+                                    }else{
+                                        payment = spaceA;
+                                    }
+                                    if(this.monedas.getMonedas() >= payment) {
+                                        this.monedas.pagar(payment);
+                                        this.centralWarehouse.getWarehouseA().addFood(payment);
+                                    }else{
+                                        System.out.println("No se ha realizado la operación");
+                                    }                    
+                                } else if (warehouseType == 2) {
+                                    int payment = 0;
+                                    if(spaceV >= 25){
+                                        disscount = (int) (spaceV / 25) * 5;
+                                        payment = spaceV - disscount;
+                                    }else{
+                                        payment = spaceV;
+                                    }
+                                    if(this.monedas.getMonedas() >= payment) {
+                                        this.monedas.pagar(payment);
+                                        this.centralWarehouse.getWarehouseV().addFood(payment);
+                                    }else{
+                                        System.out.println("No se ha realizado la operación");
+                                    }                   
                                 }
-                            }
-                            this.monedas.pagar(ammount);
-                            break;
-                        case 3:
-                            if (warehouseType == 1) {
-                                if (this.centralWarehouse.getWarehouseA().getSpace() < 25) {
-                                    ammount = this.centralWarehouse.getWarehouseA().getSpace();
-                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
-                                } else {
-                                    ammount = 25;
-                                    this.centralWarehouse.getWarehouseA().addFood(ammount);
-                                }
-                            } else if (warehouseType == 2) {
-                                if (this.centralWarehouse.getWarehouseV().getSpace() < 25) {
-                                    ammount = this.centralWarehouse.getWarehouseV().getSpace();
-                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
-                                } else {
-                                    ammount = 25;
-                                    this.centralWarehouse.getWarehouseV().addFood(ammount);
-                                }
-                            }
-                            if (ammount > 25) {
-                                discount = (ammount / 25) * 5;
-                                this.monedas.pagar(discount);
-                            } else {
-                                this.monedas.pagar(ammount);
-                            }
-                            break;
-                        case 4:
-                            if (warehouseType == 1) {
-                                ammount = this.centralWarehouse.getWarehouseA().getSpace();
-                                this.centralWarehouse.getWarehouseA().addFood(ammount);
-                            } else if (warehouseType == 2) {
-                                ammount = this.centralWarehouse.getWarehouseV().getSpace();
-                                this.centralWarehouse.getWarehouseV().addFood(ammount);
-                            }
-                            if (ammount > 25) {
-                                discount = (ammount / 25) * 5;
-                                this.monedas.pagar(discount);
-                            } else {
-                                this.monedas.pagar(ammount);
-                            }
-                            break;
+                                break;
+                            default:
+                                System.out.println("Opción inválida");
+                                break;
+                        }
                     }
+                } catch (InputMismatchException e) {
+                    System.out.println("Se ha introducido un tipo de opción incorrecta");
                 }
-
             }
         }
     }
@@ -643,31 +743,23 @@ public class Simulador {
             System.out.println("Operación cancelada.");
             return;
         }
-
-        // Verifica peces vivos y maduros
         List<Pez> pecesParaVenta = new ArrayList<>();
         for (Pez pez : tanque.getFishes()) {
             if (pez.isAlive() && pez.isMature()) {
                 pecesParaVenta.add(pez);
             }
         }
-
         if (pecesParaVenta.isEmpty()) {
             System.out.println("No hay peces vivos y maduros en el tanque para vender.");
             return;
         }
-
-        // Calcular ganancias y eliminar peces vendidos
         int ganancias = 0;
         for (Pez pez : pecesParaVenta) {
             ganancias += pez.getFishStats().getMonedas();
+            estadisticas.registrarVenta(pez.getFishStats().getNombre(), pez.getFishStats().getMonedas());
             tanque.getFishes().remove(pez);
         }
-
-        // Actualizar el sistema de monedas
         SISMonedas.getInstance().setMonedas(ganancias);
-
-        // Muestra de ooperaciones realizadas
         System.out.println("Se han vendido " + pecesParaVenta.size() + " peces.");
         System.out.println("Ganancias obtenidas: " + ganancias + " monedas.");
     }
@@ -678,7 +770,11 @@ public class Simulador {
      */
     public void cleanTank() {
         Tanque tanque = this.selectTank();
-        tanque.cleanDeadFishes();
+        if (tanque == null) {
+            return;
+        }else{
+            tanque.cleanDeadFishes();
+        }
     }
 
     /**
@@ -873,7 +969,12 @@ public class Simulador {
      * Método para mejorar el Almacén Central
      */
     public void upgradeCentralWarehouse() {
-        
+        if(this.monedas.getMonedas() >= 200){
+            this.centralWarehouse.upgrade();
+            this.monedas.pagar(200);
+        }else{
+            System.out.println("La mejora no se ha realizado");
+        }
     }
 
     /**
@@ -1101,7 +1202,6 @@ public class Simulador {
 
     /**
      * Método que busca cuantas Piscifactorías de Mar hay
-     * 
      * @return el número de Piscifactorías de Mar
      */
     public int getSeaFishfarms() {
@@ -1116,7 +1216,6 @@ public class Simulador {
 
     /**
      * Método que busca cuantas Piscifactorías de Río hay
-     * 
      * @return el número de Piscifactorías de Río
      */
     public int getRiverFishfarms() {
