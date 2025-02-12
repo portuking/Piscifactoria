@@ -77,16 +77,16 @@ public class Registros {
         transcripciones.vaciarTanque(tanque , piscifactoria);
     }
 
-    public static void registrarCompraEdificio(){
-        transcripciones.compraEdificio();
+    public static void registrarCompraEdificio(String tipoEdificio, int monedas, int tanque, String piscifactoria){
+        transcripciones.compraEdificio(tipoEdificio, monedas, tanque, piscifactoria);
     }
 
-    public static void registrarMejoraEdificio(){
-        transcripciones.mejoraEdificio();
+    public static void registrarMejoraEdificio(String piscifactoria, int aumentoComida, int monedas){
+        transcripciones.mejoraEdificio(piscifactoria, aumentoComida, monedas);
     }
 
-    public static void regitrarNextDay(){
-        transcripciones.nextDay();
+    public static void regitrarNextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos){
+        transcripciones.nextDay(dia, pecesRio, pecesMar, monedas, pecesVendidos);
     }
 
     public static void registraropsOcultasint(int codOp , String piscifactoria , int cantidadDolares){

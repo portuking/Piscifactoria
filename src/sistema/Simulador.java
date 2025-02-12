@@ -383,7 +383,7 @@ public class Simulador {
                 piscifactoria.nextDay(estadisticas);
             }
             System.out.println("===========================================");
-            this.days++;
+            this.days++;   
         }
     }
 
@@ -860,7 +860,9 @@ public class Simulador {
                                 if ((500 * this.getRiverFishfarms()) <= this.monedas.getMonedas()) {
                                     Piscifactoria newRiverFishFarm = new PiscifactoriaRio(name, 0);
                                     fishFarms.add(newRiverFishFarm);
+                                    int dolarescuesta = 500*(this.getRiverFishfarms());
                                     this.monedas.pagar(500 * (this.getRiverFishfarms()));
+                                    Registros.registrarCompraEdificio("piscifactoria",dolarescuesta, 0, newRiverFishFarm.getName());
                                 }
                                 validType = true;
                                 validSelection = true;
@@ -869,13 +871,16 @@ public class Simulador {
                                     if ((2000 * this.getSeaFishfarms()) <= this.monedas.getMonedas()) {
                                         Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                         fishFarms.add(newSeaFishFarm);
+                                    int dolarescuesta = 500*(this.getSeaFishfarms());
                                         this.monedas.pagar(2000 * getSeaFishfarms());
+                                        Registros.registrarCompraEdificio("piscifactoria",dolarescuesta, 0, newSeaFishFarm.getName());
                                     }
                                 } else {
                                     if (2000 <= this.monedas.getMonedas()) {
                                         Piscifactoria newSeaFishFarm = new PiscifactoriaMar(name, 0);
                                         fishFarms.add(newSeaFishFarm);
                                         this.monedas.pagar(2000 * getSeaFishfarms());
+                                        Registros.registrarCompraEdificio("piscifactoria",2000, 0, newSeaFishFarm.getName());
                                     }
                                 }
                                 validType = true;
@@ -888,6 +893,7 @@ public class Simulador {
                     case 2:
                         if (this.centralWarehouse == null) {
                             this.centralWarehouse = new AlmacenCentral();
+                            Registros.registrarCompraEdificio("almacen", 200, 0, "");
                         } else {
                             System.out.println("Mejora ya comprada");
                         }
@@ -964,9 +970,16 @@ public class Simulador {
                     case 1:
                         selectedFishFarm.compraTanque();
                         validSelection = true;
+                       //TODO Registro de la compra del tanque
+
                         break;
                     case 2:
                         selectedFishFarm.upgradeFood();
+                        if(selectedFishFarm instanceof PiscifactoriaMar){
+                         Registros.registrarMejoraEdificio(selectedFishFarm.getName(),100 + selectedFishFarm.getWarehouseA().getMaxCap() , 200);  
+                        }else{
+                            Registros.registrarMejoraEdificio(selectedFishFarm.getName(),25 + selectedFishFarm.getWarehouseV().getMaxCap(), 50);
+                            }
                         validSelection = true;
                     case 3:
                         validSelection = true;
