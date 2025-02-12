@@ -1,5 +1,6 @@
 package sistema;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -28,6 +29,8 @@ import peces.especies.SalmonChinook;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
 import propiedades.PecesProps;
+import registros.Registros;
+import registros.Transcripciones;
 
 /**
  * IMPLEMENNTAR CLASE
@@ -58,10 +61,10 @@ public class Simulador {
             propiedades.AlmacenPropiedades.SALMON_ATLANTICO,
             propiedades.AlmacenPropiedades.SALMON_CHINOOK };
     Scanner sc = new Scanner(System.in);
-    /*Instancia objeto helper una sola vez*/
+    /* Instancia objeto helper una sola vez */
     private Helper helper = new Helper();
     private static String[] fishesNames = {
-        propiedades.AlmacenPropiedades.BESUGO.getNombre(),
+            propiedades.AlmacenPropiedades.BESUGO.getNombre(),
             propiedades.AlmacenPropiedades.CABALLA.getNombre(),
             propiedades.AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
             propiedades.AlmacenPropiedades.LENGUADO_EUROPEO.getNombre(),
@@ -72,16 +75,18 @@ public class Simulador {
             propiedades.AlmacenPropiedades.PERCA_EUROPEA.getNombre(),
             propiedades.AlmacenPropiedades.ROBALO.getNombre(),
             propiedades.AlmacenPropiedades.SALMON_ATLANTICO.getNombre(),
-            propiedades.AlmacenPropiedades.SALMON_CHINOOK.getNombre()};
+            propiedades.AlmacenPropiedades.SALMON_CHINOOK.getNombre() };
     private static Estadisticas estadisticas = new Estadisticas(fishesNames);
-    
+
     /**
      * Método que inicializa el Sistema
      */
     public void init() {
         try {
+            crearCarpetas("transcripciones", "logs");
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
+            Transcripciones.getInstance(this.name);
             System.out.print("Escriba el nombre de su primera Piscifactoría: ");
             String fishfarmName = sc.nextLine();
             this.days = 0;
@@ -91,6 +96,8 @@ public class Simulador {
             Piscifactoria initialRiverFishfarm = new PiscifactoriaRio(fishfarmName, 25);
             fishFarms.add(initialRiverFishfarm);
             this.centralWarehouse = null;
+            Registros.getInstance().crearRegistro(this.name);
+            Registros.registrarInicio(this.name, this.monedas.getMonedas(), fishesNames, fishfarmName);
         } catch (InputMismatchException e) {
             System.out.println("El nombre es incorrecto");
         }
@@ -366,6 +373,7 @@ public class Simulador {
 
     /**
      * Método que permite pasar varios días en las Piscifactorías
+     * 
      * @param days Número de días a pasar
      */
     public void nextDay(int days) {
@@ -412,34 +420,34 @@ public class Simulador {
                         switch (option) {
                             case 1:
                                 if (warehouseType == 1) {
-                                    if(spaceA >= 5){
-                                        if(this.monedas.getMonedas() >= 5){
+                                    if (spaceA >= 5) {
+                                        if (this.monedas.getMonedas() >= 5) {
                                             this.monedas.pagar(5);
                                             selectedFishFarm.getWarehouseA().addFood(5);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceA) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             selectedFishFarm.getWarehouseA().addFood(spaceA);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if(spaceV >= 5){
-                                        if(this.monedas.getMonedas() >= 5){
+                                    if (spaceV >= 5) {
+                                        if (this.monedas.getMonedas() >= 5) {
                                             this.monedas.pagar(5);
                                             selectedFishFarm.getWarehouseV().addFood(5);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceV) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             selectedFishFarm.getWarehouseV().addFood(spaceV);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
@@ -447,34 +455,34 @@ public class Simulador {
                                 break;
                             case 2:
                                 if (warehouseType == 1) {
-                                    if(spaceA >= 10){
-                                        if(this.monedas.getMonedas() >= 10){
+                                    if (spaceA >= 10) {
+                                        if (this.monedas.getMonedas() >= 10) {
                                             this.monedas.pagar(10);
                                             selectedFishFarm.getWarehouseA().addFood(10);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceA) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             selectedFishFarm.getWarehouseA().addFood(spaceA);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if(spaceV >= 10){
-                                        if(this.monedas.getMonedas() >= 10){
+                                    if (spaceV >= 10) {
+                                        if (this.monedas.getMonedas() >= 10) {
                                             this.monedas.pagar(10);
                                             selectedFishFarm.getWarehouseV().addFood(10);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceV) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             selectedFishFarm.getWarehouseV().addFood(spaceV);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
@@ -482,34 +490,34 @@ public class Simulador {
                                 break;
                             case 3:
                                 if (warehouseType == 1) {
-                                    if(spaceA >= 25){
-                                        if(this.monedas.getMonedas() >= 20){
+                                    if (spaceA >= 25) {
+                                        if (this.monedas.getMonedas() >= 20) {
                                             this.monedas.pagar(20);
                                             selectedFishFarm.getWarehouseA().addFood(25);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceA) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             selectedFishFarm.getWarehouseA().addFood(spaceA);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if(spaceV >= 25){
-                                        if(this.monedas.getMonedas() >= 20){
+                                    if (spaceV >= 25) {
+                                        if (this.monedas.getMonedas() >= 20) {
                                             this.monedas.pagar(20);
                                             selectedFishFarm.getWarehouseV().addFood(25);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceV) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             selectedFishFarm.getWarehouseV().addFood(spaceV);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
@@ -518,32 +526,32 @@ public class Simulador {
                             case 4:
                                 if (warehouseType == 1) {
                                     int payment = 0;
-                                    if(spaceA >= 25){
+                                    if (spaceA >= 25) {
                                         disscount = (int) (spaceA / 25) * 5;
                                         payment = spaceA - disscount;
-                                    }else{
+                                    } else {
                                         payment = spaceA;
                                     }
-                                    if(this.monedas.getMonedas() >= payment) {
+                                    if (this.monedas.getMonedas() >= payment) {
                                         this.monedas.pagar(payment);
                                         selectedFishFarm.getWarehouseA().addFood(payment);
-                                    }else{
+                                    } else {
                                         System.out.println("No se ha realizado la operación");
-                                    }                    
+                                    }
                                 } else if (warehouseType == 2) {
                                     int payment = 0;
-                                    if(spaceV >= 25){
+                                    if (spaceV >= 25) {
                                         disscount = (int) (spaceV / 25) * 5;
                                         payment = spaceV - disscount;
-                                    }else{
+                                    } else {
                                         payment = spaceV;
                                     }
-                                    if(this.monedas.getMonedas() >= payment) {
+                                    if (this.monedas.getMonedas() >= payment) {
                                         this.monedas.pagar(payment);
                                         selectedFishFarm.getWarehouseV().addFood(payment);
-                                    }else{
+                                    } else {
                                         System.out.println("No se ha realizado la operación");
-                                    }                   
+                                    }
                                 }
                                 break;
                             default:
@@ -581,34 +589,34 @@ public class Simulador {
                         switch (option) {
                             case 1:
                                 if (warehouseType == 1) {
-                                    if(spaceA >= 5){
-                                        if(this.monedas.getMonedas() >= 5){
+                                    if (spaceA >= 5) {
+                                        if (this.monedas.getMonedas() >= 5) {
                                             this.monedas.pagar(5);
                                             this.centralWarehouse.getWarehouseA().addFood(5);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceA) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             this.centralWarehouse.getWarehouseA().addFood(spaceA);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if(spaceV >= 5){
-                                        if(this.monedas.getMonedas() >= 5){
+                                    if (spaceV >= 5) {
+                                        if (this.monedas.getMonedas() >= 5) {
                                             this.monedas.pagar(5);
                                             this.centralWarehouse.getWarehouseV().addFood(5);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceV) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             this.centralWarehouse.getWarehouseV().addFood(spaceV);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
@@ -616,34 +624,34 @@ public class Simulador {
                                 break;
                             case 2:
                                 if (warehouseType == 1) {
-                                    if(spaceA >= 10){
-                                        if(this.monedas.getMonedas() >= 10){
+                                    if (spaceA >= 10) {
+                                        if (this.monedas.getMonedas() >= 10) {
                                             this.monedas.pagar(10);
                                             this.centralWarehouse.getWarehouseA().addFood(10);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceA) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             this.centralWarehouse.getWarehouseA().addFood(spaceA);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if(spaceV >= 10){
-                                        if(this.monedas.getMonedas() >= 10){
+                                    if (spaceV >= 10) {
+                                        if (this.monedas.getMonedas() >= 10) {
                                             this.monedas.pagar(10);
                                             this.centralWarehouse.getWarehouseV().addFood(10);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceV) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             this.centralWarehouse.getWarehouseV().addFood(spaceV);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
@@ -651,34 +659,34 @@ public class Simulador {
                                 break;
                             case 3:
                                 if (warehouseType == 1) {
-                                    if(spaceA >= 25){
-                                        if(this.monedas.getMonedas() >= 20){
+                                    if (spaceA >= 25) {
+                                        if (this.monedas.getMonedas() >= 20) {
                                             this.monedas.pagar(20);
                                             this.centralWarehouse.getWarehouseA().addFood(25);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceA) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceA) {
                                             this.monedas.pagar(spaceA);
                                             this.centralWarehouse.getWarehouseA().addFood(spaceA);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
                                 } else if (warehouseType == 2) {
-                                    if(spaceV >= 25){
-                                        if(this.monedas.getMonedas() >= 20){
+                                    if (spaceV >= 25) {
+                                        if (this.monedas.getMonedas() >= 20) {
                                             this.monedas.pagar(20);
                                             this.centralWarehouse.getWarehouseV().addFood(25);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
-                                    }else{
-                                        if(this.monedas.getMonedas() >= spaceV) {
+                                    } else {
+                                        if (this.monedas.getMonedas() >= spaceV) {
                                             this.monedas.pagar(spaceV);
                                             this.centralWarehouse.getWarehouseV().addFood(spaceV);
-                                        }else{
+                                        } else {
                                             System.out.println("No se ha realizado la operación");
                                         }
                                     }
@@ -687,32 +695,32 @@ public class Simulador {
                             case 4:
                                 if (warehouseType == 1) {
                                     int payment = 0;
-                                    if(spaceA >= 25){
+                                    if (spaceA >= 25) {
                                         disscount = (int) (spaceA / 25) * 5;
                                         payment = spaceA - disscount;
-                                    }else{
+                                    } else {
                                         payment = spaceA;
                                     }
-                                    if(this.monedas.getMonedas() >= payment) {
+                                    if (this.monedas.getMonedas() >= payment) {
                                         this.monedas.pagar(payment);
                                         this.centralWarehouse.getWarehouseA().addFood(payment);
-                                    }else{
+                                    } else {
                                         System.out.println("No se ha realizado la operación");
-                                    }                    
+                                    }
                                 } else if (warehouseType == 2) {
                                     int payment = 0;
-                                    if(spaceV >= 25){
+                                    if (spaceV >= 25) {
                                         disscount = (int) (spaceV / 25) * 5;
                                         payment = spaceV - disscount;
-                                    }else{
+                                    } else {
                                         payment = spaceV;
                                     }
-                                    if(this.monedas.getMonedas() >= payment) {
+                                    if (this.monedas.getMonedas() >= payment) {
                                         this.monedas.pagar(payment);
                                         this.centralWarehouse.getWarehouseV().addFood(payment);
-                                    }else{
+                                    } else {
                                         System.out.println("No se ha realizado la operación");
-                                    }                   
+                                    }
                                 }
                                 break;
                             default:
@@ -772,8 +780,9 @@ public class Simulador {
         Tanque tanque = this.selectTank();
         if (tanque == null) {
             return;
-        }else{
+        } else {
             tanque.cleanDeadFishes();
+            Registros.registrarLimpiarTanque(tanque.getTankNum(), selectPisc().getName());
         }
     }
 
@@ -782,8 +791,13 @@ public class Simulador {
      * piscifactoria
      */
     public void emptyTank() {
-        Tanque tank = selectTank();
-        tank.cleanTank();
+        Tanque tanque = this.selectTank();
+        if (tanque == null) {
+            return;
+        } else {
+            tanque.cleanTank();
+            Registros.registrarVaciarTanque(tanque.getTankNum(), selectPisc().getName());
+        }
     }
 
     /**
@@ -969,10 +983,10 @@ public class Simulador {
      * Método para mejorar el Almacén Central
      */
     public void upgradeCentralWarehouse() {
-        if(this.monedas.getMonedas() >= 200){
+        if (this.monedas.getMonedas() >= 200) {
             this.centralWarehouse.upgrade();
             this.monedas.pagar(200);
-        }else{
+        } else {
             System.out.println("La mejora no se ha realizado");
         }
     }
@@ -1202,6 +1216,7 @@ public class Simulador {
 
     /**
      * Método que busca cuantas Piscifactorías de Mar hay
+     * 
      * @return el número de Piscifactorías de Mar
      */
     public int getSeaFishfarms() {
@@ -1216,6 +1231,7 @@ public class Simulador {
 
     /**
      * Método que busca cuantas Piscifactorías de Río hay
+     * 
      * @return el número de Piscifactorías de Río
      */
     public int getRiverFishfarms() {
@@ -1228,9 +1244,40 @@ public class Simulador {
         return riverFishFarms;
     }
 
+    /**
+     * Método que crea múltiples carpetas a partir de los nombres proporcionados.
+     * 
+     * @param nombresCarpetas
+     */
+    public static void crearCarpetas(String... nombresCarpetas) {
+        for (String nombre : nombresCarpetas) {
+            try {
+                File carpeta = new File(nombre);
+                if (!carpeta.exists()) {
+                    boolean creada = carpeta.mkdir();
+                    if (creada) {
+                        System.out.println("Carpeta " + nombre + " creada");
+                    } else {
+                        System.out.println("No se ha podido crear la carpeta " + nombre);
+                    }
+                } else {
+                    System.out.println("La carpeta " + nombre + " ya existe");
+                }
+            } catch (SecurityException se) {
+                System.out.println("No se tienen los permisos necesarios para crear la carpeta: " + nombre);
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
         Simulador sim = new Simulador();
-        sim.init();
-        sim.menu();
+        try {
+            sim.init();
+            sim.menu();
+        } finally{
+            
+        }
+
     }
 }
