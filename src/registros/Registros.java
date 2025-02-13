@@ -1,7 +1,5 @@
 package registros;
 
-import edificios.piscifactoria.Piscifactoria;
-
 public class Registros {
     /**Instancia utilizada para delegar las transcripciones de eventos */
     private static Transcripciones transcripciones = null;
@@ -110,5 +108,9 @@ public class Registros {
 
     public static void registrarSalir(){
         log.logSalir();
+    }
+
+    public static void registrarError(String error){
+        log.logError(error);
     }
 }
