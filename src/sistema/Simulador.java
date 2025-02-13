@@ -162,6 +162,7 @@ public class Simulador {
                     break;
                 case 14:
                     exit = true;
+                    Registros.registrarSalir();
                     break;
                 case 98:
                     this.addFishAmmount();
@@ -387,6 +388,7 @@ public class Simulador {
             }
             System.out.println("===========================================");
             this.days++;   
+            Registros.regitrarNextDay(days, i, i, i, i);
         }
     }
 
