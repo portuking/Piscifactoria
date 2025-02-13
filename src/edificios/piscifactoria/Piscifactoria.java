@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
-import peces.Pez;
-import peces.alimentacion.AlimentacionCarnivoro;
-import peces.alimentacion.AlimentacionCarnivoroActivo;
-import peces.alimentacion.AlimentacionFiltrador;
 
 /**
  * Clase que representa la Piscifactoría

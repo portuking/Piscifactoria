@@ -29,6 +29,7 @@ import peces.especies.SalmonChinook;
 import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
 import propiedades.PecesProps;
+import recompensas.GenerarRecompensa;
 import registros.Registros;
 
 /**
@@ -79,12 +80,14 @@ public class Simulador {
             propiedades.AlmacenPropiedades.DORADA.getNombre()};
     private static Estadisticas estadisticas = new Estadisticas(fishesNames);
 
+    GenerarRecompensa generar = new GenerarRecompensa();
+
     /**
      * Método que inicializa el Sistema
      */
     public void init() {
         try {
-            crearCarpetas("transcripciones", "logs");
+            crearCarpetas("transcripciones", "logs", "rewards");
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
             //Transcripciones.getInstance(this.name);
@@ -116,7 +119,7 @@ public class Simulador {
             String[] opciones = { "Estado general", "Estado piscifactoría", "Estado Tanques", "Informes", "Ictiopedia",
                     "Pasar día", "Comprar comida", "Comprar peces", "Vender peces", "Limpiar tanques", "Vaciar tanques",
                     "Mejorar", "Pasar varios días" };
-            int[] extraOps = { 98, 99 };
+            int[] extraOps = { 97, 98, 99 };
             Helper helper = new Helper();
             int opcion = helper.mostrarMenu("Menu Principal", opciones, extraOps);
 
@@ -163,6 +166,15 @@ public class Simulador {
                 case 14:
                     exit = true;
                     Registros.registrarSalir();
+                    break;
+                case 97:
+                    generar.algaReward(4);
+                    generar.piensoReward(3);
+                    generar.comidaReward(2);
+                    generar.pisciMarReward("A");
+                    generar.pisciRioReward("B");
+                    generar.tanqueReward("r");
+                    generar.almacenReward("D");
                     break;
                 case 98:
                     this.addFishAmmount();
