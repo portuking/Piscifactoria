@@ -1,6 +1,7 @@
 package edificios.tanque;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import edificios.piscifactoria.Piscifactoria;
 import estadisticas.Estadisticas;
@@ -8,6 +9,7 @@ import peces.Pez;
 import peces.alimentacion.AlimentacionCarnivoro;
 import peces.alimentacion.AlimentacionCarnivoroActivo;
 import peces.alimentacion.AlimentacionFiltrador;
+import peces.alimentacion.AlimentacionOmnivoro;
 import sistema.SISMonedas;
 
 /**
@@ -17,6 +19,7 @@ import sistema.SISMonedas;
  * @author Pablo Dopazo Suárez
  */
 public class Tanque {
+    private Piscifactoria fishFarm;
     /** Peces que hay en el Tanque */
     private ArrayList<Pez> fishes;
     /** Capacidad máxima del Tanque */
@@ -34,12 +37,13 @@ public class Tanque {
      * @param tankNum Número de tanque
      * @param type Define el tipo de Tanque
      */
-    public Tanque(int maxCapacity, int tankNum, boolean type) {
+    public Tanque(int maxCapacity, int tankNum, boolean type , Piscifactoria p) {
         this.fishes = new ArrayList<>(this.maxCapacity);
         this.maxCapacity = maxCapacity;
         this.tankNum = tankNum;
         this.fishType = null;
         this.type = type;
+        this.fishFarm = p;
     }
 
     /**
@@ -179,6 +183,21 @@ public class Tanque {
                     }else{
                         comio = false;
                     }
+                }
+            } else if(pez instanceof AlimentacionOmnivoro) {
+                consumida = pez.eat();
+                if(consumida > 0) {
+                    Random r = new Random();
+                    boolean wharehouse = r.nextBoolean();
+                    if(wharehouse){
+                        p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
+                        comio = true;
+                    }else{
+                        p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
+                        comio = true;
+                    }
+                }else{
+                    comio = false;
                 }
             }
             pez.grow(comio);
@@ -416,6 +435,11 @@ public class Tanque {
      */
     public String getTankType() {
         return this.type ? "Río" : "Mar";
+    }
+
+    
+    public String getFishfarmName() {
+        return this.fishFarm.getName();
     }
 
     @Override
