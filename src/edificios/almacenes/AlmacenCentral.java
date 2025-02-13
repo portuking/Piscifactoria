@@ -54,9 +54,9 @@ public class AlmacenCentral {
         System.out.println("--------Almacén Central--------");
         System.out.println("Comida actual: " + this.getStock());
         System.out.println("Capacidad máxima: " + this.getMaxCap());
-        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
-        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + (this.getWarehouseA().getStock()/this.getWarehouseA().getMaxCap())*100 + "%");
-        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + (this.getWarehouseV().getStock()/this.getWarehouseV().getMaxCap())*100 + "%");
+        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + ((this.getStock()*100)/this.getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + ((this.getWarehouseA().getStock()*100)/this.getWarehouseA().getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + ((this.getWarehouseV().getStock()*100)/this.getWarehouseV().getMaxCap())+"%");
     }
 
     /**
