@@ -121,8 +121,8 @@ public class Transcripciones {
         escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por "+monedas+" monedas. Añadido al tanque " + tanque+ " de la piscifactoría " +piscifactoria+" .\n");
     }
 
-    public void trVenderPeces() {//????
-        escribir("Vendidos X peces de la piscifactoría Y de forma manual por Z monedas.");
+    public void trVenderPeces(int peces, String nombrePisci, int yenes) {
+        escribir("Vendidos "+peces+" peces de la piscifactoría "+nombrePisci+" de forma manual por "+yenes+" monedas.");
     }
 
     /**
@@ -171,7 +171,7 @@ public class Transcripciones {
     public void trNextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
         escribir("Fin del día " + dia + ".\n" +
                 "Peces actuales , " + pecesRio + " de río " + pecesMar + "de mar.\n" +
-                monedas + "monedas ganadas por un total de " + pecesVendidos + ".\n" +
+                monedas + " monedas ganadas por un total de " + pecesVendidos + ".\n" +
                 "-------------------------\n>>>Inicio del dia " + (dia + 1) + ".\n");
     }
     /**

@@ -62,8 +62,8 @@ public class Registros {
         log.logComprarPeces(nombrePez, tipoSex, tanque, piscifactoria);
     }
 
-    public static void registrarVenderPeces(int peces, String piscifactoria){
-        transcripciones.trVenderPeces();
+    public static void registrarVenderPeces(int peces, String piscifactoria, int bolivares){
+        transcripciones.trVenderPeces(peces, piscifactoria, bolivares);
         log.logVenderPeces(peces, piscifactoria);
     }
     /**
