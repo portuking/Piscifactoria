@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
-import peces.Pez;
-import peces.alimentacion.AlimentacionCarnivoro;
-import peces.alimentacion.AlimentacionCarnivoroActivo;
-import peces.alimentacion.AlimentacionFiltrador;
 
 /**
  * Clase que representa la Piscifactoría
@@ -210,11 +206,9 @@ public abstract class Piscifactoria {
         this.currentFood = comidaAnimal.getStock() + comidaVegetal.getStock();
         this.maxFood = comidaAnimal.getMaxCap() + comidaVegetal.getMaxCap();
         if (this.currentFood == 0 || this.maxFood == 0) {
-            System.out.println(
-                    "Depósito de comida de la piscifactoría" + this.name + "al 0% de su capacidad. [comida/max]");
+            System.out.println("Depósito de comida de la piscifactoría" + this.name + "al 0% de su capacidad. [comida/max]");
         } else {
-            System.out.println("Depósito de comida de la piscifactoría" + this.name + "al "
-                    + (this.currentFood / this.maxFood) + "% de su capacidad. [comida/max]");
+            System.out.println("Depósito de comida de la piscifactoría" + this.name + "al "+ (this.currentFood / this.maxFood) + "% de su capacidad. [comida/max]");
         }
     }
 
@@ -243,9 +237,7 @@ public abstract class Piscifactoria {
 
     /**
      * Método que comprueba si es posible añadir un Tanque
-     * 
      * @return si es posible añadirlo
-     *         ---------------------------------REVISAR
      */
     public boolean canAddTanque() {
         if (this.tanques.size() < this.getMaxTank()) {
@@ -257,7 +249,6 @@ public abstract class Piscifactoria {
 
     /**
      * Método que permite comprar un Tanque para la Piscifactoria
-     * ---------------------------------------------------------------REVISAR
      */
     public abstract void compraTanque();
 

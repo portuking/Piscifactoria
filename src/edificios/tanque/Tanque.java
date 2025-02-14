@@ -53,34 +53,34 @@ public class Tanque {
     public void showStatus(){
         System.out.println("=============== Tanque "+ this.tankNum +" ===============");
         if(this.fishes.size() > 0 && this.getMaxCapacity() > 0){
-            System.out.println("Ocupación: peces / max " + this.fishes.size() + " / " + this.getMaxCapacity() + " " + ((this.fishes.size() * 100)/this.getMaxCapacity())+"%");
+            System.out.println("Ocupación: peces/max " + this.fishes.size() + "/" + this.getMaxCapacity() + " " + ((this.fishes.size() * 100)/this.getMaxCapacity())+"%");
         }else{
-            System.out.println("Ocupación: peces / max 0%");
+            System.out.println("Ocupación: peces/max 0%");
         }
         if(this.fishesAlive() > 0 && this.getMaxCapacity() > 0) {
-            System.out.println("Peces vivos: vivos / total " + this.fishesAlive() + " / " + this.getMaxCapacity() + " " + ((this.fishesAlive() * 100)/this.getMaxCapacity())+"%");
+            System.out.println("Peces vivos: vivos/total " + this.fishesAlive() + "/" + this.getMaxCapacity() + " " + ((this.fishesAlive() * 100)/this.getMaxCapacity())+"%");
         }else{
-            System.out.println("Peces vivos: vivos / total 0%");
+            System.out.println("Peces vivos: vivos/total 0%");
         }
         if(this.alimentedFishes() > 0 && this.fishesAlive() > 0) {
-            System.out.println("Peces alimentados: alimentados / vivos" + this.alimentedFishes() + " / " + this.fishesAlive() + " " + ((this.alimentedFishes() * 100)/this.fishesAlive())+"%");
+            System.out.println("Peces alimentados: alimentados/vivos" + this.alimentedFishes() + "/" + this.fishesAlive() + " " + ((this.alimentedFishes() * 100)/this.fishesAlive())+"%");
         }else{
-            System.out.println("Peces alimentados: alimentados / vivos 0%");
+            System.out.println("Peces alimentados: alimentados/vivos 0%");
         }
         if(this.matureFishes() > 0 && this.fishesAlive() > 0){
-            System.out.println("Peces adultos: adultos / vivos "+ this.matureFishes() /this.fishesAlive() + " " + ((this.matureFishes() * 100)/this.fishesAlive())+"%");
+            System.out.println("Peces adultos: adultos/vivos "+ this.matureFishes()+"/"+this.fishesAlive() + " " + ((this.matureFishes() * 100)/this.fishesAlive())+"%");
         }else{
-            System.out.println("Peces adultos: adultos / vivos 0%");
+            System.out.println("Peces adultos: adultos/vivos 0%");
         }
         if(this.fishesF() > 0 && this.fishesM() > 0) {
-            System.out.println("Hembras / Machos " + this.fishesF() + " / " +this.fishesM());
+            System.out.println("Hembras/Machos " + this.fishesF() + "/" +this.fishesM());
         }else{
-            System.out.println("Hembras / Machos: 0/0");
+            System.out.println("Hembras/Machos: 0/0");
         }
         if(this.fertiles() > 0 && this.fishesAlive() > 0) {
-            System.out.println("Fertiles: fertiles / vivos 0%");
+            System.out.println("Fertiles: fertiles/vivos 0%");
         }else{
-            System.out.println("Fertiles: fertiles / vivos " + this.fertiles() + " / " + this.fishesAlive());
+            System.out.println("Fertiles: fertiles/vivos " + this.fertiles() + "/" + this.fishesAlive());
         }
     }
     /**

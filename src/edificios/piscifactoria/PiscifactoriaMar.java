@@ -64,15 +64,16 @@ public class PiscifactoriaMar extends Piscifactoria{
         int capMax = this.maxFood;
         if(sisMonedas.getMonedas() >= costoMejora){
             boolean realizaMejora = false;
-            if(this.comidaAnimal.getMaxCap() <  capMax){
+            if(this.comidaAnimal.getMaxCap() <  capMax && this.comidaVegetal.getMaxCap() <  capMax){
                 this.comidaAnimal.upgrade(incrementoCap);
-                realizaMejora = true;
-            }
-            if(this.comidaVegetal.getMaxCap() <  capMax){
                 this.comidaVegetal.upgrade(incrementoCap);
                 realizaMejora = true;
-            }if(realizaMejora){
+            }else{
+                realizaMejora = false;
+            }
+            if(realizaMejora){
                 sisMonedas.pagar(costoMejora);
+                System.out.println("Almacén de la Piscifactoría "+super.getName()+ " mejorado. Su capacidad ha aumentado en "+ incrementoCap + " hasta un total de " + this.comidaAnimal.getMaxCap());
             }else{
                 System.out.println("Ambos almacenes están al maximo");
             }
