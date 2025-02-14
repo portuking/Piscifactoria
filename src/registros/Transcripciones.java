@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import edificios.piscifactoria.Piscifactoria;
-
 /**
  * Clase para gestionar las transcripciones de eventos en un archivo.
  */
@@ -76,7 +74,7 @@ public class Transcripciones {
      * @param pecesImplementados Lista de peces implementados.
      * @param pisciInicial       Piscifactoria inicial.
      */
-    public void start(String nombrePartida, int monedas, String[] pecesImplementados, String pisciInicial) {
+    public void trStart(String nombrePartida, int monedas, String[] pecesImplementados, String pisciInicial) {
         escribir("=========Arranque=========\nEmpieza el sistema " + nombrePartida +
                 ".\n=========Dinero=========\nDinero: " + monedas + " monedas.\n=========Peces=========\nRio:\n");
         for (int i = 0; i < pecesImplementados.length; i++) {
@@ -115,16 +113,16 @@ public class Transcripciones {
      *                        almacen central
      * @param piscifactoria   Piscifactoria en la que se almacena
      */
-    public void comprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen, String piscifactoria) {//creo que hecho
+    public void trComprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen, String piscifactoria) {//creo que hecho
         escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprada por " + monedasGastadas+ " monedas. Se almacena en " + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + ".\n"));// PISCIFACTORIA O ALMACEN
     }
 
-    public void comprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {//hecho
+    public void trComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {//hecho
         escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por "+monedas+" monedas. Añadido al tanque " + tanque+ " de la piscifactoría " +piscifactoria+" .\n");
     }
 
-    public void venderPeces() {//????
-        escribir("Vendidos X peces de la piscifactoría Y de forma manual por Z monedas.");
+    public void trVenderPeces(int peces, String nombrePisci, int yenes) {
+        escribir("Vendidos "+peces+" peces de la piscifactoría "+nombrePisci+" de forma manual por "+yenes+" monedas.");
     }
 
     /**
@@ -133,7 +131,7 @@ public class Transcripciones {
      * @param tanque        tanque donde se va a limpiar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void limpiarTanque(int tanque, String piscifactoria) {//hecho
+    public void trLimpiarTanque(int tanque, String piscifactoria) {//hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
@@ -143,15 +141,15 @@ public class Transcripciones {
      * @param tanque        tanque que se va a vaciar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void vaciarTanque(int tanque, String piscifactoria) {//hecho
+    public void trVaciarTanque(int tanque, String piscifactoria) {//hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
     
     /**Creo que hecho*/
-    public void compraEdificio(String tipoEdificio, int monedas, int tanque, String piscifactoria) {
+    public void trCompraEdificio(String tipoEdificio, int monedas, int tanque, String piscifactoria) {
         switch (tipoEdificio) {
             case "tanque":
-                escribir("Comprado un tanque número " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+                escribir("Comprado el tanque número " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
                 break;
             case "almacen":
                 escribir("Comprado el almacén central.\n");
@@ -165,15 +163,15 @@ public class Transcripciones {
         }
     }
 
-    public void mejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {//hecho
+    public void trMejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {//hecho
         escribir("Mejorada la piscifactoría "+piscifactoria+" aumentando su capacidad de comida hasta un total de "+aumentoComida+" por " +monedas+
                 "monedas\n");
     }
     /*FALTA IMPLEMENTAR */
-    public void nextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
+    public void trNextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
         escribir("Fin del día " + dia + ".\n" +
                 "Peces actuales , " + pecesRio + " de río " + pecesMar + "de mar.\n" +
-                monedas + "monedas ganadas por un total de " + pecesVendidos + ".\n" +
+                monedas + " monedas ganadas por un total de " + pecesVendidos + ".\n" +
                 "-------------------------\n>>>Inicio del dia " + (dia + 1) + ".\n");
     }
     /**
@@ -183,7 +181,7 @@ public class Transcripciones {
      * @param piscifactoria Nombre de la piscifactoria  
      * @param cantidadDolares Cantidad de monedas utilizadas
      */
-    public void opsOcultas(int codOp, String piscifactoria, int cantidadDolares) {//hecho
+    public void trOpsOcultas(int codOp, String piscifactoria, int cantidadDolares) {//hecho
         switch (codOp) {
             case 98:
                 escribir("Añadidos peces mediante la opción oculta a la piscifactoría " + piscifactoria + ".\n");
@@ -198,7 +196,7 @@ public class Transcripciones {
     /**
      * Cierra el BufferedWriter al final de la simulación.
      */
-    public void cerrar() {
+    public void trCerrar() {
         try {
             if (bw != null) {
                 bw.close();
