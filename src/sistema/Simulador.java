@@ -168,12 +168,42 @@ public class Simulador {
                     Registros.registrarSalir();
                     break;
                 case 97:
+                    generar.algaReward(1);
+                    generar.algaReward(2);
+                    generar.algaReward(3);
                     generar.algaReward(4);
+                    generar.algaReward(5);
+
+                    generar.piensoReward(1);
+                    generar.piensoReward(2);
                     generar.piensoReward(3);
+                    generar.piensoReward(4);
+                    generar.piensoReward(5);
+
+                    generar.comidaReward(1);
                     generar.comidaReward(2);
+                    generar.comidaReward(3);
+                    generar.comidaReward(4);
+                    generar.comidaReward(5);
+
+                    generar.BolivaresReward(1);
+                    generar.BolivaresReward(2);
+                    generar.BolivaresReward(3);
+                    generar.BolivaresReward(4);
+                    generar.BolivaresReward(5);
+
                     generar.pisciMarReward("A");
+                    generar.pisciMarReward("B");
+
+                    generar.pisciRioReward("A");
                     generar.pisciRioReward("B");
+
                     generar.tanqueReward("r");
+                    generar.tanqueReward("m");
+
+                    generar.almacenReward("A");
+                    generar.almacenReward("B");
+                    generar.almacenReward("C");
                     generar.almacenReward("D");
                     break;
                 case 98:
@@ -1338,6 +1368,10 @@ public class Simulador {
             }
 
         }
+    }
+
+    public void procesandoOpcion97(){
+        
     }
 
     public static void main(String[] args) {
