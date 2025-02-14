@@ -1,12 +1,15 @@
 package recompensas;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 /**
@@ -31,6 +34,11 @@ public class GenerarRecompensa {
      */
     public void algaReward(int lvl){
         String rutaArchivo = PATH_RECOMPENSAS + "/alga_" + lvl + ".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         String lvlreward="";
@@ -71,7 +79,7 @@ public class GenerarRecompensa {
         give.addElement("food");
         give.addAttribute("type", "algae");
         give.addText(Integer.toString(food));
-        root.addElement("quantity").addText(Integer.toString(lvl));        
+        root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
 
@@ -81,6 +89,11 @@ public class GenerarRecompensa {
      */
     public void piensoReward(int lvl){
         String rutaArchivo = PATH_RECOMPENSAS + "/pienso_" + lvl + ".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         String lvlreward="";
@@ -121,7 +134,7 @@ public class GenerarRecompensa {
         give.addElement("food");
         give.addAttribute("type", "animal");
         give.addText(Integer.toString(food));
-        root.addElement("quantity").addText(Integer.toString(lvl));        
+        root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
 
@@ -131,6 +144,11 @@ public class GenerarRecompensa {
      */
     public void BolivaresReward(int lvl){
         String rutaArchivo = PATH_RECOMPENSAS + "/monedas_" + lvl + ".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         String lvlreward="";
@@ -169,7 +187,7 @@ public class GenerarRecompensa {
         root.addElement("rarity").addText(Integer.toString(rarity));
         Element give = root.addElement("give");
         give.addElement("coins").addText(Integer.toString(bolivares));
-        root.addElement("quantity").addText(Integer.toString(lvl));        
+        root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
 
@@ -179,6 +197,11 @@ public class GenerarRecompensa {
      */
     public void comidaReward(int lvl){
         String rutaArchivo = PATH_RECOMPENSAS + "/comida_" + lvl + ".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         String lvlreward="";
@@ -219,7 +242,7 @@ public class GenerarRecompensa {
         give.addElement("food");
         give.addAttribute("type", "general");
         give.addText(Integer.toString(food));
-        root.addElement("quantity").addText(Integer.toString(lvl));        
+        root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
 
@@ -238,17 +261,21 @@ public class GenerarRecompensa {
             nombreTanque = "Tanque de río";
             codigoBuilding = "2";
             rarity = "2";
-            rutaArchivo = PATH_RECOMPENSAS + "/tanque_r_" + part.toLowerCase() + ".xml";
+            rutaArchivo = PATH_RECOMPENSAS + "/tanque_r.xml";
         } else if (tipo.equalsIgnoreCase("m")) {
             nombreTanque = "Tanque de mar";
             codigoBuilding = "3";
             rarity = "3";
-            rutaArchivo = PATH_RECOMPENSAS + "/tanque_m_" + part.toLowerCase() + ".xml";
+            rutaArchivo = PATH_RECOMPENSAS + "/tanque_m.xml";
         } else {
             System.err.println("Tipo de tanque desconocido: " + tipo);
             return;
         }
-        
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         root.addElement("name").addText(nombreTanque);
@@ -270,6 +297,11 @@ public class GenerarRecompensa {
      */
     public void pisciMarReward(String tipo){
         String rutaArchivo = PATH_RECOMPENSAS + "/pisci_m_"+ tipo.toLowerCase()+".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         root.addElement("name").addText("Piscifactoría de mar [" + tipo +"]");
@@ -291,6 +323,11 @@ public class GenerarRecompensa {
      */
     public void pisciRioReward(String tipo){
         String rutaArchivo = PATH_RECOMPENSAS + "/pisci_r_"+ tipo.toLowerCase()+".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         root.addElement("name").addText("Piscifactoría de rio [" + tipo +"]");
@@ -312,6 +349,11 @@ public class GenerarRecompensa {
      */
     public void almacenReward(String tipo){
         String rutaArchivo = PATH_RECOMPENSAS + "/almacen_"+ tipo.toLowerCase()+".xml";
+        File file = new File(rutaArchivo);
+        if (file.exists()) {
+            aumentarCantidad(file);
+            return;
+        }
         Document doc = generarArchivoXML();
         Element root = doc.getRootElement();
         root.addElement("name").addText("Almacén central [" + tipo +"]");
@@ -325,6 +367,22 @@ public class GenerarRecompensa {
         give.addElement("total").addText("ABCD");
         root.addElement("quantity").addText("1");
         guardarXML(doc, rutaArchivo);
+    }
+    
+    private void aumentarCantidad(File archivo){
+        SAXReader reader = new SAXReader();
+        try {
+            Document doc = reader.read(archivo);
+            Element root = doc.getRootElement();
+            Element quantity = root.element("quantity");
+            int cantidad = Integer.parseInt(quantity.getText());
+            cantidad++;
+            quantity.setText(Integer.toString(cantidad));
+            guardarXML(doc, archivo.getAbsolutePath());
+        } catch (DocumentException e) {
+            System.err.println("Error al leer el archivo XML: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     /**
