@@ -2,8 +2,16 @@ package recompensas;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -12,13 +20,18 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import sistema.Helper;
+
 public class GestorRecompensas {
 
     private static final String PATH_RECOMPENSAS = "rewards";
 
     /**
-     * Recorre todos los archivos XML en la carpeta rewards, disminuye en 1 el valor de <quantity> 
+     * Recorre todos los archivos XML en la carpeta rewards, disminuye en 1 el valor
+     * de <quantity>
      * y elimina el archivo si el valor es menor que 1.
+     * 
+     * @param nombreFichero Nombre del fichero XML a reducir.
      */
     private void reducirCantidad(String nombreFichero) {
         SAXReader reader = new SAXReader();
@@ -37,10 +50,205 @@ public class GestorRecompensas {
                 }
             }
         } catch (IOException e) {
-            //errores.insertar("Error al reducir la cantidad de la recompensa");
-        }catch (DocumentException e) {
-            //errores.insertar("Error al leer el documento XML");
+            // TODO
+        } catch (DocumentException e) {
+            // TODO
         }
+    }
+
+    /**
+     * Lee todos los archivos XML en la carpeta de recompensas y
+     * construye una lista con el nombre que se mostrará en el menú.
+     * Para las recompensas multipartidas se agrupan las partes y se
+     * indica con una "x" si falta alguna.
+     */
+    public List<String> obtenerMenuRewards() {
+        List<String> menuFinal = new ArrayList<>();
+        File carpeta = new File(PATH_RECOMPENSAS);
+        if (!carpeta.exists() || !carpeta.isDirectory()) {
+            System.err.println("El directorio de recompensas no existe.");
+            return menuFinal;
+        }
+
+        File[] archivos = carpeta.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".xml");
+            }
+        });
+
+        if (archivos == null || archivos.length == 0) {
+            System.out.println("No hay recompensas disponibles.");
+            return menuFinal;
+        }
+
+        List<String> recompensasSimples = new ArrayList<>();
+        Map<String, Set<String>> recompensasMulti = new HashMap<>();
+
+        SAXReader reader = new SAXReader();
+        for (File archivo : archivos) {
+            try {
+                Document doc = reader.read(archivo);
+                Element root = doc.getRootElement();
+                String nombre = root.elementText("name");
+                if (nombre == null) {
+                    continue;
+                }
+                if (nombre.contains("[")) {
+                    int inicio = nombre.indexOf("[");
+                    int fin = nombre.indexOf("]");
+                    if (inicio != -1 && fin != -1 && fin > inicio) {
+                        String base = nombre.substring(0, inicio).trim(); // Ej.: "Almacén central"
+                        String parte = nombre.substring(inicio + 1, fin).trim().toUpperCase(); // Ej.: "A"
+                        recompensasMulti.computeIfAbsent(base, k -> new HashSet<>()).add(parte);
+                    }
+                } else {
+                    recompensasSimples.add(nombre.trim());
+                }
+            } catch (DocumentException e) {
+                System.err.println("Error al leer el archivo: " + archivo.getName());
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(recompensasSimples);
+        menuFinal.addAll(recompensasSimples);
+
+        for (String base : recompensasMulti.keySet()) {
+            Set<String> partesPresentes = recompensasMulti.get(base);
+            String partesEsperadas = "";
+            if (base.equalsIgnoreCase("Almacén central")) {
+                partesEsperadas = "ABCD";
+            } else if (base.toLowerCase().contains("piscifactoría de")) {
+                partesEsperadas = "AB";
+            } else {
+                partesEsperadas = "";
+            }
+            StringBuilder partesMostrar = new StringBuilder();
+            if (!partesEsperadas.isEmpty()) {
+                for (int i = 0; i < partesEsperadas.length(); i++) {
+                    String parte = String.valueOf(partesEsperadas.charAt(i));
+                    if (partesPresentes.contains(parte)) {
+                        partesMostrar.append(parte);
+                    } else {
+                        partesMostrar.append("x");
+                    }
+                }
+            } else {
+                List<String> listaPartes = new ArrayList<>(partesPresentes);
+                Collections.sort(listaPartes);
+                for (String p : listaPartes) {
+                    partesMostrar.append(p);
+                }
+            }
+            menuFinal.add(base + " [" + partesMostrar.toString() + "]");
+        }
+        Collections.sort(menuFinal);
+        return menuFinal;
+    }
+
+    public void mostrarYCanjearReward() {
+        List<String> menuRewards = obtenerMenuRewards();
+        if (menuRewards.isEmpty()) {
+            System.out.println("No hay recompensas para canjear.");
+            return;
+        }
+        String[] opciones = menuRewards.toArray(new String[0]);
+        Helper helper = new Helper();
+        int opcion = helper.mostrarMenu("Menú de Recompensas", opciones, null);
+        if (opcion == opciones.length + 1) {
+            System.out.println("Saliendo del menú de recompensas.");
+            return;
+        }
+        String seleccion = opciones[opcion - 1];
+        if (seleccion.contains("[") && seleccion.contains("x")) {
+            System.out.println("No se puede canjear la recompensa '" + seleccion + "' porque le faltan partes.");
+        } else {
+            canjearReward(seleccion);
+        }
+    }
+
+    private void canjearReward(String seleccion) {
+        if (seleccion.contains("[")) {
+            int indexBracket = seleccion.indexOf("[");
+            String base = seleccion.substring(0, indexBracket).trim();
+            String partesEsperadas = "";
+            if (base.equalsIgnoreCase("Almacén central")) {
+                partesEsperadas = "ABCD";
+            } else if (base.toLowerCase().contains("piscifactoría de mar")) {
+                partesEsperadas = "AB";
+            } else if (base.toLowerCase().contains("piscifactoría de rio")) {
+                partesEsperadas = "AB";
+            } else {
+                return;
+            }
+            boolean canjear = true;
+            for (int i = 0; i < partesEsperadas.length(); i++) {
+                String parte = String.valueOf(partesEsperadas.charAt(i));
+                String nombreFichero = generarNombreFichero(base, parte);
+                File f = new File(PATH_RECOMPENSAS + "/" + nombreFichero);
+                if (!f.exists()) {
+                    System.out.println("Falta la parte " + parte + " para la recompensa " + base);
+                    canjear = false;
+                    break;
+                }
+            }
+            if (canjear) {
+                for (int i = 0; i < partesEsperadas.length(); i++) {
+                    String parte = String.valueOf(partesEsperadas.charAt(i));
+                    String nombreFichero = generarNombreFichero(base, parte);
+                    reducirCantidad(nombreFichero);
+                }
+                System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
+            } else {
+                System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
+            }
+        } else {
+            File carpeta = new File(PATH_RECOMPENSAS);
+            File[] archivos = carpeta.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".xml");
+                }
+            });
+            boolean encontrado = false;
+            SAXReader reader = new SAXReader();
+            for (File archivo : archivos) {
+                try {
+                    Document doc = reader.read(archivo);
+                    String nombre = doc.getRootElement().elementText("name");
+                    if (nombre != null && nombre.trim().equalsIgnoreCase(seleccion)) {
+                        reducirCantidad(archivo.getName());
+                        encontrado = true;
+                        System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
+                        break;
+                    }
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (!encontrado) {
+                System.out.println("No se encontró la recompensa '" + seleccion + "'.");
+            }
+        }
+    }
+
+    /**
+     * Genera el nombre del fichero XML según el nombre base y la parte.
+     *
+     * @param base  Nombre base de la recompensa (por ejemplo, "Almacén central").
+     * @param parte La parte de la recompensa (por ejemplo, "A").
+     * @return El nombre del fichero correspondiente.
+     */
+    private String generarNombreFichero(String base, String parte) {
+        String nombreFichero = "";
+        if (base.equalsIgnoreCase("Almacén central")) {
+            nombreFichero = "almacen_" + parte + ".xml";
+        } else if (base.toLowerCase().contains("piscifactoría de mar")) {
+            nombreFichero = "pisci_m_" + parte.toLowerCase() + ".xml";
+        } else if (base.toLowerCase().contains("piscifactoría de rio")) {
+            nombreFichero = "pisci_r_" + parte.toLowerCase() + ".xml";
+        }
+        return nombreFichero;
     }
 
     /**

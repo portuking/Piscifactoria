@@ -30,6 +30,7 @@ import propiedades.AlmacenPropiedades;
 import propiedades.PecesDatos;
 import propiedades.PecesProps;
 import recompensas.GenerarRecompensa;
+import recompensas.GestorRecompensas;
 import registros.Registros;
 
 /**
@@ -168,7 +169,10 @@ public class Simulador {
                     Registros.registrarSalir();
                     break;
                 case 97:
-                    generar.algaReward(1);
+                    GestorRecompensas gen = new GestorRecompensas();
+                    
+                    
+                   generar.algaReward(1);
                     generar.algaReward(2);
                     generar.algaReward(3);
                     generar.algaReward(4);
@@ -203,8 +207,9 @@ public class Simulador {
 
                     generar.almacenReward("A");
                     generar.almacenReward("B");
-                    generar.almacenReward("C");
+                    
                     generar.almacenReward("D");
+                    gen.mostrarYCanjearReward();
                     break;
                 case 98:
                     this.addFishAmmount();
