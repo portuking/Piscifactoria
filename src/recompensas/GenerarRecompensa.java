@@ -12,6 +12,8 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import registros.Registros;
+
 /**
  * Clase que genera recompensas en formato XML.
  */
@@ -76,9 +78,8 @@ public class GenerarRecompensa {
         root.addElement("desc").addText(food + " que se puede usar para alimentar a los peces.");
         root.addElement("rarity").addText(Integer.toString(rarity));
         Element give = root.addElement("give");
-        give.addElement("food");
-        give.addAttribute("type", "algae");
-        give.addText(Integer.toString(food));
+        Element comida = give.addElement("food").addText(Integer.toString(food));
+        comida.addAttribute("type", "algae");
         root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
@@ -131,9 +132,8 @@ public class GenerarRecompensa {
         root.addElement("desc").addText(food + " unidades de pienso hecho a partir de peces, moluscos y otros seres marinos para alimentar a peces carnívoros y omnívoros.");
         root.addElement("rarity").addText(Integer.toString(rarity));
         Element give = root.addElement("give");
-        give.addElement("food");
-        give.addAttribute("type", "animal");
-        give.addText(Integer.toString(food));
+        Element comida = give.addElement("food").addText(Integer.toString(food));
+        comida.addAttribute("type", "animal");
         root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
@@ -239,9 +239,8 @@ public class GenerarRecompensa {
         root.addElement("desc").addText(food + " unidades de pienso multipropósito para todo tipo de peces.");
         root.addElement("rarity").addText(Integer.toString(rarity));
         Element give = root.addElement("give");
-        give.addElement("food");
-        give.addAttribute("type", "general");
-        give.addText(Integer.toString(food));
+        Element comida = give.addElement("food").addText(Integer.toString(food));
+        comida.addAttribute("type", "general");
         root.addElement("quantity").addText(Integer.toString(1));        
         guardarXML(doc, rutaArchivo);
     }
@@ -396,7 +395,7 @@ public class GenerarRecompensa {
         writer = new XMLWriter(new FileWriter(rutaArchivo), OutputFormat.createPrettyPrint());
         writer.write(doc); 
         writer.flush();     
-        System.out.println("Archivo guardado en: " + rutaArchivo);
+        System.out.println("Recompensa generada en: " + rutaArchivo);
     } catch (IOException e) {
         System.err.println("Error al guardar el archivo XML: " + e.getMessage());
         e.printStackTrace();
