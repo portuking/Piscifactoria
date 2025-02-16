@@ -294,27 +294,31 @@ public class GestorRecompensas {
                 }
             }
             Element buildingElem = give.element("building");
-            String nombreBuilding = buildingElem.getText();
-            String codigo = buildingElem.attributeValue("code");
-            switch (codigo) {
-                case "4":
-                    // Lógica para desbloquear el Almacén central
-                    break;
-                case "1":
-                    // Lógica para desbloquear la Piscifactoría de mar
-                    break;
-                case "0":
-                    // Lógica para desbloquear la Piscifactoría de río
-                    break;
-                case "3":
-                    // Lógica para desbloquear el Tanque de mar
-                    break;
-                case "2":
-                    // Lógica para desbloquear el Tanque de río
-                    break;
-                default:
-                    System.out.println("Edificio desconocido con código: " + codigo);
-                    break;
+            if (buildingElem != null) {
+                String nombreBuilding = buildingElem.getText();
+                String codigo = buildingElem.attributeValue("code");
+                switch (codigo) {
+                    case "4":
+                        // Lógica para desbloquear el Almacén central
+                        break;
+                    case "1":
+                        // Lógica para desbloquear la Piscifactoría de mar
+                        break;
+                    case "0":
+                        // Lógica para desbloquear la Piscifactoría de río
+                        break;
+                    case "3":
+                        // Lógica para desbloquear el Tanque de mar
+                        break;
+                    case "2":
+                        // Lógica para desbloquear el Tanque de río
+                        break;
+                    default:
+                        System.out.println("Edificio desconocido con código: " + codigo);
+                        break;
+                }
+            } else {
+                System.out.println("No se encontró el elemento 'building' en el XML.");
             }
         }
     }
