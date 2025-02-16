@@ -99,6 +99,7 @@ public class Transcripciones {
         }
         escribir("-------------------------------------------\n");
         escribir("Piscifactoria incial: " + pisciInicial + ".\n");
+        trCerrar();
 
         // TODO implementar EXTRAS
     }
@@ -115,14 +116,17 @@ public class Transcripciones {
      */
     public void trComprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen, String piscifactoria) {//creo que hecho
         escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprada por " + monedasGastadas+ " monedas. Se almacena en " + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + ".\n"));// PISCIFACTORIA O ALMACEN
+        trCerrar();
     }
 
     public void trComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {//hecho
         escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por "+monedas+" monedas. Añadido al tanque " + tanque+ " de la piscifactoría " +piscifactoria+" .\n");
+        trCerrar();
     }
 
     public void trVenderPeces(int peces, String nombrePisci, int yenes) {
         escribir("Vendidos "+peces+" peces de la piscifactoría "+nombrePisci+" de forma manual por "+yenes+" monedas.");
+        trCerrar();
     }
 
     /**
@@ -133,6 +137,7 @@ public class Transcripciones {
      */
     public void trLimpiarTanque(int tanque, String piscifactoria) {//hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+        trCerrar();
     }
 
     /**
@@ -143,6 +148,7 @@ public class Transcripciones {
      */
     public void trVaciarTanque(int tanque, String piscifactoria) {//hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+        trCerrar();
     }
     
     /**Creo que hecho*/
@@ -150,15 +156,19 @@ public class Transcripciones {
         switch (tipoEdificio) {
             case "tanque":
                 escribir("Comprado el tanque número " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+                trCerrar();
                 break;
             case "almacen":
                 escribir("Comprado el almacén central.\n");
+                trCerrar();
                 break;
             case "mar":
                 escribir("Comprada la piscifactoría de río " + piscifactoria +" por "+monedas+" monedas.\n");
+                trCerrar();
                 break;
             default:
                 escribir("Comprada la piscifactoría de río " + piscifactoria +" por "+monedas+" monedas.\n"); //
+                trCerrar();
                 break;
         }
     }
@@ -166,6 +176,8 @@ public class Transcripciones {
     public void trMejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {//hecho
         escribir("Mejorada la piscifactoría "+piscifactoria+" aumentando su capacidad de comida hasta un total de "+aumentoComida+" por " +monedas+
                 "monedas\n");
+                trCerrar();
+
     }
     /*FALTA IMPLEMENTAR */
     public void trNextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
@@ -173,6 +185,7 @@ public class Transcripciones {
                 "Peces actuales , " + pecesRio + " de río " + pecesMar + "de mar.\n" +
                 monedas + " monedas ganadas por un total de " + pecesVendidos + ".\n" +
                 "-------------------------\n>>>Inicio del dia " + (dia + 1) + ".\n");
+                trCerrar();
     }
     /**
      * Registra la información cuando utilizas las opciones ocultas en el simulador
