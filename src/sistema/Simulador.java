@@ -167,6 +167,7 @@ public class Simulador {
                 case 14:
                     exit = true;
                     Registros.registrarSalir();
+                    Registros.cerrarRegistros();
                     break;
                 case 97:
                     GestorRecompensas gen = new GestorRecompensas();

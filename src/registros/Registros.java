@@ -113,4 +113,13 @@ public class Registros {
     public static void registrarError(String error){
         log.logError(error);
     }
+
+    public static void cerrarRegistros() {
+        if (transcripciones != null) {
+            transcripciones.trCerrar();
+        }
+        if (log != null) {
+            log.logClose();
+        }
+    }
 }
