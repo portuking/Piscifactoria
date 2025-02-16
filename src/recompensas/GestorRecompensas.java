@@ -20,7 +20,6 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import javafx.css.SimpleStyleableStringProperty;
 import sistema.Helper;
 import sistema.SISMonedas;
 
@@ -185,7 +184,7 @@ public class GestorRecompensas {
             }
             boolean canjear = true;
             List<File> archivosAProcesar = new ArrayList<>();
-            for (int i = 0; i < partesEsperadas.length(); i++) {//recorrer las partes esperadas
+            for (int i = 0; i < partesEsperadas.length(); i++) {// recorrer las partes esperadas
                 String parte = String.valueOf(partesEsperadas.charAt(i));
                 String nombreFichero = generarNombreFichero(base, parte);
                 File f = new File(PATH_RECOMPENSAS + "/" + nombreFichero);
@@ -212,7 +211,7 @@ public class GestorRecompensas {
             } else {
                 System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
             }
-        } else {//recompensa simple
+        } else {// recompensa simple
             File carpeta = new File(PATH_RECOMPENSAS);
             File[] archivos = carpeta.listFiles((dir, name) -> name.toLowerCase().endsWith(".xml"));
             SAXReader reader = new SAXReader();
@@ -232,7 +231,7 @@ public class GestorRecompensas {
                     e.printStackTrace();
                 }
             }
-    
+
             if (!encontrado) {
                 System.out.println("No se encontró la recompensa '" + seleccion + "'.");
             }
@@ -259,7 +258,8 @@ public class GestorRecompensas {
     }
 
     /**
-     * Procesa el contenido de la recompensa en el XML y ejecuta la lógica de dar recursos.
+     * Procesa el contenido de la recompensa en el XML y ejecuta la lógica de dar
+     * recursos.
      */
     private void procesarPremio(Document doc) {
         Element root = doc.getRootElement();
@@ -276,14 +276,14 @@ public class GestorRecompensas {
             if (foodElem != null) {
                 int cantidadFood = Integer.parseInt(foodElem.getText());
                 String tipoFood = foodElem.attributeValue("type");
-                if(tipoFood != null){
+                if (tipoFood != null) {
                     switch (tipoFood.toLowerCase()) {
                         case "algae":
-                            
+
                             break;
                         case "animal":
 
-                            break;                        
+                            break;
                         case "general":
 
                             break;
@@ -294,11 +294,27 @@ public class GestorRecompensas {
                 }
             }
             Element buildingElem = give.element("building");
-            if (buildingElem != null) {
-                String nombreBuilding = buildingElem.getText();
-                String codigo = buildingElem.attributeValue("code");
-                System.out.println("Se desbloquea el edificio " + nombreBuilding + " con código " + codigo);
-                //METODO EDIFCIOS
+            String nombreBuilding = buildingElem.getText();
+            String codigo = buildingElem.attributeValue("code");
+            switch (codigo) {
+                case "4":
+                    // Lógica para desbloquear el Almacén central
+                    break;
+                case "1":
+                    // Lógica para desbloquear la Piscifactoría de mar
+                    break;
+                case "0":
+                    // Lógica para desbloquear la Piscifactoría de río
+                    break;
+                case "3":
+                    // Lógica para desbloquear el Tanque de mar
+                    break;
+                case "2":
+                    // Lógica para desbloquear el Tanque de río
+                    break;
+                default:
+                    System.out.println("Edificio desconocido con código: " + codigo);
+                    break;
             }
         }
     }
