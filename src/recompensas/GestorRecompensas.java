@@ -21,6 +21,7 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 import sistema.Helper;
+import sistema.SISMonedas;
 
 public class GestorRecompensas {
 
@@ -182,7 +183,8 @@ public class GestorRecompensas {
                 return;
             }
             boolean canjear = true;
-            for (int i = 0; i < partesEsperadas.length(); i++) {
+            List<File> archivosAProcesar = new ArrayList<>();
+            for (int i = 0; i < partesEsperadas.length(); i++) {// recorrer las partes esperadas
                 String parte = String.valueOf(partesEsperadas.charAt(i));
                 String nombreFichero = generarNombreFichero(base, parte);
                 File f = new File(PATH_RECOMPENSAS + "/" + nombreFichero);
@@ -190,33 +192,36 @@ public class GestorRecompensas {
                     System.out.println("Falta la parte " + parte + " para la recompensa " + base);
                     canjear = false;
                     break;
+                } else {
+                    archivosAProcesar.add(f);
                 }
             }
             if (canjear) {
-                for (int i = 0; i < partesEsperadas.length(); i++) {
-                    String parte = String.valueOf(partesEsperadas.charAt(i));
-                    String nombreFichero = generarNombreFichero(base, parte);
-                    reducirCantidad(nombreFichero);
+                SAXReader reader = new SAXReader();
+                for (File archivo : archivosAProcesar) {
+                    try {
+                        Document doc = reader.read(archivo);
+                        procesarPremio(doc);
+                        reducirCantidad(archivo.getName());
+                    } catch (DocumentException e) {
+                        e.printStackTrace();
+                    }
                 }
                 System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
             } else {
                 System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
             }
-        } else {
+        } else {// recompensa simple
             File carpeta = new File(PATH_RECOMPENSAS);
-            File[] archivos = carpeta.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.toLowerCase().endsWith(".xml");
-                }
-            });
-            boolean encontrado = false;
+            File[] archivos = carpeta.listFiles((dir, name) -> name.toLowerCase().endsWith(".xml"));
             SAXReader reader = new SAXReader();
+            boolean encontrado = false;
             for (File archivo : archivos) {
                 try {
                     Document doc = reader.read(archivo);
                     String nombre = doc.getRootElement().elementText("name");
-                    if (nombre != null && nombre.trim().equalsIgnoreCase(seleccion)) {
+                    if (nombre != null && nombre.trim().equalsIgnoreCase(seleccion.trim())) {
+                        procesarPremio(doc);
                         reducirCantidad(archivo.getName());
                         encontrado = true;
                         System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
@@ -226,6 +231,7 @@ public class GestorRecompensas {
                     e.printStackTrace();
                 }
             }
+
             if (!encontrado) {
                 System.out.println("No se encontró la recompensa '" + seleccion + "'.");
             }
@@ -249,6 +255,68 @@ public class GestorRecompensas {
             nombreFichero = "pisci_r_" + parte.toLowerCase() + ".xml";
         }
         return nombreFichero;
+    }
+
+    /**
+     * Procesa el contenido de la recompensa en el XML y ejecuta la lógica de dar
+     * recursos.
+     */
+    private void procesarPremio(Document doc) {
+        Element root = doc.getRootElement();
+        Element give = root.element("give");
+
+        if (give != null) {
+            Element coinsElem = give.element("coins");
+            if (coinsElem != null) {
+                int coins = Integer.parseInt(coinsElem.getText());
+                SISMonedas.getInstance().setMonedas(SISMonedas.getInstance().getMonedas() + coins);
+                System.out.println("Se añaden " + coins + " monedas al jugador. Tienes: " + SISMonedas.getSaldo());
+            }
+            Element foodElem = give.element("food");
+            if (foodElem != null) {
+                int cantidadFood = Integer.parseInt(foodElem.getText());
+                String tipoFood = foodElem.attributeValue("type");
+                if (tipoFood != null) {
+                    switch (tipoFood.toLowerCase()) {
+                        case "algae":
+
+                            break;
+                        case "animal":
+
+                            break;
+                        case "general":
+
+                            break;
+                        default:
+                            System.out.println("Ni idea de ke comida es");
+                            break;
+                    }
+                }
+            }
+            Element buildingElem = give.element("building");
+            String nombreBuilding = buildingElem.getText();
+            String codigo = buildingElem.attributeValue("code");
+            switch (codigo) {
+                case "4":
+                    // Lógica para desbloquear el Almacén central
+                    break;
+                case "1":
+                    // Lógica para desbloquear la Piscifactoría de mar
+                    break;
+                case "0":
+                    // Lógica para desbloquear la Piscifactoría de río
+                    break;
+                case "3":
+                    // Lógica para desbloquear el Tanque de mar
+                    break;
+                case "2":
+                    // Lógica para desbloquear el Tanque de río
+                    break;
+                default:
+                    System.out.println("Edificio desconocido con código: " + codigo);
+                    break;
+            }
+        }
     }
 
     /**
