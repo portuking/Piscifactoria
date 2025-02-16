@@ -866,7 +866,7 @@ public class Simulador {
             return;
         } else {
             tanque.cleanDeadFishes();
-            Registros.registrarLimpiarTanque(tanque.getTankNum(), selectPisc().getName());
+            Registros.registrarLimpiarTanque(tanque.getTankNum(), tanque.getFishfarmName());
         }
     }
 
@@ -880,7 +880,7 @@ public class Simulador {
             return;
         } else {
             tanque.cleanTank();
-            Registros.registrarVaciarTanque(tanque.getTankNum(), selectPisc().getName());
+            Registros.registrarVaciarTanque(tanque.getTankNum(), tanque.getFishfarmName());
         }
     }
 
