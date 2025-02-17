@@ -1,5 +1,8 @@
 package edificios.almacenes;
 
+import java.util.List;
+import edificios.piscifactoria.Piscifactoria;
+
 /**
  * Clase que representa el Almacén Central
  * @author Manuel Abalo Rietz
@@ -27,6 +30,48 @@ public class AlmacenCentral {
         this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;
+    }
+
+    /**
+     * Método que reparte la comida animal que hay en el almacen entre las piscifactorias
+     * @param p lista de piscifactorias
+     */
+    public void repartirComidaAnimal(List<Piscifactoria> p) {
+        int almacenes = 0;
+        for (Piscifactoria piscifactoria : p) {
+            if(piscifactoria.getWarehouseA() != null){
+                almacenes++;
+            }
+        }
+
+        int reparto = (int)(this.getWarehouseA().getStock() / almacenes);
+        
+        for (Piscifactoria piscifactoria : p) {
+            if(piscifactoria.getWarehouseA() != null) {
+                piscifactoria.getWarehouseA().addFood(reparto);
+            }    
+        }
+    }
+
+    /**
+     * Método que reparte la comida vegetal que hay en el almacén central entre las piscifactorias
+     * @param p lista de piscifactorias
+     */
+    public void repartirComidaVegetal(List<Piscifactoria> p) {
+        int almacenes = 0;
+        for (Piscifactoria piscifactoria : p) {
+            if(piscifactoria.getWarehouseV() != null){
+                almacenes++;
+            }
+        }
+
+        int reparto = (int)(this.getWarehouseV().getStock() / almacenes);
+        
+        for (Piscifactoria piscifactoria : p) {
+            if(piscifactoria.getWarehouseV() != null) {
+                piscifactoria.getWarehouseV().addFood(reparto);
+            }    
+        }
     }
 
     /**

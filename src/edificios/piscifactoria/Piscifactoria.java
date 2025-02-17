@@ -342,8 +342,8 @@ public abstract class Piscifactoria {
      * Método que muestra una lista de los Tanques de la Piscifactoría
      */
     public void listTanks() {
-        for (Tanque t : tanques) {
-            System.out.println((t.getTankNum()) + ".- " + "Tipo: " + t.getTankType());
+        for (int i = 0; i < this.tanques.size(); i++) {
+            System.out.println(i + ".- " + "Tipo: " + tanques.get(i).getTankType());
         }
     }
 
