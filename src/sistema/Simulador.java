@@ -1435,7 +1435,7 @@ public class Simulador {
             sim.menu();
             new Guardado(sim).guardarPartida();
         } finally{
-            
+            Registros.cerrarRegistros();
         }
 
     }

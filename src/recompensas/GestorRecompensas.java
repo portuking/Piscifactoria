@@ -20,6 +20,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import registros.Registros;
 import sistema.Helper;
 import sistema.SISMonedas;
 
@@ -208,6 +209,7 @@ public class GestorRecompensas {
                     }
                 }
                 System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
+                Registros.registraUsoRecompensa(seleccion);
             } else {
                 System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
             }
@@ -225,6 +227,7 @@ public class GestorRecompensas {
                         reducirCantidad(archivo.getName());
                         encontrado = true;
                         System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
+                        Registros.registraUsoRecompensa(seleccion);
                         break;
                     }
                 } catch (DocumentException e) {

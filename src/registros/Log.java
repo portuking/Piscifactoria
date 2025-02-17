@@ -210,6 +210,22 @@ public class Log {
     }
 
     /**
+     * Log de cuando se crea una recompensa
+     * @param recompensa
+     */
+    public void logCreaRecompensa(String recompensa){
+        write("Recompensa " + recompensa+" creada");
+    }
+
+    /**
+     * Log para cuando se usa una recompensa
+     * @param recompensa
+     */
+    public void logUsaRecompensa(String recompensa  ){
+        write("Recompensa " + recompensa + " usada");
+    }
+
+    /**
      * Escribe un mensaje de error en el archivo de log de errores.
      * 
      * @param mensaje Mensaje de error a registrar.
