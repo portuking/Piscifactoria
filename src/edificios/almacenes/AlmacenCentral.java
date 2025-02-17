@@ -12,8 +12,6 @@ import edificios.piscifactoria.Piscifactoria;
 public class AlmacenCentral {
     /**Capacidad máxima del Almacén central*/
     private int maxCap;
-    /**Stock del Almacén central */
-    private int stock;
     /**Precio de el Almacén Central */
     private final int price;
     /**Almacén de comida Animal*/
@@ -27,7 +25,6 @@ public class AlmacenCentral {
     public AlmacenCentral() {
         this.warehouseA = new AlmacenComida(200, 0);
         this.warehouseV = new AlmacenComida(200, 0);
-        this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;
     }
@@ -102,7 +99,6 @@ public class AlmacenCentral {
      */
     public void addVegtalFood(int ammount){
         this.warehouseV.addFood(ammount);
-        this.stock += ammount;
     }
 
     /**
@@ -111,7 +107,6 @@ public class AlmacenCentral {
      */
     public void addAnimalFood(int ammount) {
         this.warehouseA.addFood(ammount);
-        this.stock += ammount;
     }
 
     /**
@@ -148,7 +143,7 @@ public class AlmacenCentral {
      * @return Devuelve la comida que hay
      */
     public int getStock() {
-        return stock;
+        return this.warehouseA.getStock() + this.warehouseV.getStock();
     }
 
     /**
