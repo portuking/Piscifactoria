@@ -396,6 +396,7 @@ public class GenerarRecompensa {
         writer.write(doc); 
         writer.flush();     
         System.out.println("Recompensa generada en: " + rutaArchivo);
+        Registros.registraCreaRecompensa(doc.getName());
     } catch (IOException e) {
         System.err.println("Error al guardar el archivo XML: " + e.getMessage());
         e.printStackTrace();

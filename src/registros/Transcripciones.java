@@ -147,7 +147,7 @@ public class Transcripciones {
      * @param piscifactoria piscifactoria de donde es el tanque
      */
     public void trVaciarTanque(int tanque, String piscifactoria) {// hecho
-        escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+        escribir("Vaciado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
     /** Creo que hecho */
@@ -160,7 +160,7 @@ public class Transcripciones {
                 escribir("Comprado el almacén central.\n");
                 break;
             case "mar":
-                escribir("Comprada la piscifactoría de río " + piscifactoria + " por " + monedas + " monedas.\n");
+                escribir("Comprada la piscifactoría de mar " + piscifactoria + " por " + monedas + " monedas.\n");
                 break;
             default:
                 escribir("Comprada la piscifactoría de río " + piscifactoria + " por " + monedas + " monedas.\n"); //
@@ -201,6 +201,22 @@ public class Transcripciones {
             default:
                 break;
         }
+    }
+
+    /**
+     * Registra la creación de una recompensa
+     * 
+     * @param recompensa
+     */
+    public void trCreaRecompensas(String recompensa){
+        escribir("Recompensa " + recompensa + " creada");
+    }
+    /**
+     * Registra el uso de una recompensa
+     * @param recompensa
+     */
+    public void trUsaRecompensas(String recompensa){
+        escribir("Recompensa "+ recompensa +" usada");
     }
 
     /**
