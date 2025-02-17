@@ -1415,7 +1415,7 @@ public class Simulador {
         return helper;
     }
 
-    public String[] getFishesNames() {
+    public static String[] getFishesNames() {
         return fishesNames;
     }
 
@@ -1426,6 +1426,8 @@ public class Simulador {
     public GenerarRecompensa getGenerar() {
         return generar;
     }
+
+    
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();

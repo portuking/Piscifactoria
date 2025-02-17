@@ -225,6 +225,10 @@ public class Log {
         write("Recompensa " + recompensa + " usada");
     }
 
+    public void logGuardadoPartida(String partida){
+        write("Se ha guardado en la partida en " + partida);
+    }
+
     /**
      * Escribe un mensaje de error en el archivo de log de errores.
      * 

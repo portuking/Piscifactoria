@@ -100,7 +100,7 @@ public class Guardado {
                     pezObjeto.addProperty("maduro", pez.isMature());
                     pezObjeto.addProperty("fertil", pez.isFertile());
                     pezObjeto.addProperty("ciclo", pez.getReproductionCycle());
-                    pezObjeto.addProperty("alimentado", false); // Valor por defecto
+                    pezObjeto.addProperty("alimentado", false);
                     JsonObject extra = new JsonObject();
                     extra.addProperty("k", "v");
                     pezObjeto.add("extra", extra);
