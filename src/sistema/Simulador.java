@@ -32,6 +32,7 @@ import propiedades.PecesProps;
 import recompensas.GenerarRecompensa;
 import recompensas.GestorRecompensas;
 import registros.Registros;
+import saves.Guardado;
 
 /**
  * IMPLEMENNTAR CLASE
@@ -88,7 +89,7 @@ public class Simulador {
      */
     public void init() {
         try {
-            crearCarpetas("transcripciones", "logs", "rewards");
+            crearCarpetas("transcripciones", "logs", "rewards", "saves");
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
             //Transcripciones.getInstance(this.name);
@@ -104,6 +105,7 @@ public class Simulador {
             fishFarms.add(initialRiverFishfarm);
             this.centralWarehouse = null;
             Registros.registrarInicio(this.name, this.monedas.getMonedas(), fishesNames, fishfarmName);
+
             
         } catch (InputMismatchException e) {
             System.out.println("El nombre es incorrecto");
@@ -120,7 +122,7 @@ public class Simulador {
             String[] opciones = { "Estado general", "Estado piscifactoría", "Estado Tanques", "Informes", "Ictiopedia",
                     "Pasar día", "Comprar comida", "Comprar peces", "Vender peces", "Limpiar tanques", "Vaciar tanques",
                     "Mejorar", "Pasar varios días" };
-            int[] extraOps = { 97, 98, 99 };
+            int[] extraOps = { 96, 97, 98, 99 };
             Helper helper = new Helper();
             int opcion = helper.mostrarMenu("Menu Principal", opciones, extraOps);
 
@@ -142,6 +144,7 @@ public class Simulador {
                     break;
                 case 6:
                     nextDay(1);
+                    new Guardado(this).guardarPartida();
                     break;
                 case 7:
                     this.addFood();
@@ -166,9 +169,13 @@ public class Simulador {
                     break;
                 case 14:
                     exit = true;
+                    new Guardado(this).guardarPartida();
                     Registros.registrarSalir();
                     Registros.cerrarRegistros();
                     break;
+                case 96:
+                    GestorRecompensas g = new GestorRecompensas();
+                    g.mostrarYCanjearReward();
                 case 97:
                     GestorRecompensas gen = new GestorRecompensas();
                     
@@ -366,7 +373,7 @@ public class Simulador {
                     case CARNIVORO:
                         System.out.print("Carnívoro\n");
                         break;
-                    case FILTRADOR:
+                    case FILTRADOR: 
                         System.out.print("Herbívoro\n");
                         break;
                     case OMNIVORO:
@@ -1380,11 +1387,53 @@ public class Simulador {
         
     }
 
+    public int getDays() {
+        return days;
+    }
+
+    public List<Piscifactoria> getFishFarms() {
+        return fishFarms;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SISMonedas getMonedas() {
+        return monedas;
+    }
+
+    public AlmacenCentral getCentralWarehouse() {
+        return centralWarehouse;
+    }
+
+    public static PecesDatos[] getPecesDisponibles() {
+        return pecesDisponibles;
+    }
+
+    public Helper getHelper() {
+        return helper;
+    }
+
+    public String[] getFishesNames() {
+        return fishesNames;
+    }
+
+    public static Estadisticas getEstadisticas() {
+        return estadisticas;
+    }
+
+    public GenerarRecompensa getGenerar() {
+        return generar;
+    }
+
     public static void main(String[] args) {
         Simulador sim = new Simulador();
+        
         try {
             sim.init();
             sim.menu();
+            new Guardado(sim).guardarPartida();
         } finally{
             
         }
