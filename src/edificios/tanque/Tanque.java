@@ -193,11 +193,19 @@ public class Tanque {
                     Random r = new Random();
                     boolean wharehouse = r.nextBoolean();
                     if(wharehouse){
-                        p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
-                        comio = true;
+                        if(p.getWarehouseV().getStock() > 0) {
+                            p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
+                            comio = true;
+                        }else{
+                            comio = false;
+                        }
                     }else{
-                        p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
-                        comio = true;
+                        if(p.getWarehouseA().getStock() > 0) {
+                            p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
+                            comio = true;
+                        }else{
+                            comio = false;
+                        }
                     }
                 }else{
                     comio = false;

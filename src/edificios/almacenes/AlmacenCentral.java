@@ -49,6 +49,7 @@ public class AlmacenCentral {
         for (Piscifactoria piscifactoria : p) {
             if(piscifactoria.getWarehouseA() != null) {
                 piscifactoria.getWarehouseA().addFood(reparto);
+                this.warehouseA.setStock(this.warehouseA.getStock() - reparto);
             }    
         }
     }
@@ -70,6 +71,7 @@ public class AlmacenCentral {
         for (Piscifactoria piscifactoria : p) {
             if(piscifactoria.getWarehouseV() != null) {
                 piscifactoria.getWarehouseV().addFood(reparto);
+                this.warehouseV.setStock(this.warehouseV.getStock() - reparto);
             }    
         }
     }
@@ -99,9 +101,9 @@ public class AlmacenCentral {
         System.out.println("--------Almacén Central--------");
         System.out.println("Comida actual: " + this.getStock());
         System.out.println("Capacidad máxima: " + this.getMaxCap());
-        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + ((this.getStock()*100)/this.getMaxCap())+"%");
-        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + ((this.getWarehouseA().getStock()*100)/this.getWarehouseA().getMaxCap())+"%");
-        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + ((this.getWarehouseV().getStock()*100)/this.getWarehouseV().getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + this.getStock() + "/" + this.getMaxCap() + ((this.getStock()*100)/this.getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + this.warehouseA.getStock() + "/" + this.warehouseA.getMaxCap() + ((this.warehouseA.getStock()*100)/this.getWarehouseA().getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + this.warehouseV.getStock() + "/" + this.warehouseV.getMaxCap() + ((this.getWarehouseV().getStock()*100)/this.warehouseV.getMaxCap())+"%");
     }
 
     /**

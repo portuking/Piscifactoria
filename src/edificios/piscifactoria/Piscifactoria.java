@@ -343,7 +343,7 @@ public abstract class Piscifactoria {
      */
     public void listTanks() {
         for (int i = 0; i < this.tanques.size(); i++) {
-            System.out.println(i + ".- " + "Tipo: " + tanques.get(i).getTankType());
+            System.out.println((i + 1) + ".- " + "Tipo: " + tanques.get(i).getTankType());
         }
     }
 
