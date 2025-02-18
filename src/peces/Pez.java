@@ -76,8 +76,9 @@ public  abstract class Pez {
      * Método que hace crecer un Pez
      */
     public void grow(boolean comido){
+        Random r = new Random();
         if(this.isAlive()) {
-            if(this.isEat()){
+            if(comido){
                 this.setEat(false);
                 this.age +=1;
                 if(this.age >= this.fishStats.getMadurez()) {
@@ -94,7 +95,6 @@ public  abstract class Pez {
                     this.reproducible = true;
                 } 
             }else{
-                Random r = new Random();
                 Boolean dead = r.nextBoolean();
                 if(!dead){
                     setEat(comido);
@@ -117,6 +117,14 @@ public  abstract class Pez {
                     this.setMature(false);
                     this.setFertile(false);
                     this.setEat(false);
+                }
+            }
+            if(this.isAlive() && !this.isMature()) {
+                if(this.getAge() % 2 == 0) {
+                    int dead = r.nextInt(100);
+                    if(dead >= 95) {
+                        this.setAlive(false);
+                    }
                 }
             }
         }else{

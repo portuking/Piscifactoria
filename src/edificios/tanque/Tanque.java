@@ -19,6 +19,7 @@ import sistema.SISMonedas;
  * @author Pablo Dopazo Suárez
  */
 public class Tanque {
+    //Piscifactoría a la que pertenece el Tanque
     private Piscifactoria fishFarm;
     /** Peces que hay en el Tanque */
     private ArrayList<Pez> fishes;
@@ -52,32 +53,34 @@ public class Tanque {
     public void showStatus(){
         System.out.println("=============== Tanque "+ this.tankNum +" ===============");
         if(this.fishes.size() > 0 && this.getMaxCapacity() > 0){
-            System.out.println("Ocupación: peces / max " + (this.fishes.size()/this.getMaxCapacity())*100+"%");
+            System.out.println("Ocupación: peces/max " + this.fishes.size() + "/" + this.getMaxCapacity() + " " + ((this.fishes.size() * 100)/this.getMaxCapacity())+"%");
         }else{
-            System.out.println("Ocupación: peces / max 0%");
+            System.out.println("Ocupación: peces/max 0%");
         }
         if(this.fishesAlive() > 0 && this.getMaxCapacity() > 0) {
-            System.out.println("Peces vivos: vivos / total " + (this.fishesAlive() / this.getMaxCapacity())*100+"%");
+            System.out.println("Peces vivos: vivos/total " + this.fishesAlive() + "/" + this.getMaxCapacity() + " " + ((this.fishesAlive() * 100)/this.getMaxCapacity())+"%");
         }else{
-            System.out.println("Peces vivos: vivos / total 0%");
+            System.out.println("Peces vivos: vivos/total 0%");
         }
         if(this.alimentedFishes() > 0 && this.fishesAlive() > 0) {
-            System.out.println("Peces alimentados: alimentados / vivos" + (this.alimentedFishes()/ this.fishesAlive())*100+"%");
+            System.out.println("Peces alimentados: alimentados/vivos" + this.alimentedFishes() + "/" + this.fishesAlive() + " " + ((this.alimentedFishes() * 100)/this.fishesAlive())+"%");
         }else{
-            System.out.println("Peces alimentados: alimentados / vivos 0%");
+            System.out.println("Peces alimentados: alimentados/vivos 0%");
         }
         if(this.matureFishes() > 0 && this.fishesAlive() > 0){
-            System.out.println("Peces adultos: adultos / vivos " + (this.matureFishes() / this.fishesAlive())*100+"%");
+            System.out.println("Peces adultos: adultos/vivos "+ this.matureFishes()+"/"+this.fishesAlive() + " " + ((this.matureFishes() * 100)/this.fishesAlive())+"%");
         }else{
-            System.out.println("Peces adultos: adultos / vivos 0%");
+            System.out.println("Peces adultos: adultos/vivos 0%");
         }
         if(this.fishesF() > 0 && this.fishesM() > 0) {
-            System.out.println("Hembras / Machos " + (this.fishesF()/this.fishesM())*100+"%");
+            System.out.println("Hembras/Machos " + this.fishesF() + "/" +this.fishesM());
         }else{
-            System.out.println("Hembras / Machos 0%");
+            System.out.println("Hembras/Machos: 0/0");
         }
         if(this.fertiles() > 0 && this.fishesAlive() > 0) {
-            System.out.println("Fertiles: fertiles / vivos 0%");
+            System.out.println("Fertiles: fertiles/vivos 0%");
+        }else{
+            System.out.println("Fertiles: fertiles/vivos " + this.fertiles() + "/" + this.fishesAlive());
         }
     }
     /**
@@ -190,11 +193,19 @@ public class Tanque {
                     Random r = new Random();
                     boolean wharehouse = r.nextBoolean();
                     if(wharehouse){
-                        p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
-                        comio = true;
+                        if(p.getWarehouseV().getStock() > 0) {
+                            p.getWarehouseV().setStock(p.getWarehouseV().getStock() - consumida);
+                            comio = true;
+                        }else{
+                            comio = false;
+                        }
                     }else{
-                        p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
-                        comio = true;
+                        if(p.getWarehouseA().getStock() > 0) {
+                            p.getWarehouseA().setStock(p.getWarehouseA().getStock() - consumida);
+                            comio = true;
+                        }else{
+                            comio = false;
+                        }
                     }
                 }else{
                     comio = false;
@@ -223,7 +234,7 @@ public class Tanque {
         }
     }
     for (int i = fishes.size() - 1; i >= 0; i--) {
-        if (fishes.get(i).getAge() == fishes.get(i).getFishStats().getOptimo()) {
+        if (fishes.get(i).isAlive() && fishes.get(i).getAge() == fishes.get(i).getFishStats().getOptimo()) {
             estadisticas.registrarVenta(fishes.get(i).getName(), fishes.get(i).getFishStats().getMonedas());
             vendidos++;
             ganancias += fishes.get(i).getFishStats().getMonedas();
@@ -437,7 +448,9 @@ public class Tanque {
         return this.type ? "Río" : "Mar";
     }
 
-    
+    /**
+     * @return Devuelve el nombre de la Piscifactoría a la que pertenece el tanque
+     */    
     public String getFishfarmName() {
         return this.fishFarm.getName();
     }
