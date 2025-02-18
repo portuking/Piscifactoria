@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Conexion {
-        private static Properties connectionProps;
+    private static Properties connectionProps;
     private static Connection conn;        
     private static final String USER = "aces";
     private static final String PASSWORD = "191102";
     private static final String SERVER = "aces.iescotarelo.es";
-    private static final String PORTNUMBER = "3306";
+    private static final String PORTNUMBER = "3307";
     private static final String DATABASE = "piscifactoria";
 
     private Conexion() { }
