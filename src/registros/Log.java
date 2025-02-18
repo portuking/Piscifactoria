@@ -86,7 +86,6 @@ public class Log {
     public void logStart(String nombrePartida, String pisciInicial) {
         write("Inicio de la partida: " + nombrePartida + ".");
         write("Piscifactoría inicial: " + pisciInicial + ".");
-        logClose();
     }
 
     /**
@@ -99,7 +98,6 @@ public class Log {
      */
     public void logComprarComida(int cantidadComida, String tipoComida, boolean almacen, String piscifactoria){
         write(cantidadComida + "de comida de tipo " + tipoComida + " comprada. Se almacena en" + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + "."));
-        logClose();
     }
 
     /**
@@ -112,7 +110,6 @@ public class Log {
      */
     public void logComprarPeces(String nombrePez, boolean tipoSex, int tanque, String piscifactoria){
         write(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado. Añadido al tanque " + tanque + " de la piscifactoria " + piscifactoria );
-        logClose();
     }
 
     /**
@@ -123,7 +120,6 @@ public class Log {
      */
     public void logVenderPeces(int peces, String piscifactoria){
         write("Vendidos "+peces + " peces de la piscifactoria "+ piscifactoria +" de forma manual");
-        logClose();
     }
 
     /**
@@ -134,7 +130,6 @@ public class Log {
      */
     public void logLimpiarTanque(int tanque, String piscifactoria){
         write("Limpiado el tanque " + tanque + " de la piscifactoria " + piscifactoria);
-        logClose();
     }
 
     /**
@@ -145,7 +140,6 @@ public class Log {
      */
     public void logVaciarTanque(int tanque, String piscifactoria){
         write("Vaciado el tanque " + tanque + " de la piscifactoria " + piscifactoria);
-        logClose();
     }
 
     /**
@@ -158,19 +152,15 @@ public class Log {
         switch (tipoEdificio) {
             case "tanque":
                 write("Comprado un tanque para la piscifactoria " + piscifactoria);
-                logClose();
                 break;
             case "almacen":
                 write("Comprado el almacén cenrtal");
-                logClose();
                 break;
             case "mar":
                 write("Comprado la piscifactoria de mar " + piscifactoria);
-                logClose();
                 break;
             default:
                 write("Comprado la piscifactoria de rio "+ piscifactoria);
-                logClose();
                 break;
         }
     }
@@ -182,7 +172,6 @@ public class Log {
      */
     public void logMejorarEdificio(String piscifactoria){
         write("Mejorada la piscifactoria " + piscifactoria + " aumentando su capacidad de comida");
-        logClose();
     }
 
     /**
@@ -192,7 +181,6 @@ public class Log {
      */
     public void logNextDay(int day){
         write("Fin del día " + day + ".");
-        logClose();
     }
 
     /**
@@ -205,11 +193,9 @@ public class Log {
         switch (codOp) {
             case 98:
                 write("Añadidos peces mediante la opcion oculta a la piscifactoria " + piscifactoria);
-                logClose();
                 break;
             case 99:  
                 write("Añadidas monedas mediante la opcion oculta");          
-                logClose();
                 break;
             default:
                 break;
@@ -221,7 +207,26 @@ public class Log {
      */
     public void logSalir(){
         write("Cierre de la partida");
-        logClose();
+    }
+
+    /**
+     * Log de cuando se crea una recompensa
+     * @param recompensa
+     */
+    public void logCreaRecompensa(String recompensa){
+        write("Recompensa " + recompensa+" creada");
+    }
+
+    /**
+     * Log para cuando se usa una recompensa
+     * @param recompensa
+     */
+    public void logUsaRecompensa(String recompensa  ){
+        write("Recompensa " + recompensa + " usada");
+    }
+
+    public void logGuardadoPartida(String partida){
+        write("Se ha guardado en la partida en " + partida);
     }
 
     /**
@@ -234,7 +239,6 @@ public class Log {
             errorWriter.write("[" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "] " + mensaje);
             errorWriter.newLine();
             errorWriter.flush();
-            logClose();
         } catch (IOException e) {
             System.out.println("Error crítico al registrar errores: " + e.getMessage());
         }

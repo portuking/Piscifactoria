@@ -20,6 +20,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import registros.Registros;
 import sistema.Helper;
 import sistema.SISMonedas;
 
@@ -208,6 +209,7 @@ public class GestorRecompensas {
                     }
                 }
                 System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
+                Registros.registraUsoRecompensa(seleccion);
             } else {
                 System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
             }
@@ -225,6 +227,7 @@ public class GestorRecompensas {
                         reducirCantidad(archivo.getName());
                         encontrado = true;
                         System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
+                        Registros.registraUsoRecompensa(seleccion);
                         break;
                     }
                 } catch (DocumentException e) {
@@ -294,27 +297,31 @@ public class GestorRecompensas {
                 }
             }
             Element buildingElem = give.element("building");
-            String nombreBuilding = buildingElem.getText();
-            String codigo = buildingElem.attributeValue("code");
-            switch (codigo) {
-                case "4":
-                    // Lógica para desbloquear el Almacén central
-                    break;
-                case "1":
-                    // Lógica para desbloquear la Piscifactoría de mar
-                    break;
-                case "0":
-                    // Lógica para desbloquear la Piscifactoría de río
-                    break;
-                case "3":
-                    // Lógica para desbloquear el Tanque de mar
-                    break;
-                case "2":
-                    // Lógica para desbloquear el Tanque de río
-                    break;
-                default:
-                    System.out.println("Edificio desconocido con código: " + codigo);
-                    break;
+            if (buildingElem != null) {
+                String nombreBuilding = buildingElem.getText();
+                String codigo = buildingElem.attributeValue("code");
+                switch (codigo) {
+                    case "4":
+                        // Lógica para desbloquear el Almacén central
+                        break;
+                    case "1":
+                        // Lógica para desbloquear la Piscifactoría de mar
+                        break;
+                    case "0":
+                        // Lógica para desbloquear la Piscifactoría de río
+                        break;
+                    case "3":
+                        // Lógica para desbloquear el Tanque de mar
+                        break;
+                    case "2":
+                        // Lógica para desbloquear el Tanque de río
+                        break;
+                    default:
+                        System.out.println("Edificio desconocido con código: " + codigo);
+                        break;
+                }
+            } else {
+                System.out.println("No se encontró el elemento 'building' en el XML.");
             }
         }
     }
