@@ -32,8 +32,6 @@ public class AlmacenComida {
                 this.setStock(this.getStock()+free);
                 System.out.println("Han sobrado " + leftovers + " unidades de comida");
             }
-        }else{
-            System.out.println("Operación Incorrecta: No se añade comida");
         }
     }    
 
