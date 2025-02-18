@@ -158,6 +158,7 @@ public class Log {
                 break;
             case "mar":
                 write("Comprado la piscifactoria de mar " + piscifactoria);
+                break;
             default:
                 write("Comprado la piscifactoria de rio "+ piscifactoria);
                 break;
@@ -209,6 +210,26 @@ public class Log {
     }
 
     /**
+     * Log de cuando se crea una recompensa
+     * @param recompensa
+     */
+    public void logCreaRecompensa(String recompensa){
+        write("Recompensa " + recompensa+" creada");
+    }
+
+    /**
+     * Log para cuando se usa una recompensa
+     * @param recompensa
+     */
+    public void logUsaRecompensa(String recompensa  ){
+        write("Recompensa " + recompensa + " usada");
+    }
+
+    public void logGuardadoPartida(String partida){
+        write("Se ha guardado en la partida en " + partida);
+    }
+
+    /**
      * Escribe un mensaje de error en el archivo de log de errores.
      * 
      * @param mensaje Mensaje de error a registrar.
@@ -217,6 +238,7 @@ public class Log {
         try (BufferedWriter errorWriter = new BufferedWriter(new FileWriter(ERROR_LOG_FILE, true))) {
             errorWriter.write("[" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "] " + mensaje);
             errorWriter.newLine();
+            errorWriter.flush();
         } catch (IOException e) {
             System.out.println("Error crítico al registrar errores: " + e.getMessage());
         }

@@ -99,7 +99,6 @@ public class Transcripciones {
         }
         escribir("-------------------------------------------\n");
         escribir("Piscifactoria incial: " + pisciInicial + ".\n");
-
         // TODO implementar EXTRAS
     }
 
@@ -113,16 +112,22 @@ public class Transcripciones {
      *                        almacen central
      * @param piscifactoria   Piscifactoria en la que se almacena
      */
-    public void trComprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen, String piscifactoria) {//creo que hecho
-        escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprada por " + monedasGastadas+ " monedas. Se almacena en " + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + ".\n"));// PISCIFACTORIA O ALMACEN
+    public void trComprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen,
+            String piscifactoria) {// creo que hecho
+        escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprada por " + monedasGastadas
+                + " monedas. Se almacena en "
+                + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + ".\n"));// PISCIFACTORIA O
+                                                                                                  // ALMACEN
     }
 
-    public void trComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {//hecho
-        escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por "+monedas+" monedas. Añadido al tanque " + tanque+ " de la piscifactoría " +piscifactoria+" .\n");
+    public void trComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {// hecho
+        escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por " + monedas + " monedas. Añadido al tanque "
+                + tanque + " de la piscifactoría " + piscifactoria + " .\n");
     }
 
     public void trVenderPeces(int peces, String nombrePisci, int yenes) {
-        escribir("Vendidos "+peces+" peces de la piscifactoría "+nombrePisci+" de forma manual por "+yenes+" monedas.");
+        escribir("Vendidos " + peces + " peces de la piscifactoría " + nombrePisci + " de forma manual por " + yenes
+                + " monedas.");
     }
 
     /**
@@ -131,7 +136,7 @@ public class Transcripciones {
      * @param tanque        tanque donde se va a limpiar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void trLimpiarTanque(int tanque, String piscifactoria) {//hecho
+    public void trLimpiarTanque(int tanque, String piscifactoria) {// hecho
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
@@ -141,11 +146,11 @@ public class Transcripciones {
      * @param tanque        tanque que se va a vaciar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void trVaciarTanque(int tanque, String piscifactoria) {//hecho
-        escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
+    public void trVaciarTanque(int tanque, String piscifactoria) {// hecho
+        escribir("Vaciado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
-    
-    /**Creo que hecho*/
+
+    /** Creo que hecho */
     public void trCompraEdificio(String tipoEdificio, int monedas, int tanque, String piscifactoria) {
         switch (tipoEdificio) {
             case "tanque":
@@ -155,33 +160,36 @@ public class Transcripciones {
                 escribir("Comprado el almacén central.\n");
                 break;
             case "mar":
-                escribir("Comprada la piscifactoría de río " + piscifactoria +" por "+monedas+" monedas.\n");
+                escribir("Comprada la piscifactoría de mar " + piscifactoria + " por " + monedas + " monedas.\n");
                 break;
             default:
-                escribir("Comprada la piscifactoría de río " + piscifactoria +" por "+monedas+" monedas.\n"); //
+                escribir("Comprada la piscifactoría de río " + piscifactoria + " por " + monedas + " monedas.\n"); //
                 break;
         }
     }
 
-    public void trMejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {//hecho
-        escribir("Mejorada la piscifactoría "+piscifactoria+" aumentando su capacidad de comida hasta un total de "+aumentoComida+" por " +monedas+
+    public void trMejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {// hecho
+        escribir("Mejorada la piscifactoría " + piscifactoria + " aumentando su capacidad de comida hasta un total de "
+                + aumentoComida + " por " + monedas +
                 "monedas\n");
     }
-    /*FALTA IMPLEMENTAR */
+
+    /* FALTA IMPLEMENTAR */
     public void trNextDay(int dia, int pecesRio, int pecesMar, int monedas, int pecesVendidos) {
         escribir("Fin del día " + dia + ".\n" +
                 "Peces actuales , " + pecesRio + " de río " + pecesMar + "de mar.\n" +
                 monedas + " monedas ganadas por un total de " + pecesVendidos + ".\n" +
                 "-------------------------\n>>>Inicio del dia " + (dia + 1) + ".\n");
     }
+
     /**
      * Registra la información cuando utilizas las opciones ocultas en el simulador
      * 
-     * @param codOp Códigos ocultos utilizados en el simulador
-     * @param piscifactoria Nombre de la piscifactoria  
+     * @param codOp           Códigos ocultos utilizados en el simulador
+     * @param piscifactoria   Nombre de la piscifactoria
      * @param cantidadDolares Cantidad de monedas utilizadas
      */
-    public void trOpsOcultas(int codOp, String piscifactoria, int cantidadDolares) {//hecho
+    public void trOpsOcultas(int codOp, String piscifactoria, int cantidadDolares) {// hecho
         switch (codOp) {
             case 98:
                 escribir("Añadidos peces mediante la opción oculta a la piscifactoría " + piscifactoria + ".\n");
@@ -190,7 +198,25 @@ public class Transcripciones {
                 escribir("Añadidas 1000 monedas mediante la opción oculta. Monedas actuales, " + cantidadDolares
                         + ".\n");
                 break;
+            default:
+                break;
         }
+    }
+
+    /**
+     * Registra la creación de una recompensa
+     * 
+     * @param recompensa
+     */
+    public void trCreaRecompensas(String recompensa){
+        escribir("Recompensa " + recompensa + " creada");
+    }
+    /**
+     * Registra el uso de una recompensa
+     * @param recompensa
+     */
+    public void trUsaRecompensas(String recompensa){
+        escribir("Recompensa "+ recompensa +" usada");
     }
 
     /**

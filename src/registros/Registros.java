@@ -109,4 +109,27 @@ public class Registros {
     public static void registrarSalir(){
         log.logSalir();
     }
+
+    public static void registraCreaRecompensa(String recompensa){
+        transcripciones.trCreaRecompensas(recompensa);
+        log.logCreaRecompensa(recompensa);
+    }
+
+    public static void registraUsoRecompensa(String recompensa){
+        transcripciones.trUsaRecompensas(recompensa);
+        log.logUsaRecompensa(recompensa);
+    }
+
+    public static void registrarError(String error){
+        log.logError(error);
+    }
+
+    public static void cerrarRegistros() {
+        if (transcripciones != null) {
+            transcripciones.trCerrar();
+        }
+        if (log != null) {
+            log.logClose();
+        }
+    }
 }
