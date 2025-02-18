@@ -23,6 +23,7 @@ import org.dom4j.io.XMLWriter;
 import registros.Registros;
 import sistema.Helper;
 import sistema.SISMonedas;
+import sistema.Simulador;
 
 public class GestorRecompensas {
 
@@ -148,7 +149,8 @@ public class GestorRecompensas {
         return menuFinal;
     }
 
-    public void mostrarYCanjearReward() {
+
+    public void mostrarYCanjearReward(Simulador sim) {
         List<String> menuRewards = obtenerMenuRewards();
         if (menuRewards.isEmpty()) {
             System.out.println("No hay recompensas para canjear.");
@@ -165,11 +167,11 @@ public class GestorRecompensas {
         if (seleccion.contains("[") && seleccion.contains("x")) {
             System.out.println("No se puede canjear la recompensa '" + seleccion + "' porque le faltan partes.");
         } else {
-            canjearReward(seleccion);
+            canjearReward(seleccion, sim);
         }
     }
 
-    private void canjearReward(String seleccion) {
+    private void canjearReward(String seleccion, Simulador sim) {
         if (seleccion.contains("[")) {
             int indexBracket = seleccion.indexOf("[");
             String base = seleccion.substring(0, indexBracket).trim();
@@ -202,7 +204,7 @@ public class GestorRecompensas {
                 for (File archivo : archivosAProcesar) {
                     try {
                         Document doc = reader.read(archivo);
-                        procesarPremio(doc);
+                        procesarPremio(doc, sim);
                         reducirCantidad(archivo.getName());
                     } catch (DocumentException e) {
                         e.printStackTrace();
@@ -223,7 +225,7 @@ public class GestorRecompensas {
                     Document doc = reader.read(archivo);
                     String nombre = doc.getRootElement().elementText("name");
                     if (nombre != null && nombre.trim().equalsIgnoreCase(seleccion.trim())) {
-                        procesarPremio(doc);
+                        procesarPremio(doc, sim);
                         reducirCantidad(archivo.getName());
                         encontrado = true;
                         System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
@@ -264,7 +266,7 @@ public class GestorRecompensas {
      * Procesa el contenido de la recompensa en el XML y ejecuta la lógica de dar
      * recursos.
      */
-    private void procesarPremio(Document doc) {
+    private void procesarPremio(Document doc, Simulador sim) {
         Element root = doc.getRootElement();
         Element give = root.element("give");
 

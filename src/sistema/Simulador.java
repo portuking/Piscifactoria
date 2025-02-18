@@ -102,7 +102,7 @@ public class Simulador {
             String fishfarmName = sc.nextLine();
             Registros.getInstance().crearRegistro(this.name);
             // Log.getInstance(fishfarmName);
-            this.days = 0;
+            this.days = 1;
             this.fishFarms = new ArrayList<Piscifactoria>();
             this.monedas = SISMonedas.getInstance();
             this.monedas.setMonedas(100);
@@ -186,7 +186,7 @@ public class Simulador {
                     break;
                 case 96:
                     GestorRecompensas g = new GestorRecompensas();
-                    g.mostrarYCanjearReward();
+                    g.mostrarYCanjearReward(this);
                 case 97:
                     GestorRecompensas gen = new GestorRecompensas();
 
@@ -227,7 +227,7 @@ public class Simulador {
                     generar.almacenReward("B");
 
                     generar.almacenReward("D");
-                    gen.mostrarYCanjearReward();
+                    gen.mostrarYCanjearReward(this);
                     break;
                 case 98:
                     this.addFishAmmount();
@@ -1480,22 +1480,22 @@ public class Simulador {
 
     private void pedidilloAutomata() {
         Random rand = new Random();
-    int idCliente = rand.nextInt(10) + 1;  // Asegura que hay 10 clientes insertados en BD
-    int indexPez = rand.nextInt(fishesNames.length);
-    int idPez = indexPez + 1;
+        int idCliente = rand.nextInt(10) + 1;  // Asegura que hay 10 clientes insertados en BD
+        int indexPez = rand.nextInt(fishesNames.length);
+        int idPez = indexPez + 1;
 
-    // Verificar si existen en la BD antes de insertar
-    if (!DAOPedidos.existeCliente(idCliente) || !DAOPedidos.existePez(idPez)) {
-        System.out.println("Cliente o pez no encontrado en la base de datos. No se generó el pedido.");
-        return;
-    }
+        // Verificar si existen en la BD antes de insertar
+        if (!DAOPedidos.existeCliente(idCliente) || !DAOPedidos.existePez(idPez)) {
+            System.out.println("Cliente o pez no encontrado en la base de datos. No se generó el pedido.");
+            return;
+        }
 
-    int cantidad = rand.nextInt(41) + 10;
-    PedidoDTO pedido = new PedidoDTO(0, idCliente, idPez, cantidad, 0);
-    DAOPedidos.insertarPedido(pedido);
-    System.out.println("Pedido automático generado: " + cantidad + " peces de tipo "
+        int cantidad = rand.nextInt(41) + 10;
+        PedidoDTO pedido = new PedidoDTO(0, idCliente, idPez, cantidad, 0);
+        DAOPedidos.insertarPedido(pedido);
+        System.out.println("Pedido automático generado: " + cantidad + " peces de tipo "
             + fishesNames[indexPez] + " para el cliente " + idCliente);
-}
+    }
 
     public void gestionarPedidos() {
         List<String> pedidosPendientes = DAOPedidos.listarPedidosPendientes();
@@ -1559,6 +1559,13 @@ public class Simulador {
         DAOPedidos.actualizarPedido(pedido);
         
         System.out.println("Se han enviado " + pecesAEnviar + " peces para el pedido " + idPedido + ".");
+    }
+
+    /**
+     * @return devuelve el Almacén central del simulador
+     */
+    public AlmacenCentral getAlmacenCentral(){
+        return this.centralWarehouse;
     }
 
     public static void main(String[] args) {
