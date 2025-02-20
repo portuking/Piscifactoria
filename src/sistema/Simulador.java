@@ -1435,49 +1435,13 @@ public class Simulador {
         }
     }
 
+    /**
+     * Método que implementa la opción 97
+     */
     public void procesandoOpcion97() {
 
     }
 
-    public int getDays() {
-        return days;
-    }
-
-    public List<Piscifactoria> getFishFarms() {
-        return fishFarms;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public SISMonedas getMonedas() {
-        return monedas;
-    }
-
-    public AlmacenCentral getCentralWarehouse() {
-        return centralWarehouse;
-    }
-
-    public static PecesDatos[] getPecesDisponibles() {
-        return pecesDisponibles;
-    }
-
-    public Helper getHelper() {
-        return helper;
-    }
-
-    public static String[] getFishesNames() {
-        return fishesNames;
-    }
-
-    public static Estadisticas getEstadisticas() {
-        return estadisticas;
-    }
-
-    public GenerarRecompensa getGenerar() {
-        return generar;
-    }
 
     private void pedidilloAutomata() {
         Random rand = new Random();
@@ -1656,7 +1620,110 @@ public class Simulador {
         }
         return selected;
     }
+    
+    /**
+     * Método que reparte una cantidad de comida animal entre las piscifactorias
+     * @param cantidad cantidad de comida a añadir
+     */
+    public void repartirComidaAnimal(int cantidad) {
+        int almacenes = 0;
+        for (Piscifactoria piscifactoria : fishFarms) {
+            if(piscifactoria.getWarehouseA() != null){
+                almacenes++;
+            }
+        }
+        int reparto = (int)(cantidad / almacenes);
+        for (Piscifactoria piscifactoria : fishFarms) {
+            piscifactoria.getWarehouseA().addFood(reparto);
+        }
+    }
 
+    /**
+     * Método que reparte una cantidad de comida vegetal entre las piscifactorias
+     * @param cantidad cantidad de comida a añadir
+     */
+    public void repartirComidaVegetal(int cantidad) {
+        int almacenes = 0;
+        for (Piscifactoria piscifactoria : fishFarms) {
+            if(piscifactoria.getWarehouseV() != null){
+                almacenes++;
+            }
+        }
+        int reparto = (int)(cantidad / almacenes);
+        for (Piscifactoria piscifactoria : fishFarms) {
+            piscifactoria.getWarehouseV().addFood(reparto);
+        }
+    }
+
+    /**
+     * @return días del Simulador
+     */
+    public int getDays() {
+        return days;
+    }
+
+    /**
+     * @return Lista de Piscifactorias del Simulador
+     */
+    public List<Piscifactoria> getFishFarms() {
+        return fishFarms;
+    }
+
+    /**
+     * @return Nombre de la empresa/partida
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return Monedas del sistema
+     */
+    public SISMonedas getMonedas() {
+        return monedas;
+    }
+
+    /**
+     * @return Almacén Central del Simulador
+     */
+    public AlmacenCentral getCentralWarehouse() {
+        return centralWarehouse;
+    }
+
+    /**
+     * @return Array con los peces disponibles
+     */
+    public static PecesDatos[] getPecesDisponibles() {
+        return pecesDisponibles;
+    }
+
+    /**
+     * @return Helper del sistema
+     */
+    public Helper getHelper() {
+        return helper;
+    }
+
+    /**
+     * @return Array con los nombres de los peces disponibles
+     */
+    public static String[] getFishesNames() {
+        return fishesNames;
+    }
+
+    /**
+     * @return Objeto para guardar y gestionar las Estadísticas
+     */
+    public static Estadisticas getEstadisticas() {
+        return estadisticas;
+    }
+
+    /**
+     * @return Objeto que genera y gestiona las recompensas del sistema
+     */
+    public GenerarRecompensa getGenerar() {
+        return generar;
+    }
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();
