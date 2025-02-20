@@ -275,6 +275,7 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada no válida");
+                sc.next();
             }
         }
         return selected;
@@ -307,6 +308,7 @@ public class Simulador {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Entrada no válida");
+                    sc.next();
                 }
             }
             return selected;
