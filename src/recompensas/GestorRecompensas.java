@@ -12,14 +12,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-
+import edificios.almacenes.AlmacenCentral;
+import edificios.piscifactoria.Piscifactoria;
+import edificios.piscifactoria.PiscifactoriaMar;
+import edificios.piscifactoria.PiscifactoriaRio;
+import edificios.tanque.Tanque;
 import registros.Registros;
 import sistema.Helper;
 import sistema.SISMonedas;
@@ -284,7 +287,7 @@ public class GestorRecompensas {
                 if (tipoFood != null) {
                     switch (tipoFood.toLowerCase()) {
                         case "algae":
-
+                            
                             break;
                         case "animal":
 
@@ -304,19 +307,28 @@ public class GestorRecompensas {
                 String codigo = buildingElem.attributeValue("code");
                 switch (codigo) {
                     case "4":
-                        // Lógica para desbloquear el Almacén central
+                        if(sim.getAlmacenCentral() != null){
+                            AlmacenCentral almcen = new AlmacenCentral();
+                            sim.setAlmacenCentral(almcen);
+                        }
                         break;
                     case "1":
-                        // Lógica para desbloquear la Piscifactoría de mar
+                        PiscifactoriaMar pisciMar = new PiscifactoriaMar(nombreBuilding);
+                        sim.addPisci(pisciMar);
                         break;
                     case "0":
-                        // Lógica para desbloquear la Piscifactoría de río
+                        PiscifactoriaRio pisciRio = new PiscifactoriaRio(nombreBuilding);
+                        sim.addPisci(pisciRio);
                         break;
                     case "3":
-                        // Lógica para desbloquear el Tanque de mar
+                        Piscifactoria pisciTanqueMar = sim.selectPisciMar();
+                        Tanque tanqueMar = new Tanque(0, 0, false, pisciTanqueMar);
+                        pisciTanqueMar.addTanque(tanqueMar);
                         break;
                     case "2":
-                        // Lógica para desbloquear el Tanque de río
+                        Piscifactoria pisciTanqueRio = sim.selectPisciRio();
+                        Tanque tanqueRio = new Tanque(0, 0, true, pisciTanqueRio);
+                        pisciTanqueRio.addTanque(tanqueRio);
                         break;
                     default:
                         System.out.println("Edificio desconocido con código: " + codigo);

@@ -248,6 +248,16 @@ public abstract class Piscifactoria {
     }
 
     /**
+     * Método que permite añadir un tanque a la piscifactoria si hay sitio
+     * de manera gratuita
+     */
+    public void addTanque(Tanque tanque){
+        if(this.canAddTanque()){
+            tanques.add(tanque);
+        }
+    }
+
+    /**
      * Método que permite comprar un Tanque para la Piscifactoria
      */
     public abstract void compraTanque();
