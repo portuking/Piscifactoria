@@ -285,20 +285,44 @@ public class GestorRecompensas {
                 int cantidadFood = Integer.parseInt(foodElem.getText());
                 String tipoFood = foodElem.attributeValue("type");
                 if (tipoFood != null) {
-                    switch (tipoFood.toLowerCase()) {
-                        case "algae":
-                            
-                            break;
-                        case "animal":
-
-                            break;
-                        case "general":
-
-                            break;
-                        default:
-                            System.out.println("Ni idea de ke comida es");
-                            break;
+                    if(sim.getAlmacenCentral() != null) {
+                        switch (tipoFood.toLowerCase()) {
+                            case "algae":
+                                sim.getAlmacenCentral().addVegtalFood(cantidadFood);
+                                sim.getAlmacenCentral().repartirComidaAnimal(sim.getFishFarms());
+                                break;
+                            case "animal":
+                                sim.getAlmacenCentral().addAnimalFood(cantidadFood);
+                                sim.getAlmacenCentral().repartirComidaAnimal(sim.getFishFarms());
+                                break;
+                            case "general":
+                                sim.getAlmacenCentral().addAnimalFood(cantidadFood);
+                                sim.getAlmacenCentral().addVegtalFood(cantidadFood);
+                                sim.getAlmacenCentral().repartirComidaAnimal(sim.getFishFarms());
+                                sim.getAlmacenCentral().repartirComidaVegetal(sim.getFishFarms());
+                                break;
+                            default:
+                                System.out.println("Tipo de comida inválido");
+                                break;
+                        }
+                    }else{
+                        switch (tipoFood.toLowerCase()) {
+                            case "algae":
+                                sim.repartirComidaVegetal(cantidadFood);
+                                break;
+                            case "animal":
+                                sim.repartirComidaAnimal(cantidadFood);
+                                break;
+                            case "general":
+                                sim.repartirComidaAnimal(cantidadFood);
+                                sim.repartirComidaVegetal(cantidadFood);
+                                break;
+                            default:
+                                System.out.println("tipo de comida inválido");
+                                break;
+                        }
                     }
+                    
                 }
             }
             Element buildingElem = give.element("building");
