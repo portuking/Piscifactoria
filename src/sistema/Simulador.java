@@ -245,7 +245,6 @@ public class Simulador {
      * Método que muestra un ménu con las Piscifactorías disponibles
      */
     public void menuPisc() {
-        System.out.println("Seleccione una opción");
         System.out.println("--------------------------- Piscifactorías ---------------------------");
         System.out.println("[Peces vivos / Peces totales / Espacio total]");
         for (int i = 0; i < fishFarms.size(); i++) {
@@ -1569,6 +1568,95 @@ public class Simulador {
     public AlmacenCentral getAlmacenCentral(){
         return this.centralWarehouse;
     }
+
+    /**
+     * Método que permite poner un Almacén Central al simulador
+     * @param almacen almacén a poner
+     */
+    public void setAlmacenCentral(AlmacenCentral almacen){
+        this.centralWarehouse = almacen;
+    }
+
+    /**
+     * Método que permite añadir una piscifactoria al simulador
+     * @param p piscifactoria a añadir
+     */
+    public void addPisci(Piscifactoria p){
+        this.fishFarms.add(p);
+    }
+
+    /**
+     * Método que permite seleccionar una Piscifactoría de Mar
+     * @return Piscifactoría de Mar seleccionada
+     */
+    public Piscifactoria selectPisciMar(){
+        List<Piscifactoria> piscisMar = new ArrayList<Piscifactoria>();
+        System.out.println("--------------------------- Piscifactorías ---------------------------");
+        System.out.println("[Peces vivos / Peces totales / Espacio total]");
+        for (int i = 0; i < fishFarms.size(); i++) {
+            if(fishFarms.get(i) instanceof PiscifactoriaMar) {
+                System.out.println((i + 1) + ".- " + fishFarms.get(i).getName() + "[" + fishFarms.get(i).fishesAlive() + "/"
+                    + fishFarms.get(i).occuped() + "/" + fishFarms.get(i).maxFishes() + "]");
+                piscisMar.add(fishFarms.get(i));
+            }
+        }
+        System.out.println("0.- Cancelar");
+
+        Piscifactoria selected = null;
+        while (selected == null) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                int option = sc.nextInt();
+                if (option == 0) {
+                    return null;
+                }
+                if (option > 0 && option - 1 < piscisMar.size()) {
+                    selected = piscisMar.get(option - 1);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada no válida");
+                sc.next();
+            }
+        }
+        return selected;
+    }
+
+    /**
+     * Método que permite seleccionar una Piscifactoría de Río
+     * @return Piscifactoría de Río seleccionada
+     */
+    public Piscifactoria selectPisciRio(){
+        List<Piscifactoria> piscisRio = new ArrayList<Piscifactoria>();
+        System.out.println("--------------------------- Piscifactorías ---------------------------");
+        System.out.println("[Peces vivos / Peces totales / Espacio total]");
+        for (int i = 0; i < fishFarms.size(); i++) {
+            if(fishFarms.get(i) instanceof PiscifactoriaMar) {
+                System.out.println((i + 1) + ".- " + fishFarms.get(i).getName() + "[" + fishFarms.get(i).fishesAlive() + "/"
+                    + fishFarms.get(i).occuped() + "/" + fishFarms.get(i).maxFishes() + "]");
+                piscisRio.add(fishFarms.get(i));
+            }
+        }
+        System.out.println("0.- Cancelar");
+
+        Piscifactoria selected = null;
+        while (selected == null) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                int option = sc.nextInt();
+                if (option == 0) {
+                    return null;
+                }
+                if (option > 0 && option - 1 < piscisRio.size()) {
+                    selected = piscisRio.get(option - 1);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada no válida");
+                sc.next();
+            }
+        }
+        return selected;
+    }
+
 
     public static void main(String[] args) {
         Simulador sim = new Simulador();

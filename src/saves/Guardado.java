@@ -3,21 +3,15 @@ package saves;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import edificios.almacenes.AlmacenCentral;
 import edificios.piscifactoria.Piscifactoria;
-import edificios.piscifactoria.PiscifactoriaRio;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
 import peces.Pez;
-import sistema.SISMonedas;
 import sistema.Simulador;
 
 /**
