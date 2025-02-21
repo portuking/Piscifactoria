@@ -346,13 +346,17 @@ public class GestorRecompensas {
                         break;
                     case "3":
                         Piscifactoria pisciTanqueMar = sim.selectPisciMar();
-                        Tanque tanqueMar = new Tanque(0, 0, false, pisciTanqueMar);
-                        pisciTanqueMar.addTanque(tanqueMar);
+                        if(pisciTanqueMar != null) {
+                            Tanque tanqueMar = new Tanque(0, 0, false, pisciTanqueMar);
+                            pisciTanqueMar.addTanque(tanqueMar);
+                        }
                         break;
                     case "2":
                         Piscifactoria pisciTanqueRio = sim.selectPisciRio();
-                        Tanque tanqueRio = new Tanque(0, 0, true, pisciTanqueRio);
-                        pisciTanqueRio.addTanque(tanqueRio);
+                        if(pisciTanqueRio != null) {
+                            Tanque tanqueRio = new Tanque(0, 0, true, pisciTanqueRio);
+                            pisciTanqueRio.addTanque(tanqueRio);
+                        }
                         break;
                     default:
                         System.out.println("Edificio desconocido con código: " + codigo);
