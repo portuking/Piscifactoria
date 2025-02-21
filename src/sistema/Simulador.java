@@ -6,7 +6,6 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
 import bd.Conexion;
 import bd.DAOPedidos;
 import bd.GeneradorBD;
@@ -40,7 +39,10 @@ import registros.Registros;
 import saves.Guardado;
 
 /**
- * IMPLEMENNTAR CLASE
+ * Clase que representa el Simulador del sistema de Piscifactorías
+ * @author Adrián Ces López
+ * @author Manuel Abalo Rietz
+ * @author Pablo Dopazo Suárez
  */
 public class Simulador {
     /** Días que han pasado */
@@ -1046,6 +1048,7 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida.");
+                sc.next();
             }
         }
     }
@@ -1087,6 +1090,7 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida");
+                sc.next();
             }
         }
     }
@@ -1129,6 +1133,7 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida");
+                sc.next();
             }
         }
     }
@@ -1463,67 +1468,72 @@ public class Simulador {
     }
 
     public void gestionarPedidos() {
-        List<String> pedidosPendientes = DAOPedidos.listarPedidosPendientes();
-        if (pedidosPendientes.isEmpty()) {
-            System.out.println("No hay pedidos pendientes.");
-            return;
-        }
-        System.out.println("Pedidos pendientes:");
-        for (String p : pedidosPendientes) {
-            System.out.println(p);
-        }
-        System.out.print("Ingrese el id del pedido a enviar (0 para cancelar): ");
-        int idPedido = sc.nextInt();
-        if (idPedido == 0) {
-            return;
-        }
-        
-        PedidoDTO pedido = DAOPedidos.obtenerPedidoPorId(idPedido);
-        if (pedido == null) {
-            System.out.println("Pedido no encontrado.");
-            return;
-        }
-        if (pedido.getPecesEnviados() >= pedido.getCantidadPeces()) {
-            System.out.println("El pedido ya está completado.");
-            return;
-        }
-        
-        // Seleccionar el tanque para enviar peces
-        Tanque tanque = selectTank();
-        if (tanque == null) {
-            System.out.println("Operación cancelada.");
-            return;
-        }
-        
-        // Validar que el tanque tenga el tipo de pez requerido
-        String nombrePezPedido = DAOPedidos.obtenerNombrePez(pedido.getIdPez());
-        if (tanque.getFishType() != null && !tanque.getFishType().equals(nombrePezPedido)) {
-            System.out.println("El tanque seleccionado no contiene el tipo de pez requerido para este pedido.");
-            return;
-        }
-        
-        // Obtener los peces maduros del tanque
-        List<Pez> pecesMaduros = new ArrayList<>();
-        for (Pez pez : tanque.getFishes()) {
-            if (pez.isAlive() && pez.isMature()) {
-                pecesMaduros.add(pez);
+        try {
+            List<String> pedidosPendientes = DAOPedidos.listarPedidosPendientes();
+            if (pedidosPendientes.isEmpty()) {
+                System.out.println("No hay pedidos pendientes.");
+                return;
             }
-        }
-        if (pecesMaduros.isEmpty()) {
-            System.out.println("No hay peces maduros en el tanque para enviar.");
-            return;
-        }
+            System.out.println("Pedidos pendientes:");
+            for (String p : pedidosPendientes) {
+                System.out.println(p);
+            }
+            System.out.print("Ingrese el id del pedido a enviar (0 para cancelar): ");
+            int idPedido = sc.nextInt();
+            if (idPedido == 0) {
+                return;
+            }
         
-        int pecesNecesarios = pedido.getCantidadPeces() - pedido.getPecesEnviados();
-        int pecesAEnviar = Math.min(pecesNecesarios, pecesMaduros.size());
+            PedidoDTO pedido = DAOPedidos.obtenerPedidoPorId(idPedido);
+            if (pedido == null) {
+                System.out.println("Pedido no encontrado.");
+                return;
+            }
+            if (pedido.getPecesEnviados() >= pedido.getCantidadPeces()) {
+                System.out.println("El pedido ya está completado.");
+                return;
+            }
         
-        for (int i = 0; i < pecesAEnviar; i++) {
-            tanque.getFishes().remove(pecesMaduros.get(i));
+            // Seleccionar el tanque para enviar peces
+            Tanque tanque = selectTank();
+            if (tanque == null) {
+                System.out.println("Operación cancelada.");
+                return;
+            }
+        
+            // Validar que el tanque tenga el tipo de pez requerido
+            String nombrePezPedido = DAOPedidos.obtenerNombrePez(pedido.getIdPez());
+            if (tanque.getFishType() != null && !tanque.getFishType().equals(nombrePezPedido)) {
+                System.out.println("El tanque seleccionado no contiene el tipo de pez requerido para este pedido.");
+                return;
+            }
+        
+            // Obtener los peces maduros del tanque
+            List<Pez> pecesMaduros = new ArrayList<>();
+            for (Pez pez : tanque.getFishes()) {
+                if (pez.isAlive() && pez.isMature()) {
+                    pecesMaduros.add(pez);
+                }
+            }
+            if (pecesMaduros.isEmpty()) {
+                System.out.println("No hay peces maduros en el tanque para enviar.");
+                return;
+            }
+        
+            int pecesNecesarios = pedido.getCantidadPeces() - pedido.getPecesEnviados();
+            int pecesAEnviar = Math.min(pecesNecesarios, pecesMaduros.size());
+        
+            for (int i = 0; i < pecesAEnviar; i++) {
+                tanque.getFishes().remove(pecesMaduros.get(i));
+            }
+            pedido.setPecesEnviados(pedido.getPecesEnviados() + pecesAEnviar);
+            DAOPedidos.actualizarPedido(pedido);
+        
+            System.out.println("Se han enviado " + pecesAEnviar + " peces para el pedido " + idPedido + ".");
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida");
+            sc.next();
         }
-        pedido.setPecesEnviados(pedido.getPecesEnviados() + pecesAEnviar);
-        DAOPedidos.actualizarPedido(pedido);
-        
-        System.out.println("Se han enviado " + pecesAEnviar + " peces para el pedido " + idPedido + ".");
     }
 
     /**
