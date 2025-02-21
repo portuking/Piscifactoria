@@ -27,10 +27,10 @@ public class Guardado {
 
     public void guardarPartida() {
         JsonObject estructuraJson = new JsonObject();
-        Estadisticas stats = simulador.getEstadisticas();
+        Estadisticas stats = Simulador.getEstadisticas();
         //peces implementados
         JsonArray pecesImplementados = new JsonArray();
-        for (String pez : simulador.getFishesNames()) {
+        for (String pez : Simulador.getFishesNames()) {
             pecesImplementados.add(pez);
         }
         estructuraJson.add("implementados", pecesImplementados);
@@ -39,7 +39,7 @@ public class Guardado {
         estructuraJson.addProperty("empresa", simulador.getName());
         estructuraJson.addProperty("dia", simulador.getDays());
         estructuraJson.addProperty("monedas", simulador.getMonedas().getMonedas());
-        estructuraJson.addProperty("orca", stats.exportarDatos(simulador.getFishesNames()));
+        estructuraJson.addProperty("orca", stats.exportarDatos(Simulador.getFishesNames()));
         
         //almacén central
         JsonObject edificiosObjeto = new JsonObject();
