@@ -82,6 +82,7 @@ public class Tanque {
         }else{
             System.out.println("Fertiles: fertiles/vivos " + this.fertiles() + "/" + this.fishesAlive());
         }
+        System.out.println("Peces enfermos: " + this.contarEnfermos());
     }
     /**
      * Muestra la información de los Peces del Tanque
@@ -251,6 +252,7 @@ public class Tanque {
     sisMonedas.setMonedas(sisMonedas.getMonedas() + ganancias);
     System.out.println("Se han vendido: " + vendidos + " peces");
     System.out.println("Se han ganado: " + ganancias + " monedas");
+    this.propagarEnfermedad();
 }
 
 
@@ -453,6 +455,49 @@ public class Tanque {
      */    
     public String getFishfarmName() {
         return this.fishFarm.getName();
+    }
+
+    public int contarEnfermos() {
+        int enfermos = 0;
+        for (Pez pez : fishes) {
+            if (pez.isEnfermo()) {
+                enfermos++;
+            }
+        }
+        return enfermos;
+    }
+
+    public void propagarEnfermedad() {
+        Random r = new Random();
+        boolean hayMuertos = false;
+        boolean hayEnfermos = false;
+
+        for (Pez pez : fishes) {
+            if (!pez.isAlive()) {
+                hayMuertos = true;
+            }
+            if (pez.isEnfermo()) {
+                hayEnfermos = true;
+            }
+        }
+
+        for (Pez pez : fishes) {
+            if (!pez.isEnfermo() && pez.isAlive()) {
+                if (hayMuertos && r.nextInt(100) < 5) {
+                    pez.infectar();
+                } else if (hayEnfermos && r.nextInt(100) < 10) {
+                    pez.infectar();
+                }
+            }
+        }
+    }
+
+    public void curarPeces() {
+        for (Pez pez : fishes) {
+            if (pez.isEnfermo()) {
+                pez.curar();
+            }
+        }
     }
 
     @Override

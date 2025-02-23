@@ -5,20 +5,21 @@ import propiedades.PecesDatos;
 
 /**
  * Clase que representa un Pez
+ * 
  * @author Manuel Abalo Rietz
  * @author Adrián Ces López
  * @author Pablo Dopazo Suárez
  */
-public  abstract class Pez {
-    /**Objeto de la clase PecesDatos con los datos del Pez */
+public abstract class Pez {
+    /** Objeto de la clase PecesDatos con los datos del Pez */
     protected PecesDatos fishStats;
-    /**Nombre Común del Pez*/
+    /** Nombre Común del Pez */
     protected final String name;
-    /**Nombre Científico del Pez*/
+    /** Nombre Científico del Pez */
     protected final String scientifcName;
     /** Edad del Pez */
     protected int age;
-    /** Sexo del Pez  true -> Hembra | false -> Macho*/
+    /** Sexo del Pez true -> Hembra | false -> Macho */
     protected final boolean sex;
     /** Si el Pez es fértil */
     protected boolean fertile;
@@ -28,13 +29,16 @@ public  abstract class Pez {
     protected boolean eat;
     /** Si el Pez es adulto */
     protected boolean mature;
-    /**Ciclo de reprosucción del Pez*/
+    /** Ciclo de reprosucción del Pez */
     protected int reproductionCycle;
-    /**Si el Pez se puede reproducir o no*/
+    /** Si el Pez se puede reproducir o no */
     protected boolean reproducible;
+    /** Si el pez esta enfermo */
+    protected boolean enfermo = false;
 
     /**
      * Constructor de Pez
+     * 
      * @param age Edad del Pez
      * @param sex Sexo del Pez
      */
@@ -48,18 +52,20 @@ public  abstract class Pez {
         this.alive = true;
         this.eat = true;
         this.mature = false;
+        this.enfermo = false;
         this.reproductionCycle = fishStats.getCiclo();
     }
 
     /** Método que muestra el estado del Pez */
     public void showStatus() {
-        System.out.println("---------------"+this.getName()+"---------------");
+        System.out.println("---------------" + this.getName() + "---------------");
         System.out.println("Edad: " + this.age + " días");
         System.out.println(this.sex ? "Sexo: H" : "Sexo: M");
-        System.out.println(this.alive ?"Vivo: Si" : "Vivo: No");
+        System.out.println(this.alive ? "Vivo: Si" : "Vivo: No");
         System.out.println(this.eat ? "Alimentado: Si" : "Alimentado: No");
         System.out.println(this.mature ? "Adulto: Si" : "Adulto: No");
         System.out.println(this.fertile ? "Fértil: Si" : "Fértil: No");
+        System.out.println(this.enfermo ? "Enfermo: Sí" : "Enfermo: No");
     }
 
     /**
@@ -73,61 +79,101 @@ public  abstract class Pez {
     public abstract int eat();
 
     /**
+     * Método que infecta a un pez
+     */
+    public void infectar() {
+        this.enfermo = true;
+    }
+
+    /**
+     * Método que cura a un pez
+     */
+    public void curar() {
+        this.enfermo = false;
+    }
+
+    /**
+     * Método para saber si esta enfermo o no un pez
+     * 
+     * @return
+     */
+    public boolean isEnfermo() {
+        return this.enfermo;
+    }
+
+    /**
      * Método que hace crecer un Pez
      */
-    public void grow(boolean comido){
+    public void grow(boolean comido) {
         Random r = new Random();
-        if(this.isAlive()) {
-            if(comido){
+        if (this.isAlive()) {
+            if (comido) {
                 this.setEat(false);
-                this.age +=1;
-                if(this.age >= this.fishStats.getMadurez()) {
+                this.age += 1;
+                if (this.age >= this.fishStats.getMadurez()) {
                     setMature(true);
-                }else{
+                } else {
                     setMature(false);
                 }
-                if(this.age == this.reproductionCycle) {
+                if (this.age == this.reproductionCycle) {
                     setFertile(true);
-                }else{
+                } else {
                     setFertile(false);
                 }
-                if(this.isFertile() && this.isMature()) {
+                if (this.isFertile() && this.isMature()) {
                     this.reproducible = true;
-                } 
-            }else{
+                }
+            } else {
                 Boolean dead = r.nextBoolean();
-                if(!dead){
+                if (!dead) {
                     setEat(comido);
-                    this.age +=1;
-                    if(this.age >= this.fishStats.getMadurez()) {
+                    this.age += 1;
+                    if (this.age >= this.fishStats.getMadurez()) {
                         setMature(true);
-                    }else{
+                    } else {
                         setMature(false);
                     }
-                    if(this.age == this.reproductionCycle) {
+                    if (this.age == this.reproductionCycle) {
                         setFertile(true);
-                    }else{
+                    } else {
                         setFertile(false);
                     }
-                    if(this.isFertile() && this.isMature()) {
+                    if (this.isFertile() && this.isMature()) {
                         this.reproducible = true;
                     }
-                }else{
+                } else {
                     this.setAlive(false);
                     this.setMature(false);
                     this.setFertile(false);
                     this.setEat(false);
                 }
             }
-            if(this.isAlive() && !this.isMature()) {
-                if(this.getAge() % 2 == 0) {
+            if (this.isAlive() && !this.isMature()) {
+                if (this.getAge() % 2 == 0) {
                     int dead = r.nextInt(100);
-                    if(dead >= 95) {
+                    if (dead >= 95) {
                         this.setAlive(false);
                     }
                 }
             }
-        }else{
+        } else {
+            this.setMature(false);
+            this.setFertile(false);
+            this.setEat(false);
+        }
+
+        if (this.enfermo) {
+            int probabilidadMuerte = this.mature ? 10 : 25;
+            if (r.nextInt(100) < probabilidadMuerte) {
+                this.setAlive(false);
+            }
+        }
+
+        if (this.enfermo && comido) {
+            if (r.nextInt(100) < 10) {
+                this.curar();
+            }
+        } else {
             this.setMature(false);
             this.setFertile(false);
             this.setEat(false);
@@ -137,7 +183,7 @@ public  abstract class Pez {
     /**
      * Método que resetea un Pez
      */
-    public void reset(){
+    public void reset() {
         this.age = 0;
         this.fertile = false;
         this.alive = true;
@@ -148,7 +194,7 @@ public  abstract class Pez {
     /**
      * @return Devuelve el objeto con la información del Pez
      */
-    public PecesDatos getFishStats(){
+    public PecesDatos getFishStats() {
         return this.fishStats;
     }
 
@@ -162,38 +208,38 @@ public  abstract class Pez {
     /**
      * @return Nombre Común del Pez
      */
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
     /**
      * @return Nombre Científico del Pez
      */
-    public String getScientificName(){
+    public String getScientificName() {
         return this.scientifcName;
     }
 
     /**
      * @return Si el Pez esta vivo o no
      */
-    public boolean isAlive(){
+    public boolean isAlive() {
         return this.alive;
     }
 
     /**
      * @return Si el Pez tiene hambre
      */
-    public boolean isEat(){
+    public boolean isEat() {
         return this.eat;
     }
 
     /**
      * @return Si el Pez es maduro o no
      */
-    public boolean isMature(){
-        if(this.age >= this.getFishStats().getMadurez()){
+    public boolean isMature() {
+        if (this.age >= this.getFishStats().getMadurez()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -209,15 +255,14 @@ public  abstract class Pez {
         }
         return this.fertile;
     }
-    
 
     /**
      * @return true si el pez es macho
      */
-    public boolean isMale(){
-        if(this.sex == false){
+    public boolean isMale() {
+        if (this.sex == false) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -226,9 +271,9 @@ public  abstract class Pez {
      * @return true si el pez es hembra
      */
     public boolean isFemale() {
-        if(this.sex == true){
+        if (this.sex == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -242,14 +287,16 @@ public  abstract class Pez {
 
     /**
      * Método para setear el ciclo de reproducción
+     * 
      * @param reproductionCycle número de días que dura el ciclo
      */
     public void setReproductionCycle(int reproductionCycle) {
         this.reproductionCycle = reproductionCycle;
     }
 
-     /**
+    /**
      * Método para setear la comida
+     * 
      * @param eat Si el pez ha comido
      */
     public void setEat(boolean eat) {
@@ -258,6 +305,7 @@ public  abstract class Pez {
 
     /**
      * Método para setear la fertilidad
+     * 
      * @param fertile false si no es fértil y true si lo es
      */
     public void setFertile(boolean fertile) {
@@ -266,6 +314,7 @@ public  abstract class Pez {
 
     /**
      * Método que permite setear si esta vivo o no
+     * 
      * @param alive si esta vivo o no
      */
     public void setAlive(boolean alive) {
@@ -274,6 +323,7 @@ public  abstract class Pez {
 
     /**
      * Método que permite setear si es maduro o no
+     * 
      * @param mature si es maduro o no
      */
     public void setMature(boolean mature) {
@@ -283,7 +333,7 @@ public  abstract class Pez {
     /**
      * @return si el Pez es reproducible o no
      */
-    public boolean isReproducible(){
+    public boolean isReproducible() {
         return this.reproducible;
     }
 
@@ -297,16 +347,16 @@ public  abstract class Pez {
     @Override
     public String toString() {
         return "===== Estado del Pez =====\n" +
-               "Nombre Común: " + name + "\n" +
-               "Nombre Científico: " + scientifcName + "\n" +
-               "Edad: " + age + " días\n" +
-               "Sexo: " + (sex ? "Hembra" : "Macho") + "\n" +
-               "Estado:\n" +
-               "  - Vivo: " + (alive ? "Sí" : "No") + "\n" +
-               "  - Alimentado: " + (eat ? "Sí" : "No") + "\n" +
-               "  - Maduro: " + (mature ? "Sí" : "No") + "\n" +
-               "  - Fértil: " + (fertile ? "Sí" : "No") + "\n" +
-               "Ciclo de Reproducción Restante: " + reproductionCycle + " días\n" +
-               "===========================";
+                "Nombre Común: " + name + "\n" +
+                "Nombre Científico: " + scientifcName + "\n" +
+                "Edad: " + age + " días\n" +
+                "Sexo: " + (sex ? "Hembra" : "Macho") + "\n" +
+                "Estado:\n" +
+                "  - Vivo: " + (alive ? "Sí" : "No") + "\n" +
+                "  - Alimentado: " + (eat ? "Sí" : "No") + "\n" +
+                "  - Maduro: " + (mature ? "Sí" : "No") + "\n" +
+                "  - Fértil: " + (fertile ? "Sí" : "No") + "\n" +
+                "Ciclo de Reproducción Restante: " + reproductionCycle + " días\n" +
+                "===========================";
     }
 }

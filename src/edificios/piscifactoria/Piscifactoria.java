@@ -1,9 +1,12 @@
 package edificios.piscifactoria;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
+import sistema.SISMonedas;
 
 /**
  * Clase que representa la Piscifactoría
@@ -377,6 +380,40 @@ public abstract class Piscifactoria {
             }
         }
         return null;
+    }
+
+    /**
+     * Método que gestiona una enfermedad, se llama en simulador.
+     */
+    public void gestionarEnfermedad() {
+        Scanner sc = new Scanner(System.in);
+        SISMonedas sisMonedas = SISMonedas.getInstance();
+        System.out.println("=============== Enfermos ===============");
+        for (int i = 0; i < tanques.size(); i++) {
+            System.out.println((i + 1) + ".- " + this.name + " [" + tanques.get(i).contarEnfermos() + "]");
+        }
+        System.out.println("¿Deseas curar los peces enfermos de algún tanque? (S/N)");
+        String respuesta = sc.nextLine();
+        if (respuesta.equalsIgnoreCase("S")) {
+            System.out.println("Introduce el número del tanque:");
+            int tanqueIndex = sc.nextInt() - 1;
+            if (tanqueIndex >= 0 && tanqueIndex < tanques.size()) {
+                int pecesEnfermos = tanques.get(tanqueIndex).contarEnfermos();
+                int costo = pecesEnfermos * 10;
+                System.out.println("El costo para curar los peces es: " + costo + " monedas. Confirmar? (S/N)");
+                sc.nextLine();
+                String confirmacion = sc.nextLine();
+                if (confirmacion.equalsIgnoreCase("S") && sisMonedas.getMonedas() >= costo) {
+                    sisMonedas.pagar(costo);
+                    tanques.get(tanqueIndex).curarPeces();
+                    System.out.println("Peces curados exitosamente.");
+                } else {
+                    System.out.println("No se realizó la curación.");
+                }
+            } else {
+                System.out.println("Número de tanque inválido.");
+            }
+        }
     }
 
     @Override
