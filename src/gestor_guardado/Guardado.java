@@ -83,6 +83,7 @@ public class Guardado {
                 datosTanque.addProperty("vivos", tanque.fishesAlive());
                 datosTanque.addProperty("maduros", tanque.matureFishes());
                 datosTanque.addProperty("fertiles", tanque.fertiles());
+                datosTanque.addProperty("enfermos", tanque.contarEnfermos());
                 tanqueObjeto.add("datos", datosTanque);
                 
                 JsonArray pecesArray = new JsonArray();
@@ -94,6 +95,7 @@ public class Guardado {
                     pezObjeto.addProperty("maduro", pez.isMature());
                     pezObjeto.addProperty("fertil", pez.isFertile());
                     pezObjeto.addProperty("ciclo", pez.getReproductionCycle());
+                    pezObjeto.addProperty("enfermo", pez.isEnfermo());
                     pezObjeto.addProperty("alimentado", false);
                     JsonObject extra = new JsonObject();
                     extra.addProperty("k", "v");

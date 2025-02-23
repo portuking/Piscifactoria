@@ -457,6 +457,10 @@ public class Tanque {
         return this.fishFarm.getName();
     }
 
+    /**
+     * Método que cuenta enfermos
+     * @return peces enfermos
+     */
     public int contarEnfermos() {
         int enfermos = 0;
         for (Pez pez : fishes) {
@@ -466,7 +470,9 @@ public class Tanque {
         }
         return enfermos;
     }
-
+    /**
+     * Método que propaga la enfermedad en un tanque
+     */
     public void propagarEnfermedad() {
         Random r = new Random();
         boolean hayMuertos = false;
@@ -492,6 +498,9 @@ public class Tanque {
         }
     }
 
+    /**
+     * Método que cura a los peces en un tanque
+     */
     public void curarPeces() {
         for (Pez pez : fishes) {
             if (pez.isEnfermo()) {

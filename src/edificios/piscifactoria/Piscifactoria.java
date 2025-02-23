@@ -2,10 +2,12 @@ package edificios.piscifactoria;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.jar.Attributes.Name;
 
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
+import registros.Registros;
 import sistema.SISMonedas;
 
 /**
@@ -407,6 +409,7 @@ public abstract class Piscifactoria {
                     sisMonedas.pagar(costo);
                     tanques.get(tanqueIndex).curarPeces();
                     System.out.println("Peces curados exitosamente.");
+                    Registros.registrarCuraPeces(pecesEnfermos, this.name , costo);
                 } else {
                     System.out.println("No se realizó la curación.");
                 }

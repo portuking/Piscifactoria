@@ -1,4 +1,4 @@
-package gestor_guardado;
+ package gestor_guardado;
 
 import java.io.File;
 import java.io.FileReader;
@@ -154,6 +154,8 @@ public class Cargado {
                                     boolean maduro = pezJson.has("maduro") ? pezJson.get("maduro").getAsBoolean() : false;
                                     boolean fertil = pezJson.has("fertil") ? pezJson.get("fertil").getAsBoolean() : false;
                                     boolean alimentado = pezJson.has("alimentado") ? pezJson.get("alimentado").getAsBoolean() : false;
+                                    boolean enfermo = pezJson.has("enfermo") ? pezJson.get("enfermo").getAsBoolean() : false;
+
     
                                     // Crear el pez según su tipo
                                     Pez pez = crearPez(tipoPez, sexo);
@@ -163,6 +165,7 @@ public class Cargado {
                                         pez.setMature(maduro);
                                         pez.setFertile(fertil);
                                         pez.setEat(alimentado); // Restaurar el estado de alimentación
+                                        pez.setEnfermo(enfermo);
                                         tanque.addFishes(pez);
                                     } else {
                                         System.out.println("Advertencia: Tipo de pez desconocido - " + tipoPez);

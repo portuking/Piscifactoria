@@ -124,6 +124,10 @@ public class Registros {
         log.logError(error);
     }
 
+    public static void registrarCuraPeces(int peces, String piscifactoria, int monedas){
+        transcripciones.trCurapeces(peces, piscifactoria, monedas);
+    }
+
     public static void cerrarRegistros() {
         if (transcripciones != null) {
             transcripciones.trCerrar();

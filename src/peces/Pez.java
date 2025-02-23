@@ -86,6 +86,14 @@ public abstract class Pez {
     }
 
     /**
+     * Método para seter si esta enfermo
+     * @param enfermo
+     */
+    public void setEnfermo(boolean enfermo) {
+        this.enfermo = enfermo;
+    }
+
+    /**
      * Método que cura a un pez
      */
     public void curar() {

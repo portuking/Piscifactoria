@@ -99,7 +99,6 @@ public class Transcripciones {
         }
         escribir("-------------------------------------------\n");
         escribir("Piscifactoria incial: " + pisciInicial + ".\n");
-        // TODO implementar EXTRAS
     }
 
     /**
@@ -209,14 +208,21 @@ public class Transcripciones {
      * @param recompensa
      */
     public void trCreaRecompensas(String recompensa){
-        escribir("Recompensa " + recompensa + " creada");
+        escribir("Recompensa " + recompensa + " creada\n");
     }
     /**
      * Registra el uso de una recompensa
      * @param recompensa
      */
     public void trUsaRecompensas(String recompensa){
-        escribir("Recompensa "+ recompensa +" usada");
+        escribir("Recompensa "+ recompensa +" usada\n");
+    }
+
+    /**
+     * 
+     */
+    public void trCurapeces(int peces,String piscifactoria, int monedas){
+        escribir("Curados" + peces + " peces de la piscifactoría"  + piscifactoria + " por " + monedas +" monedas\n");
     }
 
     /**
