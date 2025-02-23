@@ -139,30 +139,32 @@ public abstract class Piscifactoria {
         System.out.println("===============  " + this.name + " ===============");
         System.out.println("Tanques :" + this.tanques.size());
         if (this.occuped() > 0) {
-            System.out.println("Ocupación: peces / max " + ((double) this.occuped() / this.maxFishes()) * 100 + "%");
+            System.out.println("Ocupación: peces/max " + this.occuped() + "/" + this.maxFishes() + " "
+                    + ((this.occuped() * 100) / this.maxFishes()) + "%");
         } else {
-            System.out.println("Ocupación: peces / max 0%");
+            System.out.println("Ocupación: peces/max 0/0 0%");
         }
         if (this.fishesAlive() > 0) {
-            System.out.println(
-                    "Peces vivos: vivos / total " + ((double) this.fishesAlive() / this.occuped() * 100 + "%"));
+            System.out.println("Peces vivos: vivos/total " + this.fishesAlive() + "/" + this.occuped() + " "
+                    + ((this.fishesAlive() * 100) / this.occuped() + "%"));
         } else {
-            System.out.println("Peces vivos: vivos / total 0%");
+            System.out.println("Peces vivos: vivos/total 0/0 0%");
         }
         if (this.alimentedFishes() > 0 && this.fishesAlive() > 0) {
-            System.out.println("Peces alimentados: alimentados / vivos "
-                    + ((double) this.alimentedFishes() / this.fishesAlive()) * 100 + "%");
+            System.out.println("Peces alimentados: alimentados/vivos " + this.alimentedFishes() + "/"
+                    + this.fishesAlive() + " " + ((this.alimentedFishes() * 100) / this.fishesAlive()) + "%");
         } else {
-            System.out.println("Peces alimentados: alimentados / vivos 0%");
+            System.out.println("Peces alimentados: alimentados/vivos 0/0 0%");
         }
         if (this.matureFishes() > 0 && this.fishesAlive() > 0) {
-            System.out.println("Peces adultos: adultos / vivos "
-                    + ((double) this.matureFishes() / this.fishesAlive()) * 100 + "%");
+            System.out.println("Peces adultos: adultos/vivos " + this.matureFishes() + "/" + this.fishesAlive() + " "
+                    + ((this.matureFishes() * 100) / this.fishesAlive()) + "%");
         } else {
-            System.out.println("Peces adultos: adultos / vivos 0%");
+            System.out.println("Peces adultos: adultos/vivos 0/0 0%");
         }
         System.out.println("Hembras/Machos: " + this.fishesF() + "/" + this.fishesM());
         System.out.println("Fértiles: fertiles/vivos: " + this.fertiles() + "/" + this.fishesAlive());
+
         if (this.currentFood > 0 && this.maxFood > 0) {
             System.out.println(
                     "Almacén de comida: actual/max " + (this.getCurrentFood() / this.getMaxFood()) * 100 + "%");
@@ -244,7 +246,6 @@ public abstract class Piscifactoria {
      * Método que comprueba si es posible añadir un Tanque
      * 
      * @return si es posible añadirlo
-     *         ---------------------------------REVISAR
      */
     public boolean canAddTanque() {
         if (this.tanques.size() < this.getMaxTank()) {
@@ -255,11 +256,19 @@ public abstract class Piscifactoria {
     }
 
     /**
+     * Método que permite añadir un tanque a la piscifactoria si hay sitio
+     * de manera gratuita
+     */
+    public void addTanque(Tanque tanque) {
+        if (this.canAddTanque()) {
+            tanques.add(tanque);
+        }
+    }
+
+    /**
      * Método que permite comprar un Tanque para la Piscifactoria
-     * ---------------------------------------------------------------REVISAR
      */
     public abstract void compraTanque();
-
 
     public void cleanTank(Tanque tank) {
         tank.cleanTank();
@@ -350,9 +359,24 @@ public abstract class Piscifactoria {
      * Método que muestra una lista de los Tanques de la Piscifactoría
      */
     public void listTanks() {
-        for (Tanque t : tanques) {
-            System.out.println((t.getTankNum()) + ".- " + "Tipo: " + t.getTankType());
+        for (int i = 0; i < this.tanques.size(); i++) {
+            System.out.println((i + 1) + ".- " + "Tipo: " + tanques.get(i).getTankType());
         }
+    }
+
+    /**
+     * Busca un tanque por su número.
+     * 
+     * @param numeroTanque El número del tanque a buscar.
+     * @return El tanque encontrado, o null si no se encuentra.
+     */
+    public Tanque getTanquePorNumero(int numeroTanque) {
+        for (Tanque tanque : this.tanques) {
+            if (tanque.getTankNum() == numeroTanque) {
+                return tanque;
+            }
+        }
+        return null;
     }
 
     @Override

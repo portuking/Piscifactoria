@@ -16,6 +16,9 @@ import registros.Registros;
 
 /**
  * Clase que genera recompensas en formato XML.
+ * @author Adrián Ces López
+ * @author Manuel Abalo Rietz
+ * @author Pablo Dopazo Suárez
  */
 public class GenerarRecompensa {
 
@@ -368,6 +371,10 @@ public class GenerarRecompensa {
         guardarXML(doc, rutaArchivo);
     }
     
+    /**
+     * Método que aumenta la Cantidad de Piezas de la recompensa
+     * @param archivo archivo con la recompensa
+     */
     private void aumentarCantidad(File archivo){
         SAXReader reader = new SAXReader();
         try {
@@ -396,7 +403,7 @@ public class GenerarRecompensa {
         writer.write(doc); 
         writer.flush();     
         System.out.println("Recompensa generada en: " + rutaArchivo);
-        Registros.registraCreaRecompensa(doc.getName());
+        Registros.registrarCreaRecompensa(doc.getName());
     } catch (IOException e) {
         System.err.println("Error al guardar el archivo XML: " + e.getMessage());
         e.printStackTrace();

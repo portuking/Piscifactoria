@@ -3,6 +3,7 @@ package edificios.piscifactoria;
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import sistema.SISMonedas;
+import java.util.List;
 
 /**
  * Clase que representa una Piscifactoría de Río
@@ -50,6 +51,21 @@ public class PiscifactoriaRio extends Piscifactoria{
         this.comidaAnimal = new AlmacenComida(25, stock);
         this.comidaVegetal = new AlmacenComida(25, stock);
     }
+
+    /**
+     * Constructor de Piscifactoría de Río (para cargar partida).
+     * @param name Nombre de la Piscifactoría
+     * @param tanques Lista de tanques cargados desde el archivo de guardado
+     */
+    public PiscifactoriaRio(String name, List<Tanque> tanques) {
+        super(name);
+        this.tankID = super.getTankID();
+        this.maxTankCapacity = 25;
+        this.maxFood = 250;
+        super.getTanques().addAll(tanques); // Añadir los tanques cargados
+        this.comidaAnimal = new AlmacenComida(25, 0);
+        this.comidaVegetal = new AlmacenComida(25, 0);
+    }
     
     /**
      * Método que permite mejorar los Almacenes de la Piscifactoría
@@ -62,14 +78,15 @@ public class PiscifactoriaRio extends Piscifactoria{
         int capMax = this.maxFood;
         if(sisMonedas.getMonedas() >= costoMejora){
             boolean realizaMejora = false;
-            if(this.comidaAnimal.getMaxCap() <  capMax){
+            if(this.comidaAnimal.getMaxCap() <  capMax && this.comidaVegetal.getMaxCap() <  capMax){
                 this.comidaAnimal.upgrade(incrementoCap);
-                realizaMejora = true;
-            }
-            if(this.comidaVegetal.getMaxCap() <  capMax){
                 this.comidaVegetal.upgrade(incrementoCap);
                 realizaMejora = true;
-            }if(realizaMejora){
+            }else{
+                realizaMejora = false;
+            }
+            if(realizaMejora){
+                System.out.println("Almacén de la Piscifactoría "+super.getName()+ " mejorado. Su capacidad ha aumentado en "+ incrementoCap + " hasta un total de " + this.comidaAnimal.getMaxCap());
                 sisMonedas.pagar(costoMejora);
             }else{
                 System.out.println("Ambos almacenes están al maximo");

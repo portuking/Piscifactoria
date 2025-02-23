@@ -12,20 +12,31 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-
+import edificios.almacenes.AlmacenCentral;
+import edificios.piscifactoria.Piscifactoria;
+import edificios.piscifactoria.PiscifactoriaMar;
+import edificios.piscifactoria.PiscifactoriaRio;
+import edificios.tanque.Tanque;
 import registros.Registros;
 import sistema.Helper;
 import sistema.SISMonedas;
+import sistema.Simulador;
 
+/**
+ * Clase que gestiona las recompensas
+ * @author Adrián Ces López
+ * @author Manuel Abalo Rietz
+ * @author Pablo Dopazo Suárez
+ */
 public class GestorRecompensas {
 
+    /**Nombre de la carpeta donde se almacenan las recompensas */
     private static final String PATH_RECOMPENSAS = "rewards";
 
     /**
@@ -148,7 +159,11 @@ public class GestorRecompensas {
         return menuFinal;
     }
 
-    public void mostrarYCanjearReward() {
+    /**
+     * Método que muestra las recompensas y permite seleccionar una
+     * @param sim Simulador en el que se canjean las recompensas
+     */
+    public void mostrarYCanjearReward(Simulador sim) {
         List<String> menuRewards = obtenerMenuRewards();
         if (menuRewards.isEmpty()) {
             System.out.println("No hay recompensas para canjear.");
@@ -165,11 +180,16 @@ public class GestorRecompensas {
         if (seleccion.contains("[") && seleccion.contains("x")) {
             System.out.println("No se puede canjear la recompensa '" + seleccion + "' porque le faltan partes.");
         } else {
-            canjearReward(seleccion);
+            canjearReward(seleccion, sim);
         }
     }
 
-    private void canjearReward(String seleccion) {
+    /**
+     * Método que permite canjear recompensas
+     * @param seleccion Recompensa seleccionada
+     * @param sim Simulador en el que se canjean 
+     */
+    private void canjearReward(String seleccion, Simulador sim) {
         if (seleccion.contains("[")) {
             int indexBracket = seleccion.indexOf("[");
             String base = seleccion.substring(0, indexBracket).trim();
@@ -202,14 +222,14 @@ public class GestorRecompensas {
                 for (File archivo : archivosAProcesar) {
                     try {
                         Document doc = reader.read(archivo);
-                        procesarPremio(doc);
+                        procesarPremio(doc, sim);
                         reducirCantidad(archivo.getName());
                     } catch (DocumentException e) {
                         e.printStackTrace();
                     }
                 }
                 System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
-                Registros.registraUsoRecompensa(seleccion);
+                Registros.registrarUsoRecompensa(seleccion);
             } else {
                 System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
             }
@@ -223,11 +243,11 @@ public class GestorRecompensas {
                     Document doc = reader.read(archivo);
                     String nombre = doc.getRootElement().elementText("name");
                     if (nombre != null && nombre.trim().equalsIgnoreCase(seleccion.trim())) {
-                        procesarPremio(doc);
+                        procesarPremio(doc, sim);
                         reducirCantidad(archivo.getName());
                         encontrado = true;
                         System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
-                        Registros.registraUsoRecompensa(seleccion);
+                        Registros.registrarUsoRecompensa(seleccion);
                         break;
                     }
                 } catch (DocumentException e) {
@@ -264,7 +284,7 @@ public class GestorRecompensas {
      * Procesa el contenido de la recompensa en el XML y ejecuta la lógica de dar
      * recursos.
      */
-    private void procesarPremio(Document doc) {
+    private void procesarPremio(Document doc, Simulador sim) {
         Element root = doc.getRootElement();
         Element give = root.element("give");
 
@@ -280,20 +300,44 @@ public class GestorRecompensas {
                 int cantidadFood = Integer.parseInt(foodElem.getText());
                 String tipoFood = foodElem.attributeValue("type");
                 if (tipoFood != null) {
-                    switch (tipoFood.toLowerCase()) {
-                        case "algae":
-
-                            break;
-                        case "animal":
-
-                            break;
-                        case "general":
-
-                            break;
-                        default:
-                            System.out.println("Ni idea de ke comida es");
-                            break;
+                    if(sim.getAlmacenCentral() != null) {
+                        switch (tipoFood.toLowerCase()) {
+                            case "algae":
+                                sim.getAlmacenCentral().addVegtalFood(cantidadFood);
+                                sim.getAlmacenCentral().repartirComidaAnimal(sim.getFishFarms());
+                                break;
+                            case "animal":
+                                sim.getAlmacenCentral().addAnimalFood(cantidadFood);
+                                sim.getAlmacenCentral().repartirComidaAnimal(sim.getFishFarms());
+                                break;
+                            case "general":
+                                sim.getAlmacenCentral().addAnimalFood(cantidadFood);
+                                sim.getAlmacenCentral().addVegtalFood(cantidadFood);
+                                sim.getAlmacenCentral().repartirComidaAnimal(sim.getFishFarms());
+                                sim.getAlmacenCentral().repartirComidaVegetal(sim.getFishFarms());
+                                break;
+                            default:
+                                System.out.println("Tipo de comida inválido");
+                                break;
+                        }
+                    }else{
+                        switch (tipoFood.toLowerCase()) {
+                            case "algae":
+                                sim.repartirComidaVegetal(cantidadFood);
+                                break;
+                            case "animal":
+                                sim.repartirComidaAnimal(cantidadFood);
+                                break;
+                            case "general":
+                                sim.repartirComidaAnimal(cantidadFood);
+                                sim.repartirComidaVegetal(cantidadFood);
+                                break;
+                            default:
+                                System.out.println("tipo de comida inválido");
+                                break;
+                        }
                     }
+                    
                 }
             }
             Element buildingElem = give.element("building");
@@ -302,19 +346,32 @@ public class GestorRecompensas {
                 String codigo = buildingElem.attributeValue("code");
                 switch (codigo) {
                     case "4":
-                        // Lógica para desbloquear el Almacén central
+                        if(sim.getAlmacenCentral() != null){
+                            AlmacenCentral almcen = new AlmacenCentral();
+                            sim.setAlmacenCentral(almcen);
+                        }
                         break;
                     case "1":
-                        // Lógica para desbloquear la Piscifactoría de mar
+                        PiscifactoriaMar pisciMar = new PiscifactoriaMar(nombreBuilding);
+                        sim.addPisci(pisciMar);
                         break;
                     case "0":
-                        // Lógica para desbloquear la Piscifactoría de río
+                        PiscifactoriaRio pisciRio = new PiscifactoriaRio(nombreBuilding);
+                        sim.addPisci(pisciRio);
                         break;
                     case "3":
-                        // Lógica para desbloquear el Tanque de mar
+                        Piscifactoria pisciTanqueMar = sim.selectPisciMar();
+                        if(pisciTanqueMar != null) {
+                            Tanque tanqueMar = new Tanque(0, 0, false, pisciTanqueMar);
+                            pisciTanqueMar.addTanque(tanqueMar);
+                        }
                         break;
                     case "2":
-                        // Lógica para desbloquear el Tanque de río
+                        Piscifactoria pisciTanqueRio = sim.selectPisciRio();
+                        if(pisciTanqueRio != null) {
+                            Tanque tanqueRio = new Tanque(0, 0, true, pisciTanqueRio);
+                            pisciTanqueRio.addTanque(tanqueRio);
+                        }
                         break;
                     default:
                         System.out.println("Edificio desconocido con código: " + codigo);

@@ -3,6 +3,7 @@ package edificios.piscifactoria;
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import sistema.SISMonedas;
+import java.util.List;
 
 /**
  * Clase que representa una Piscifactoría de Mar
@@ -54,6 +55,21 @@ public class PiscifactoriaMar extends Piscifactoria{
     }
 
     /**
+     * Constructor de Piscifactoría de mar (para cargar partida).
+     * @param name Nombre de la Piscifactoría
+     * @param tanques Lista de tanques cargados desde el archivo de guardado
+     */
+    public PiscifactoriaMar(String name, List<Tanque> tanques) {
+        super(name);
+        this.maxTankCapacity = 100;
+        this.tankID = super.getTankID();
+        super.getTanques().addAll(tanques);
+        this.comidaAnimal = new AlmacenComida(100, 0);
+        this.comidaVegetal = new AlmacenComida(100, 0);
+        this.maxFood = 1000;
+    }
+
+    /**
      * Método que permite mejorar la capacidad de comida
      */
     @Override
@@ -64,15 +80,16 @@ public class PiscifactoriaMar extends Piscifactoria{
         int capMax = this.maxFood;
         if(sisMonedas.getMonedas() >= costoMejora){
             boolean realizaMejora = false;
-            if(this.comidaAnimal.getMaxCap() <  capMax){
+            if(this.comidaAnimal.getMaxCap() <  capMax && this.comidaVegetal.getMaxCap() <  capMax){
                 this.comidaAnimal.upgrade(incrementoCap);
-                realizaMejora = true;
-            }
-            if(this.comidaVegetal.getMaxCap() <  capMax){
                 this.comidaVegetal.upgrade(incrementoCap);
                 realizaMejora = true;
-            }if(realizaMejora){
+            }else{
+                realizaMejora = false;
+            }
+            if(realizaMejora){
                 sisMonedas.pagar(costoMejora);
+                System.out.println("Almacén de la Piscifactoría "+super.getName()+ " mejorado. Su capacidad ha aumentado en "+ incrementoCap + " hasta un total de " + this.comidaAnimal.getMaxCap());
             }else{
                 System.out.println("Ambos almacenes están al maximo");
             }

@@ -1,5 +1,8 @@
 package edificios.almacenes;
 
+import java.util.List;
+import edificios.piscifactoria.Piscifactoria;
+
 /**
  * Clase que representa el Almacén Central
  * @author Manuel Abalo Rietz
@@ -9,8 +12,6 @@ package edificios.almacenes;
 public class AlmacenCentral {
     /**Capacidad máxima del Almacén central*/
     private int maxCap;
-    /**Stock del Almacén central */
-    private int stock;
     /**Precio de el Almacén Central */
     private final int price;
     /**Almacén de comida Animal*/
@@ -24,10 +25,73 @@ public class AlmacenCentral {
     public AlmacenCentral() {
         this.warehouseA = new AlmacenComida(200, 0);
         this.warehouseV = new AlmacenComida(200, 0);
-        this.stock = 0;
         this.price = 2000;
         this.maxCap = 400;
     }
+
+    /**
+     * Método que reparte la comida animal que hay en el almacen entre las piscifactorias
+     * @param p lista de piscifactorias
+     */
+    public void repartirComidaAnimal(List<Piscifactoria> p) {
+        int almacenes = 0;
+        for (Piscifactoria piscifactoria : p) {
+            if (piscifactoria.getWarehouseA() != null) {
+                almacenes++;
+            }
+        }
+    
+        if (almacenes == 0) return; 
+    
+        int comidaTotal = this.getWarehouseA().getStock();
+        int comidaRestante = comidaTotal; 
+    
+        for (Piscifactoria piscifactoria : p) {
+            if (piscifactoria.getWarehouseA() != null) {
+                int capacidadDisponible = piscifactoria.getWarehouseA().getSpace();
+                int cantidadARepartir = Math.min(comidaRestante / almacenes, capacidadDisponible);
+    
+                piscifactoria.getWarehouseA().addFood(cantidadARepartir);
+                comidaRestante -= cantidadARepartir;
+                almacenes--;
+            }
+        }
+    
+        this.warehouseA.setStock(comidaRestante);
+    }
+    
+
+    /**
+     * Método que reparte la comida vegetal que hay en el almacén central entre las piscifactorias
+     * @param p lista de piscifactorias
+     */
+    public void repartirComidaVegetal(List<Piscifactoria> p) {
+        int almacenes = 0;
+        for (Piscifactoria piscifactoria : p) {
+            if (piscifactoria.getWarehouseV() != null) {
+                almacenes++;
+            }
+        }
+    
+        if (almacenes == 0) return;
+    
+        int comidaTotal = this.getWarehouseV().getStock();
+        int comidaRestante = comidaTotal;
+    
+        for (Piscifactoria piscifactoria : p) {
+            if (piscifactoria.getWarehouseV() != null) {
+                int capacidadDisponible = piscifactoria.getWarehouseV().getSpace();
+                int cantidadARepartir = Math.min(comidaRestante / almacenes, capacidadDisponible);
+    
+                piscifactoria.getWarehouseV().addFood(cantidadARepartir);
+                comidaRestante -= cantidadARepartir;
+                almacenes--;
+            }
+        }
+    
+        this.warehouseV.setStock(comidaRestante);
+    }
+    
 
     /**
      * Método que añade comida vegetal al Almacén Central
@@ -35,7 +99,6 @@ public class AlmacenCentral {
      */
     public void addVegtalFood(int ammount){
         this.warehouseV.addFood(ammount);
-        this.stock += ammount;
     }
 
     /**
@@ -44,7 +107,6 @@ public class AlmacenCentral {
      */
     public void addAnimalFood(int ammount) {
         this.warehouseA.addFood(ammount);
-        this.stock += ammount;
     }
 
     /**
@@ -54,9 +116,9 @@ public class AlmacenCentral {
         System.out.println("--------Almacén Central--------");
         System.out.println("Comida actual: " + this.getStock());
         System.out.println("Capacidad máxima: " + this.getMaxCap());
-        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + (this.getStock()/this.getMaxCap())*100 + "%");
-        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + (this.getWarehouseA().getStock()/this.getWarehouseA().getMaxCap())*100 + "%");
-        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + (this.getWarehouseV().getStock()/this.getWarehouseV().getMaxCap())*100 + "%");
+        System.out.println("Porcentaje de ocupación general [Comida actual / Máxima capacidad] " + this.getStock() + "/" + this.getMaxCap() + " " +((this.getStock()*100)/this.getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación de comida animal [Comida actual / Máxima capacidad] " + this.warehouseA.getStock() + "/" + this.warehouseA.getMaxCap() + " " + ((this.warehouseA.getStock()*100)/this.getWarehouseA().getMaxCap())+"%");
+        System.out.println("Porcentaje de ocupación de comida vegetal [Comida actual / Máxima capacidad] " + this.warehouseV.getStock() + "/" + this.warehouseV.getMaxCap() + " " +((this.getWarehouseV().getStock()*100)/this.warehouseV.getMaxCap())+"%");
     }
 
     /**
@@ -81,7 +143,7 @@ public class AlmacenCentral {
      * @return Devuelve la comida que hay
      */
     public int getStock() {
-        return stock;
+        return this.warehouseA.getStock() + this.warehouseV.getStock();
     }
 
     /**
@@ -96,6 +158,13 @@ public class AlmacenCentral {
      */
     public AlmacenComida getWarehouseV() {
         return warehouseV;
+    }
+
+    /**
+     * @param maximo Capacidad máxima del Almacén Central
+     */
+    public void setMaxCap(int maximo) {
+        this.maxCap = maximo;
     }
 
     @Override
