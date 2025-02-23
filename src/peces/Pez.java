@@ -287,6 +287,13 @@ public  abstract class Pez {
         return this.reproducible;
     }
 
+    /**
+     * @param edad Edad del Pez
+     */
+    public void setAge(int edad) {
+        this.age = edad;
+    }
+
     @Override
     public String toString() {
         return "===== Estado del Pez =====\n" +
