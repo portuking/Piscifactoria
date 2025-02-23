@@ -16,6 +16,8 @@ import edificios.piscifactoria.PiscifactoriaMar;
 import edificios.piscifactoria.PiscifactoriaRio;
 import edificios.tanque.Tanque;
 import estadisticas.Estadisticas;
+import gestor_guardado.Cargado;
+import gestor_guardado.Guardado;
 import peces.Pez;
 import peces.especies.Besugo;
 import peces.especies.Caballa;
@@ -36,8 +38,6 @@ import propiedades.PecesProps;
 import recompensas.GenerarRecompensa;
 import recompensas.GestorRecompensas;
 import registros.Registros;
-import saves.Cargado;
-import saves.Guardado;
 
 /**
  * Clase que representa el Simulador del sistema de Piscifactorías
@@ -91,6 +91,12 @@ public class Simulador {
     private static Estadisticas estadisticas = new Estadisticas(fishesNames);
 
     GenerarRecompensa generar = new GenerarRecompensa();
+
+    public Simulador() {
+        this.monedas = SISMonedas.getInstance(); // Inicializa el sistema de monedas
+        this.fishFarms = new ArrayList<>(); // Inicializa la lista de piscifactorías
+        this.days = 1; // Inicia el día en 1
+    }
 
     /**
      * Método que inicializa el Sistema
@@ -1750,6 +1756,14 @@ public class Simulador {
         this.days = dia;
     }
 
+    /**
+    * Método que permite establecer el sistema de monedas del simulador.
+    * @param monedas La instancia de SISMonedas a establecer.
+    */
+    public void setMonedas(SISMonedas monedas) {
+        this.monedas = monedas;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Simulador sim = new Simulador();
@@ -1770,6 +1784,7 @@ public class Simulador {
         } finally {
             Registros.cerrarRegistros();
             Conexion.cerrarConexion(); 
+            sc.close();
         }
 
     }
