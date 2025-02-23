@@ -222,7 +222,7 @@ public class Transcripciones {
      * 
      */
     public void trCurapeces(int peces,String piscifactoria, int monedas){
-        escribir("Curados" + peces + " peces de la piscifactoría"  + piscifactoria + " por " + monedas +" monedas\n");
+        escribir("Curados " + peces + " peces de la piscifactoría"  + piscifactoria + " por " + monedas +" monedas\n");
     }
 
     /**
