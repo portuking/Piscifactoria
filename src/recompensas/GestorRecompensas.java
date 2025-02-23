@@ -28,8 +28,15 @@ import sistema.Helper;
 import sistema.SISMonedas;
 import sistema.Simulador;
 
+/**
+ * Clase que gestiona las recompensas
+ * @author Adrián Ces López
+ * @author Manuel Abalo Rietz
+ * @author Pablo Dopazo Suárez
+ */
 public class GestorRecompensas {
 
+    /**Nombre de la carpeta donde se almacenan las recompensas */
     private static final String PATH_RECOMPENSAS = "rewards";
 
     /**
@@ -152,7 +159,10 @@ public class GestorRecompensas {
         return menuFinal;
     }
 
-
+    /**
+     * Método que muestra las recompensas y permite seleccionar una
+     * @param sim Simulador en el que se canjean las recompensas
+     */
     public void mostrarYCanjearReward(Simulador sim) {
         List<String> menuRewards = obtenerMenuRewards();
         if (menuRewards.isEmpty()) {
@@ -174,6 +184,11 @@ public class GestorRecompensas {
         }
     }
 
+    /**
+     * Método que permite canjear recompensas
+     * @param seleccion Recompensa seleccionada
+     * @param sim Simulador en el que se canjean 
+     */
     private void canjearReward(String seleccion, Simulador sim) {
         if (seleccion.contains("[")) {
             int indexBracket = seleccion.indexOf("[");
@@ -214,7 +229,7 @@ public class GestorRecompensas {
                     }
                 }
                 System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
-                Registros.registraUsoRecompensa(seleccion);
+                Registros.registrarUsoRecompensa(seleccion);
             } else {
                 System.out.println("No se puede canjear la recompensa multipartida '" + seleccion + "'.");
             }
@@ -232,7 +247,7 @@ public class GestorRecompensas {
                         reducirCantidad(archivo.getName());
                         encontrado = true;
                         System.out.println("Recompensa '" + seleccion + "' canjeada exitosamente!");
-                        Registros.registraUsoRecompensa(seleccion);
+                        Registros.registrarUsoRecompensa(seleccion);
                         break;
                     }
                 } catch (DocumentException e) {

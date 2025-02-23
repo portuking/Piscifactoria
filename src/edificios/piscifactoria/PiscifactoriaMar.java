@@ -3,6 +3,7 @@ package edificios.piscifactoria;
 import edificios.almacenes.AlmacenComida;
 import edificios.tanque.Tanque;
 import sistema.SISMonedas;
+import java.util.List;
 
 /**
  * Clase que representa una Piscifactoría de Mar
@@ -50,6 +51,21 @@ public class PiscifactoriaMar extends Piscifactoria{
         super.getTanques().add(initialSeaTank);
         this.comidaAnimal = new AlmacenComida(100, stock);
         this.comidaVegetal = new AlmacenComida(100, stock);
+        this.maxFood = 1000;
+    }
+
+    /**
+     * Constructor de Piscifactoría de mar (para cargar partida).
+     * @param name Nombre de la Piscifactoría
+     * @param tanques Lista de tanques cargados desde el archivo de guardado
+     */
+    public PiscifactoriaMar(String name, List<Tanque> tanques) {
+        super(name);
+        this.maxTankCapacity = 100;
+        this.tankID = super.getTankID();
+        super.getTanques().addAll(tanques);
+        this.comidaAnimal = new AlmacenComida(100, 0);
+        this.comidaVegetal = new AlmacenComida(100, 0);
         this.maxFood = 1000;
     }
 

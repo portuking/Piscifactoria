@@ -160,6 +160,13 @@ public class AlmacenCentral {
         return warehouseV;
     }
 
+    /**
+     * @param maximo Capacidad máxima del Almacén Central
+     */
+    public void setMaxCap(int maximo) {
+        this.maxCap = maximo;
+    }
+
     @Override
     public String toString() {
         return "Precio del almacén central " + this.price + "\n" + 
