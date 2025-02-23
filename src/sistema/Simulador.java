@@ -36,6 +36,7 @@ import propiedades.PecesProps;
 import recompensas.GenerarRecompensa;
 import recompensas.GestorRecompensas;
 import registros.Registros;
+import saves.Cargado;
 import saves.Guardado;
 
 /**
@@ -1735,12 +1736,35 @@ public class Simulador {
         return generar;
     }
 
+    /**
+     * @param nombre Nuevo nombre de empresa/partida
+     */
+    public void setName(String nombre){
+        this.name = nombre;
+    }
+
+    /**
+     * @param dia dia del Simulador
+     */
+    public void setDays(int dia) {
+        this.days = dia;
+    }
+
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Simulador sim = new Simulador();
 
         try {
             GeneradorBD.generarBD();
-            sim.init();
+            System.out.print("¿Desea cargar una partida guardada? (s/n): ");
+            String opcion = sc.nextLine();
+            if(opcion.equalsIgnoreCase("s")){
+                System.out.print("Ingrese el nombre de la partida: ");
+                String nombrePartida = sc.nextLine();
+                Cargado.cargarPartida(sim, nombrePartida);
+            }else{
+                sim.init();
+            }
             sim.menu();
             new Guardado(sim).guardarPartida();
         } finally {
