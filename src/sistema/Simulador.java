@@ -38,6 +38,7 @@ import propiedades.PecesProps;
 import recompensas.GenerarRecompensa;
 import recompensas.GestorRecompensas;
 import registros.Registros;
+import registros.Transcripciones;
 
 /**
  * Clase que representa el Simulador del sistema de Piscifactorías
@@ -104,15 +105,40 @@ public class Simulador {
     public void init() {
         try {
             crearCarpetas("transcripciones", "logs", "rewards", "saves");
+    
+            // Verificar si hay partidas guardadas
+            File savesDir = new File("saves");
+            File[] partidasGuardadas = savesDir.listFiles((dir, name) -> name.endsWith(".save"));
+    
+            if (partidasGuardadas != null && partidasGuardadas.length > 0) {
+                // Mostrar las partidas guardadas disponibles
+                System.out.println("Partidas guardadas encontradas:");
+                for (File partida : partidasGuardadas) {
+                    System.out.println("- " + partida.getName().replace(".save", ""));
+                }
+    
+                // Preguntar al usuario si desea cargar una partida
+                System.out.print("¿Desea cargar una partida? (s/n): ");
+                String respuesta = sc.nextLine().trim().toLowerCase();
+    
+                if (respuesta.equals("s")) {
+                    // Solicitar el nombre de la partida a cargar
+                    System.out.print("Ingrese el nombre de la partida que desea cargar: ");
+                    String nombrePartida = sc.nextLine().trim();
+                    cargarPartida(nombrePartida); // Llamar al método cargarPartida
+                    return; // Salir del método init después de cargar la partida
+                }
+            }
+    
+            // Si no hay partidas guardadas o el usuario elige no cargar una, crear una nueva partida
             System.out.print("Escriba el nombre de su empresa/partida: ");
             this.name = sc.nextLine();
-            // Transcripciones.getInstance(this.name);
+            Transcripciones.getInstance(this.name);
             System.out.print("Escriba el nombre de su primera Piscifactoría: ");
             String fishfarmName = sc.nextLine();
             Registros.getInstance().crearRegistro(this.name);
-            // Log.getInstance(fishfarmName);
             this.days = 1;
-            this.fishFarms = new ArrayList<Piscifactoria>();
+            this.fishFarms = new ArrayList<>();
             this.monedas = SISMonedas.getInstance();
             this.monedas.setMonedas(100);
             Piscifactoria initialRiverFishfarm = new PiscifactoriaRio(fishfarmName, 25);
@@ -120,6 +146,7 @@ public class Simulador {
             this.centralWarehouse = null;
             Registros.registrarInicio(this.name, this.monedas.getMonedas(), fishesNames, fishfarmName);
 
+    
         } catch (InputMismatchException e) {
             System.out.println("El nombre es incorrecto");
         }
@@ -468,7 +495,7 @@ public class Simulador {
             }
             System.out.println("===========================================");
             this.days++;
-            Registros.regitrarNextDay(this.days, i, i, i, i);
+            Registros.registrarNextDay(this.days, i, i, i, i);
             if (this.days % 10 == 0) {
                 pedidilloAutomata();
             }
@@ -1289,7 +1316,7 @@ public class Simulador {
         this.monedas.setMonedas(this.monedas.getMonedas() + 1000);
         System.out.println("Se han añadido 1000 monedas al saldo");
         System.out.println("Monedas actuales: " + SISMonedas.getInstance().getMonedas());
-        Registros.registraropsOcultasint(99, "", SISMonedas.getInstance().getMonedas());
+        Registros.registrarOpsOcultas(99, "", SISMonedas.getInstance().getMonedas());
     }
 
     /**
@@ -1387,7 +1414,7 @@ public class Simulador {
                 estadisticas.registrarNacimiento(pecesCompatibles.get(pezRandom).getNombre());
 
             }
-            Registros.registraropsOcultasint(98, tanque.getFishfarmName(), 0);
+            Registros.registrarOpsOcultas(98, tanque.getFishfarmName(), 0);
         }
     }
 
@@ -1454,10 +1481,12 @@ public class Simulador {
 
     }
 
-
+    /**
+     * Método que genera los pedidos
+     */
     private void pedidilloAutomata() {
         Random rand = new Random();
-        int idCliente = rand.nextInt(10) + 1;  // Asegura que hay 10 clientes insertados en BD
+        int idCliente = rand.nextInt(10) + 1;
         int indexPez = rand.nextInt(fishesNames.length);
         int idPez = indexPez + 1;
 
@@ -1474,6 +1503,9 @@ public class Simulador {
             + fishesNames[indexPez] + " para el cliente " + idCliente);
     }
 
+    /**
+     * Método que gestiona los pedidos
+     */
     public void gestionarPedidos() {
         try {
             List<String> pedidosPendientes = DAOPedidos.listarPedidosPendientes();
@@ -1764,28 +1796,44 @@ public class Simulador {
         this.monedas = monedas;
     }
 
+    public void cargarPartida(String nombrePartida) {
+        System.out.println("Cargando partida: " + nombrePartida);
+    
+        // Llamar al método de carga
+        Cargado.load(this, nombrePartida);
+    
+        // Inicializar log y transcripciones después de cargar la partida
+        Registros.getInstance().crearRegistro(this.name);
+    
+        // Registrar en el log que se ha cargado una partida
+        Registros.registrarInicio(this.name, this.monedas.getMonedas(), fishesNames, fishFarms.get(0).getName());
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Simulador sim = new Simulador();
 
         try {
+            // Generar la base de datos si no existe
             GeneradorBD.generarBD();
-            System.out.print("¿Desea cargar una partida guardada? (s/n): ");
-            String opcion = sc.nextLine();
-            if(opcion.equalsIgnoreCase("s")){
-                System.out.print("Ingrese el nombre de la partida: ");
-                String nombrePartida = sc.nextLine();
-                Cargado.cargarPartida(sim, nombrePartida);
-            }else{
-                sim.init();
-            }
+
+            // Inicializar el sistema (cargar o crear una partida)
+            sim.init();
+
+            // Iniciar el menú principal
             sim.menu();
+
+            // Guardar la partida antes de salir
             new Guardado(sim).guardarPartida();
+
+        } catch (Exception e) {
+            System.err.println("Error inesperado: " + e.getMessage());
+            e.printStackTrace();
         } finally {
+            // Cerrar recursos
             Registros.cerrarRegistros();
-            Conexion.cerrarConexion(); 
+            Conexion.cerrarConexion();
             sc.close();
         }
-
     }
 }

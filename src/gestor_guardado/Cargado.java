@@ -3,7 +3,6 @@ package gestor_guardado;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -27,6 +26,8 @@ import peces.especies.Robalo;
 import peces.especies.SalmonAtlantico;
 import peces.especies.SalmonChinook;
 import sistema.Simulador;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Clase que se encarga de cargar partidas guardadas
@@ -37,148 +38,124 @@ import sistema.Simulador;
  */
 public class Cargado {
 
-    public static void cargarPartida(Simulador simulador, String nombrePartida) {
+     /**
+     * Método para cargar una partida guardada.
+     * @param simulador Instancia del simulador donde se cargará la partida.
+     * @param nombrePartida Nombre de la partida que se desea cargar.
+     */
+    public static void load(Simulador simulador, String nombrePartida) {
         String nombreArchivo = "saves/" + nombrePartida + ".save";
         File archivo = new File(nombreArchivo);
-    
+
         if (!archivo.exists()) {
             System.out.println("No se encontró una partida guardada con el nombre: " + nombrePartida);
             return;
         }
-    
         try (FileReader reader = new FileReader(archivo)) {
             Gson gson = new Gson();
             JsonObject json = gson.fromJson(reader, JsonObject.class);
-    
+
             if (json == null) {
                 System.out.println("El archivo de guardado está vacío o corrupto.");
                 return;
             }
-    
-            // Cargar datos generales del simulador
             if (json.has("empresa")) {
                 simulador.setName(json.get("empresa").getAsString());
             } else {
                 System.out.println("Advertencia: No se encontró el nombre de la empresa. Usando valor predeterminado.");
                 simulador.setName("Empresa Desconocida");
             }
-    
+
             if (json.has("dia")) {
                 simulador.setDays(json.get("dia").getAsInt());
             } else {
                 System.out.println("Advertencia: No se encontró el día. Iniciando desde el día 1.");
                 simulador.setDays(1);
             }
-    
+
             if (json.has("monedas")) {
                 simulador.getMonedas().setMonedas(json.get("monedas").getAsInt());
             } else {
                 System.out.println("Advertencia: No se encontraron monedas. Iniciando con 100 monedas.");
                 simulador.getMonedas().setMonedas(100);
             }
-    
-            // Cargar piscifactorías
             if (json.has("piscifactorias")) {
                 JsonArray piscifactoriasArray = json.getAsJsonArray("piscifactorias");
                 for (JsonElement piscifactoriaElement : piscifactoriasArray) {
                     JsonObject piscifactoriaJson = piscifactoriaElement.getAsJsonObject();
-    
-                    // Verificar campos obligatorios
                     if (!piscifactoriaJson.has("nombre") || !piscifactoriaJson.has("tipo")) {
                         System.out.println("Advertencia: Piscifactoria con estructura incompleta. Ignorando...");
                         continue;
                     }
-    
+
                     String nombrePiscifactoria = piscifactoriaJson.get("nombre").getAsString();
                     boolean esMar = piscifactoriaJson.get("tipo").getAsInt() == 1;
-    
-                    // Crear la piscifactoría según su tipo
-                    Piscifactoria piscifactoria = esMar ? new PiscifactoriaMar(nombrePiscifactoria) : new PiscifactoriaRio(nombrePiscifactoria);
-    
-                    // Cargar almacenes de comida
+                    int comidaAnimal = 0;
+                    int comidaVegetal = 0;
                     if (piscifactoriaJson.has("comida")) {
                         JsonObject comidaJson = piscifactoriaJson.getAsJsonObject("comida");
-                        if (comidaJson.has("animal") && comidaJson.has("vegetal")) {
-                            int comidaAnimal = comidaJson.get("animal").getAsInt();
-                            int comidaVegetal = comidaJson.get("vegetal").getAsInt();
-    
-                            // Asegurarse de que las cantidades no excedan la capacidad máxima
-                            comidaAnimal = Math.min(comidaAnimal, piscifactoria.getWarehouseA().getMaxCap());
-                            comidaVegetal = Math.min(comidaVegetal, piscifactoria.getWarehouseV().getMaxCap());
-    
-                            piscifactoria.getWarehouseA().setStock(comidaAnimal);
-                            piscifactoria.getWarehouseV().setStock(comidaVegetal);
-                        } else {
-                            System.out.println("Advertencia: Almacenes de comida incompletos. Iniciando con stock 0.");
+                        if (comidaJson.has("animal")) {
+                            comidaAnimal = comidaJson.get("animal").getAsInt();
+                        }
+                        if (comidaJson.has("vegetal")) {
+                            comidaVegetal = comidaJson.get("vegetal").getAsInt();
                         }
                     }
-    
-                    // Cargar tanques
+                    List<Tanque> tanquesCargados = new ArrayList<>();
                     if (piscifactoriaJson.has("tanques")) {
                         JsonArray tanquesArray = piscifactoriaJson.getAsJsonArray("tanques");
                         for (JsonElement tanqueElement : tanquesArray) {
                             JsonObject tanqueJson = tanqueElement.getAsJsonObject();
-    
-                            // Verificar campos obligatorios del tanque
-                            if (!tanqueJson.has("num") || !tanqueJson.has("pez")) {
+                            if (!tanqueJson.has("capacidad") || !tanqueJson.has("id") || !tanqueJson.has("esRio")) {
                                 System.out.println("Advertencia: Tanque con estructura incompleta. Ignorando...");
                                 continue;
                             }
-    
-                            int numeroTanque = tanqueJson.get("num").getAsInt();
-                            String tipoPez = tanqueJson.get("pez").getAsString();
-                            boolean esRioTanque = !esMar; // Asumir que el tipo de tanque depende de la piscifactoria
-    
-                            // Buscar el tanque existente o crear uno nuevo si no existe
-                            Tanque tanque = piscifactoria.getTanquePorNumero(numeroTanque);
-                            if (tanque == null) {
-                                tanque = new Tanque(25, numeroTanque, esRioTanque, piscifactoria);
-                                piscifactoria.addTanque(tanque);
-                            }
-    
-                            // Cargar peces
+
+                            int capacidad = tanqueJson.get("capacidad").getAsInt();
+                            int id = tanqueJson.get("id").getAsInt();
+                            boolean esRio = tanqueJson.get("esRio").getAsBoolean();
+                            Tanque tanque = new Tanque(capacidad, id, esRio, null);
                             if (tanqueJson.has("peces")) {
                                 JsonArray pecesArray = tanqueJson.getAsJsonArray("peces");
                                 for (JsonElement pezElement : pecesArray) {
                                     JsonObject pezJson = pezElement.getAsJsonObject();
-    
-                                    // Verificar campos obligatorios del pez
-                                    if (!pezJson.has("edad") || !pezJson.has("sexo") || !pezJson.has("vivo")) {
+                                    if (!pezJson.has("nombre") || !pezJson.has("edad") || !pezJson.has("sexo") || !pezJson.has("vivo")) {
                                         System.out.println("Advertencia: Pez con estructura incompleta. Ignorando...");
                                         continue;
                                     }
-    
+
+                                    String nombrePez = pezJson.get("nombre").getAsString();
                                     int edad = pezJson.get("edad").getAsInt();
                                     boolean sexo = pezJson.get("sexo").getAsBoolean();
                                     boolean vivo = pezJson.get("vivo").getAsBoolean();
-                                    boolean maduro = pezJson.has("maduro") ? pezJson.get("maduro").getAsBoolean() : false;
-                                    boolean fertil = pezJson.has("fertil") ? pezJson.get("fertil").getAsBoolean() : false;
-                                    boolean alimentado = pezJson.has("alimentado") ? pezJson.get("alimentado").getAsBoolean() : false;
-    
-                                    // Crear el pez según su tipo
-                                    Pez pez = crearPez(tipoPez, sexo);
+                                    Pez pez = crearPez(nombrePez, sexo);
                                     if (pez != null) {
-                                        pez.setAlive(vivo);
                                         pez.setAge(edad);
-                                        pez.setMature(maduro);
-                                        pez.setFertile(fertil);
-                                        pez.setEat(alimentado); // Restaurar el estado de alimentación
+                                        pez.setAlive(vivo);
                                         tanque.addFishes(pez);
                                     } else {
-                                        System.out.println("Advertencia: Tipo de pez desconocido - " + tipoPez);
+                                        System.out.println("Advertencia: Tipo de pez desconocido - " + nombrePez);
                                     }
                                 }
                             }
+
+                            tanquesCargados.add(tanque);
                         }
                     }
-    
-                    // Agregar la piscifactoría al simulador
+                    Piscifactoria piscifactoria;
+                    if (esMar) {
+                        piscifactoria = new PiscifactoriaMar(nombrePiscifactoria, tanquesCargados);
+                    } else {
+                        piscifactoria = new PiscifactoriaRio(nombrePiscifactoria, tanquesCargados);
+                    }
+                    piscifactoria.getWarehouseA().setStock(comidaAnimal);
+                    piscifactoria.getWarehouseV().setStock(comidaVegetal);
                     simulador.addPisci(piscifactoria);
                 }
             } else {
                 System.out.println("Advertencia: No se encontraron piscifactorías en el archivo.");
             }
-    
+
             System.out.println("Partida cargada con éxito: " + nombrePartida);
         } catch (IOException e) {
             System.err.println("Error al leer el archivo de guardado: " + e.getMessage());
@@ -186,7 +163,13 @@ public class Cargado {
             System.err.println("Error inesperado al cargar la partida: " + e.getMessage());
         }
     }
-    
+
+    /**
+     * Método para crear un pez según su tipo.
+     * @param nombrePez Nombre del pez.
+     * @param sexo Sexo del pez.
+     * @return Instancia del pez creado.
+     */
     private static Pez crearPez(String nombrePez, boolean sexo) {
         switch (nombrePez) {
             case "Besugo":

@@ -99,7 +99,6 @@ public class Transcripciones {
         }
         escribir("-------------------------------------------\n");
         escribir("Piscifactoria incial: " + pisciInicial + ".\n");
-        // TODO implementar EXTRAS
     }
 
     /**
@@ -113,14 +112,13 @@ public class Transcripciones {
      * @param piscifactoria   Piscifactoria en la que se almacena
      */
     public void trComprarComdida(int cantidadComida, String tipoComida, int monedasGastadas, boolean almacen,
-            String piscifactoria) {// creo que hecho
+            String piscifactoria) {
         escribir(cantidadComida + " de comida de tipo " + tipoComida + " comprada por " + monedasGastadas
                 + " monedas. Se almacena en "
-                + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + ".\n"));// PISCIFACTORIA O
-                                                                                                  // ALMACEN
+                + (almacen ? "el almacén central" : "la piscifactoría " + piscifactoria + ".\n"));
     }
 
-    public void trComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {// hecho
+    public void trComprarPeces(String nombrePez, boolean tipoSex, int monedas, int tanque, String piscifactoria) {
         escribir(nombrePez + (tipoSex ? " (M)" : " (H)") + " comprado por " + monedas + " monedas. Añadido al tanque "
                 + tanque + " de la piscifactoría " + piscifactoria + " .\n");
     }
@@ -136,7 +134,7 @@ public class Transcripciones {
      * @param tanque        tanque donde se va a limpiar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void trLimpiarTanque(int tanque, String piscifactoria) {// hecho
+    public void trLimpiarTanque(int tanque, String piscifactoria) {
         escribir("Limpiado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
@@ -146,7 +144,7 @@ public class Transcripciones {
      * @param tanque        tanque que se va a vaciar
      * @param piscifactoria piscifactoria de donde es el tanque
      */
-    public void trVaciarTanque(int tanque, String piscifactoria) {// hecho
+    public void trVaciarTanque(int tanque, String piscifactoria) {
         escribir("Vaciado el tanque " + tanque + " de la piscifactoría " + piscifactoria + ".\n");
     }
 
@@ -168,7 +166,7 @@ public class Transcripciones {
         }
     }
 
-    public void trMejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {// hecho
+    public void trMejoraEdificio(String piscifactoria, int aumentoComida, int monedas) {
         escribir("Mejorada la piscifactoría " + piscifactoria + " aumentando su capacidad de comida hasta un total de "
                 + aumentoComida + " por " + monedas +
                 "monedas\n");
